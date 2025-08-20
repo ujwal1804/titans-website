@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar";
 
 export default function Page() {
   return (
-    <main className="relative bg-black text-white">
+    <main className=" bg-black text-white">
       {/* Navbar */}
       {/* <Navbar /> */}
 
@@ -20,12 +20,14 @@ export default function Page() {
       <VenomBeam className="flex items-center justify-center w-full flex-col px-4">
         <Hero />
       </VenomBeam>
-      <VenomBeam className="flex items-center justify-center w-full flex-col px-4">
+      <VenomBeam className="flex items-center justify-center w-full flex-col px-4 pb-32">
         <AboutBot />
+      </VenomBeam>
+      <VenomBeam className="flex items-center justify-center w-full flex-col px-4">
+        <BacktestResults />
       </VenomBeam>
       {/* Other sections */}
 
-      <BacktestResults />
       <LiveResults />
       <Features />
       <LeadForm />

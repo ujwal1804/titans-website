@@ -27,7 +27,7 @@ export default function AboutBot() {
   ];
 
   return (
-    <section id="about" className="py-32 px-6 relative ">
+    <section id="about" className=" px-6 relative ">
       {/* Section Heading */}
       <h2 className="bg-clip-text mb-12 flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-900 to-neutral-700 dark:from-neutral-200 dark:to-white text-3xl md:text-4xl lg:text-6xl  pb-1 md:pb-2 pt-2 md:pt-4 relative z-20 font-bold tracking-tight leading-tight">
         About the Bot
@@ -36,9 +36,9 @@ export default function AboutBot() {
       {/* Features Grid */}
       <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {features.map((feature, idx) => (
-          <SpotlightCard className="w-80 h-72" spotlightColor="34, 211, 238">
+          <SpotlightCard key={idx} className="w-80 h-72" spotlightColor="34, 211, 238">
             <div className="w-full h-full flex flex-col items-center justify-center text-center">
-              <h3 className="text-xl font-semibold mb-2">{feature.icon}</h3>
+              <h3 className="text-xl font-semibold mb-2 text-neutral-500">{feature.icon}</h3>
               <h3 className="text-xl font-semibold mb-1 bg-clip-text flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-900 to-neutral-500 dark:from-neutral-200 dark:to-white   pb-1 md:pb-2 pt-2 md:pt-4 relative z-20 font-bold tracking-tight leading-tight">
                 {feature.title}
               </h3>
