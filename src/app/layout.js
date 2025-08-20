@@ -1,5 +1,17 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import localFont from 'next/font/local';
+
+const trenchThin = localFont({
+  src: "./fonts/TrenchThin.otf",
+  variable: "--font-trenchthin",
+});
+
+const aquire = localFont({
+  src: "./fonts/Aquire.otf",
+  variable: "--font-aquire",
+});
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,7 +32,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${aquire.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>
