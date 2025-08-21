@@ -8,7 +8,7 @@ const itemsSample = [
         meta: "v2.4.1",
         description:
             "Real-time metrics with AI-powered insights and predictive analytics",
-        icon: <TrendingUp className="w-4 h-4 text-blue-500" />,
+        icon: <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />,
         status: "Live",
         tags: ["Statistics", "Reports", "AI"],
         colSpan: 2,
@@ -18,7 +18,7 @@ const itemsSample = [
         title: "Task Manager",
         meta: "84 completed",
         description: "Automated workflow management with priority scheduling",
-        icon: <CheckCircle className="w-4 h-4 text-emerald-500" />,
+        icon: <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" />,
         status: "Updated",
         tags: ["Productivity", "Automation"],
     },
@@ -26,7 +26,7 @@ const itemsSample = [
         title: "Media Library",
         meta: "12GB used",
         description: "Cloud storage with intelligent content processing",
-        icon: <Video className="w-4 h-4 text-purple-500" />,
+        icon: <Video className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />,
         tags: ["Storage", "CDN"],
         colSpan: 2,
     },
@@ -34,7 +34,7 @@ const itemsSample = [
         title: "Global Network",
         meta: "6 regions",
         description: "Multi-region deployment with edge computing",
-        icon: <Globe className="w-4 h-4 text-sky-500" />,
+        icon: <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-sky-500" />,
         status: "Beta",
         tags: ["Infrastructure", "Edge"],
     },
@@ -44,17 +44,17 @@ function BentoGrid({
     items = itemsSample
 }) {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-4 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 p-2 sm:p-4 lg:p-6 max-w-7xl mx-auto">
             {items.map((item, index) => (
                 <div
                     key={index}
                     className={cn(
-                        "group relative p-4 rounded-xl overflow-hidden transition-all duration-300",
+                        "group relative p-3 sm:p-4 lg:p-6 rounded-xl overflow-hidden transition-all duration-300",
                         "border border-gray-100/80 dark:border-white/10 bg-white dark:bg-black",
                         "hover:shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:hover:shadow-[0_2px_12px_rgba(255,255,255,0.03)]",
                         "hover:-translate-y-0.5 will-change-transform",
-                        item.colSpan || "col-span-1",
-                        item.colSpan === 2 ? "md:col-span-2" : "",
+                        // Responsive column spans
+                        item.colSpan === 2 ? "sm:col-span-2 lg:col-span-2" : "col-span-1",
                         {
                             "shadow-[0_2px_12px_rgba(0,0,0,0.03)] -translate-y-0.5":
                                 item.hasPersistentHover,
@@ -72,10 +72,10 @@ function BentoGrid({
                             className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:4px_4px]" />
                     </div>
 
-                    <div className="relative flex flex-col space-y-3">
+                    <div className="relative flex flex-col space-y-2 sm:space-y-3 lg:space-y-4">
                         <div className="flex items-center justify-between">
                             <div
-                                className="w-8 h-8 rounded-lg flex items-center justify-center bg-black/5 dark:bg-white/10 group-hover:bg-gradient-to-br transition-all duration-300">
+                                className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center bg-black/5 dark:bg-white/10 group-hover:bg-gradient-to-br transition-all duration-300">
                                 {item.icon}
                             </div>
                             <span
@@ -88,27 +88,27 @@ function BentoGrid({
                             </span>
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-1 sm:space-y-2">
                             <h3
-                                className="font-medium text-gray-900 dark:text-gray-100 tracking-tight text-[15px]">
+                                className="font-medium text-gray-900 dark:text-gray-100 tracking-tight text-sm sm:text-[15px] lg:text-base">
                                 {item.title}
                                 <span className="ml-2 text-xs text-gray-500 dark:text-gray-400 font-normal">
                                     {item.meta}
                                 </span>
                             </h3>
                             <p
-                                className="text-sm text-gray-600 dark:text-gray-300 leading-snug font-[425]">
+                                className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-snug font-[425]">
                                 {item.description}
                             </p>
                         </div>
 
-                        <div className="flex items-center justify-between mt-2">
+                        <div className="flex items-center justify-between mt-1 sm:mt-2">
                             <div
-                                className="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
+                                className="flex items-center space-x-1 sm:space-x-2 text-xs text-gray-500 dark:text-gray-400">
                                 {item.tags?.map((tag, i) => (
                                     <span
                                         key={i}
-                                        className="px-2 py-1 rounded-md bg-black/5 dark:bg-white/10 backdrop-blur-sm transition-all duration-200 hover:bg-black/10 dark:hover:bg-white/20">
+                                        className="px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md bg-black/5 dark:bg-white/10 backdrop-blur-sm transition-all duration-200 hover:bg-black/10 dark:hover:bg-white/20 text-xs">
                                         #{tag}
                                     </span>
                                 ))}
