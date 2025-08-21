@@ -1,25 +1,36 @@
-import Typeanimation from "@/components/ui/typeanimation";
+'use client'
 
-export default function Hero() {
+import { SplineScene } from "@/components/ui/splite";
+import { Card } from "@/components/ui/card";
+import { SpotlightCard } from "@/components/ui/spotlightcard";
+
+export default function SplineSceneBasic() {
   return (
-    <div className="flex items-center justify-center w-full flex-col px-4">
-      <h2 className="bg-clip-text flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-4xl md:text-5xl lg:text-7xl  pb-1 md:pb-2 pt-2 md:pt-4 relative z-20 font-bold tracking-tight leading-tight">
-        
-        
-        <Typeanimation
-          words={[" Precision In Code"]}
-          typingSpeed="50"
-          deletingSpeed="slow"
-          pauseDuration={1000}
-          className=""
-        />
+    <Card className="max-w-7xl h-[500px] overflow-hidden flex flex-col md:flex-row">
+      
+      {/* Left content */}
+      <div className="flex-1 p-8 flex flex-col justify-center z-10">
+        <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
+          Futuristic Trading
+        </h1>
+        <p className="mt-4 text-neutral-300 max-w-lg">
+          Experience next-level trading with our AI-powered bot. Track profits, automate strategies, and engage with live 3D insights for smarter decisions.
+        </p>
+      </div>
 
-        Power in Trades.
-      </h2>
-      <p className="max-w-xl mx-auto text-base md:text-2xl text-neutral-500 dark:text-neutral-400 text-center mt-2">
-        Our AI-driven trading bot for MetaTrader 5 adapts to markets in real
-        time. Tested, optimized, and built to multiply equity with precision.
-      </p>
-    </div>
-  );
+      {/* Right content */}
+      <div className="flex-1 relative">
+        <SplineScene
+          scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+          className="w-full h-full"
+        />
+      </div>
+
+      {/* Optional spotlight card for extra highlight */}
+      <SpotlightCard
+        className="hidden md:block md:absolute md:left-60 md:-top-20"
+        fill="white"
+      />
+    </Card>
+  )
 }

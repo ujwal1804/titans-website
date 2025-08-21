@@ -10,7 +10,6 @@ import LeadForm from "./components/LeadForm";
 import LiveResults from "./components/LiveResults";
 import Navbar from "./components/Navbar";
 import Pricing from "./components/Pricing";
-import FuturisticPricingSection from "@/components/ui/dark-gradient-pricing";
 
 export default function Page() {
   return (
@@ -35,7 +34,7 @@ export default function Page() {
         <Features />
       </VenomBeam>
       <VenomBeam className="flex items-center justify-center w-full flex-col px-4">
-        {/* <FuturisticPricingSection /> */}
+        <Pricing/>
       </VenomBeam>
       {/* Other sections */}
 

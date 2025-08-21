@@ -27,7 +27,7 @@ export default function AboutBot() {
   ];
 
   return (
-    <section id="about" className=" px-6 relative ">
+    <section id="about" className=" mt-32 px-6 relative ">
       {/* Section Heading */}
       <h2 className="bg-clip-text mb-12 flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-3xl md:text-4xl lg:text-6xl  pb-1 md:pb-2 pt-2 md:pt-4 relative z-20 font-bold tracking-tight leading-tight">
         About the Bot

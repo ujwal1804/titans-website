@@ -1,6 +1,4 @@
-import FuturisticPricingSection, {
-  PricingCard,
-} from "@/components/ui/dark-gradient-pricing";
+
 import React from "react";
 
 function Pricing() {
