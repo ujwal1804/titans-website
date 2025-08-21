@@ -12,34 +12,34 @@ function LiveResults() {
   return (
     <section
       id="live-results"
-      className="relative py-24 px-6  text-white text-center"
+      className="relative mt-16 sm:mt-20 lg:mt-24 text-white text-center px-4"
     >
       {/* Title */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-3xl md:text-5xl font-bold mb-4"
+        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 lg:mb-6"
       >
         Live Trading Results
       </motion.h2>
-      <p className="text-neutral-400 text-lg mb-12">
+      <p className="text-neutral-400 text-sm sm:text-base md:text-lg mb-8 sm:mb-10 lg:mb-12 px-4">
         Verified performance for{" "}
         <span className="text-white font-semibold">August 2025</span>
       </p>
 
       {/* Results Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 w-[95vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw] xl:w-[75vw] mx-auto">
         {results.map((item, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: index * 0.2 }}
-            className="w-[280px] mx-auto"
+            className="w-full sm:w-[280px] mx-auto"
           >
             <button
-              className="group relative w-full overflow-hidden border border-border rounded-[32px] aspect-square transition-colors duration-200 hover:border-[#0ea5e9] focus:outline-[5px] focus:outline-[Highlight]"
+              className="group relative w-full overflow-hidden border border-border rounded-[24px] sm:rounded-[32px] aspect-square transition-colors duration-200 hover:border-[#0ea5e9] focus:outline-[5px] focus:outline-[Highlight]"
               style={{ "--active-color": "text-neutral-500" }}
             >
               <PixelCanvas
@@ -48,11 +48,11 @@ function LiveResults() {
                 colors={["#e0f2fe", "#7dd3fc", "#0ea5e9"]}
                 variant="icon"
               />
-              <div className="relative z-10 h-full w-full flex flex-col items-center justify-center text-center px-4">
-                <span className="text-4xl font-bold text-cyan-500 group-hover:text-[var(--active-color)] transition-colors">
+              <div className="relative z-10 h-full w-full flex flex-col items-center justify-center text-center px-3 sm:px-4">
+                <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-500 group-hover:text-[var(--active-color)] transition-colors">
                   {item.value}
                 </span>
-                <span className="text-neutral-400 text-sm mt-2">
+                <span className="text-neutral-400 text-xs sm:text-sm mt-2 leading-tight">
                   {item.label}
                 </span>
               </div>

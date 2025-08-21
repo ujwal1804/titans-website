@@ -9,7 +9,7 @@ const inputVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-neutral-300 border border-neutral-700 hover:text-neutral-300",
+        default: "text-neutral-300 border border-cyan-500 hover:text-cyan-300",
         outline:
           "bg-transparent text-cyan-400 border border-cyan-400 hover:text-cyan-300",
         ghost: "bg-transparent text-cyan-400 hover:bg-cyan-950/30",
@@ -123,7 +123,7 @@ const InteractiveInput = React.forwardRef((
     }
     
     .animate-shimmer-slide-scoped {
-      animation: InteractiveInput-shimmer-slide var(--speed) ease-in-out infinite alternate;
+      animation: Interactive Input-shimmer-slide var(--speed) ease-in-out infinite alternate;
     }
     
     .animate-spin-around-scoped {
@@ -173,7 +173,7 @@ const InteractiveInput = React.forwardRef((
         className="absolute -z-20 [background:var(--bg)]"
         style={{ inset: shimmerSize, borderRadius }} />
       <InputComp
-        className="w-full h-full bg-transparent placeholder: text-center outline-none border-none relative z-10 text-inherit placeholder:text-neutral-600"
+        className="w-full h-full bg-transparent placeholder: text-center outline-none border-none relative z-10 text-inherit placeholder:text-neutral-200"
         ref={ref}
         {...props} />
     </div>

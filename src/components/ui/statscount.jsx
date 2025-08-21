@@ -88,7 +88,7 @@ function AnimatedCounter({
       className={cn("text-center flex-1 min-w-0 flex flex-col justify-center h-full")}>
       <motion.div
         className={cn(
-          "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 whitespace-nowrap text-neutral-500"
+          "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 whitespace-nowrap text-neutral-200"
         )}
         initial={{ scale: 0.8 }}
         animate={isInView ? { scale: 1 } : { scale: 0.8 }}
@@ -103,7 +103,7 @@ function AnimatedCounter({
       </motion.div>
       <motion.p
         className={cn(
-          "text-xs sm:text-sm leading-relaxed px-1 sm:px-2 hyphens-auto break-words text-neutral-500"
+          "text-xs sm:text-sm leading-relaxed px-1 sm:px-2 hyphens-auto break-words text-neutral-300"
         )}
         style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
         initial={{ opacity: 0 }}
@@ -128,7 +128,7 @@ export default function StatsCount({
     <motion.section
       ref={containerRef}
       className={cn(
-        "py-8 sm:py-12 lg:py-20 px-2 sm:px-4 md:px-8 w-full overflow-hidden",
+        "py-4 w-full overflow-hidden",
         className
       )}
       initial={{ opacity: 0 }}
@@ -141,7 +141,7 @@ export default function StatsCount({
         transition={{ duration: 0.8, delay: 0.2 }}>
         <h2
           className={cn(
-            "text-sm sm:text-base md:text-lg lg:text-xl font-medium tracking-wide px-4 text-neutral-500"
+            "text-sm sm:text-base md:text-lg lg:text-xl font-medium tracking-wide text-neutral-200"
           )}>
           <span className="hidden sm:inline">
             {title.includes("WITH") ? (

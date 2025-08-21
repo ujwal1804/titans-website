@@ -30,6 +30,49 @@
 
 body {
   font-family: Aquire, Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Responsive container utilities */
+@layer utilities {
+  .container-responsive {
+    @apply w-[95vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw] xl:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-spacing {
+    @apply mt-16 sm:mt-20 lg:mt-24;
+  }
+  
+  .heading-responsive {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
+  }
+  
+  .text-responsive {
+    @apply text-sm sm:text-base md:text-lg lg:text-xl;
+  }
+  
+  .spacing-responsive {
+    @apply gap-4 sm:gap-6 lg:gap-8;
+  }
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better focus states for accessibility */
+*:focus {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+}
+
+/* Improved mobile touch targets */
+@media (max-width: 640px) {
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
 @layer base {
