@@ -62,7 +62,7 @@ function LeadForm({ isModalOpen, setIsModalOpen }) {
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 mb-4 sm:mb-6">
               Get Early Access
             </h2>
-            <p className="text-sm sm:text-base md:text-lg text-neutral-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-neutral-300 max-w-3xl mx-auto leading-relaxed">
               Be among the first to experience our revolutionary algorithm-based
               trading bot. Join the waitlist and get exclusive early access.
             </p>
