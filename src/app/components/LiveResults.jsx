@@ -12,7 +12,7 @@ function LiveResults() {
   return (
     <section
       id="live-results"
-      className="relative mt-16 sm:mt-20 lg:mt-24 text-white text-center px-4"
+      className="relative mt-20 text-white text-center"
     >
       {/* Title */}
       <motion.h2
@@ -29,14 +29,14 @@ function LiveResults() {
       </p>
 
       {/* Results Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 w-[95vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw] xl:w-[75vw] mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 w-[95vw] md:w-[85vw] mx-auto">
         {results.map((item, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: index * 0.2 }}
-            className="w-full sm:w-[280px] mx-auto"
+            className="w-full mx-auto"
           >
             <button
               className="group relative w-full overflow-hidden border border-border rounded-[24px] sm:rounded-[32px] aspect-square transition-colors duration-200 hover:border-[#0ea5e9] focus:outline-[5px] focus:outline-[Highlight]"

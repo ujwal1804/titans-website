@@ -44,17 +44,17 @@ function BentoGrid({
     items = itemsSample
 }) {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 p-2 sm:p-4 lg:p-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6  mx-auto">
             {items.map((item, index) => (
                 <div
                     key={index}
                     className={cn(
                         "group relative p-3 sm:p-4 lg:p-6 rounded-xl overflow-hidden transition-all duration-300",
-                        "border border-gray-100/80 dark:border-white/10 bg-white dark:bg-black",
+                        "border border-gray-100/80 dark:border-white/10 ",
                         "hover:shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:hover:shadow-[0_2px_12px_rgba(255,255,255,0.03)]",
                         "hover:-translate-y-0.5 will-change-transform",
                         // Responsive column spans
-                        item.colSpan === 2 ? "sm:col-span-2 lg:col-span-2" : "col-span-1",
+                        item.colSpan === 2 ? "sm:col-span-2 lg:col-span-2" : "col-span-2  md:col-span-1",
                         {
                             "shadow-[0_2px_12px_rgba(0,0,0,0.03)] -translate-y-0.5":
                                 item.hasPersistentHover,

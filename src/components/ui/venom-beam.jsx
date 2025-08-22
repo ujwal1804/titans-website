@@ -15,7 +15,7 @@ const VenomBeam = ({ children, className = "" }) => {
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.height = document.documentElement.scrollHeight;
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     };
@@ -42,7 +42,7 @@ const VenomBeam = ({ children, className = "" }) => {
     initParticles();
 
     const handleMouseMove = (e) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+      mouseRef.current = { x: e.clientX, y: e.clientY + window.scrollY };
     };
 
     canvas.addEventListener("mousemove", handleMouseMove);
@@ -79,13 +79,19 @@ const VenomBeam = ({ children, className = "" }) => {
 
         // glow effect
         const alpha = p.opacity * (1 - p.life / p.maxLife);
-const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3);
+        const gradient = ctx.createRadialGradient(
+          p.x,
+          p.y,
+          0,
+          p.x,
+          p.y,
+          p.size * 3
+        );
 
-// White-to-gray glowing orb effect
-gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);       // bright white center
-gradient.addColorStop(0.5, `rgba(200, 200, 200, ${alpha * 0.7})`); // soft gray glow
-gradient.addColorStop(1, `rgba(0, 0, 0, 0)`);                       // fade out to transparent
-
+        // White-to-gray glowing orb effect
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`); // bright white center
+        gradient.addColorStop(0.5, `rgba(200, 200, 200, ${alpha * 0.7})`); // soft gray glow
+        gradient.addColorStop(1, `rgba(0, 0, 0, 0)`); // fade out to transparent
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
@@ -123,11 +129,12 @@ gradient.addColorStop(1, `rgba(0, 0, 0, 0)`);                       // fade out 
   }, []);
 
   return (
-    <div className="relative h-[100vh] w-full bg-black">
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
-      <div className={`absolute inset-0 flex items-center justify-center ${className}`}>
-        {children}
-      </div>
+    <div className="relative w-full bg-black">
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 w-full h-full pointer-events-none"
+      />
+      <div className={`relative z-10 ${className}`}>{children}</div>
     </div>
   );
 };

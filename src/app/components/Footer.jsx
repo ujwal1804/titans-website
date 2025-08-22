@@ -1,145 +1,74 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
-  
-  const footerLinks = {
-    product: [
-      { name: 'Features', href: '#features' },
-      { name: 'Pricing', href: '#pricing' },
-      { name: 'API', href: '#api' },
-      { name: 'Documentation', href: '#docs' }
-    ],
-    company: [
-      { name: 'About', href: '#about' },
-      { name: 'Blog', href: '#blog' },
-      { name: 'Careers', href: '#careers' },
-      { name: 'Contact', href: '#contact' }
-    ],
-    support: [
-      { name: 'Help Center', href: '#help' },
-      { name: 'Community', href: '#community' },
-      { name: 'Status', href: '#status' },
-      { name: 'Security', href: '#security' }
-    ]
-  };
 
   return (
-    <footer className="mt-16 sm:mt-20 lg:mt-24 bg-neutral-900/50 border-t border-neutral-800">
-      <div className="w-[95vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw] xl:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-16">
-          {/* Company Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-1"
-          >
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">
-              Titans Trading
-            </h3>
-            <p className="text-sm sm:text-base text-neutral-400 leading-relaxed mb-4 sm:mb-6">
-              Revolutionary AI-powered trading bot for next-generation investors.
-            </p>
-            <div className="flex space-x-4">
-              {/* Social Media Icons */}
-              <a href="#" className="text-neutral-400 hover:text-white transition-colors">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                </svg>
-              </a>
-              <a href="#" className="text-neutral-400 hover:text-white transition-colors">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                </svg>
-              </a>
-              <a href="#" className="text-neutral-400 hover:text-white transition-colors">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-            </div>
-          </motion.div>
+    <footer className="mt-20 relative overflow-hidden">
+      {/* Background gradient for depth */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent" />
 
-          {/* Product Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h4 className="text-sm sm:text-base font-semibold text-white mb-4 sm:mb-6">Product</h4>
-            <ul className="space-y-2 sm:space-y-3">
-              {footerLinks.product.map((link) => (
-                <li key={link.name}>
-                  <a href={link.href} className="text-sm sm:text-base text-neutral-400 hover:text-white transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+      {/* Futuristic background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-500/6 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-purple-500/6 rounded-full blur-2xl animate-pulse delay-1000" />
+        <div className="absolute bottom-1/3 left-1/2 transform -translate-x-1/2 w-56 h-56 bg-cyan-500/4 rounded-full blur-xl animate-pulse delay-500" />
+      </div>
 
-          {/* Company Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h4 className="text-sm sm:text-base font-semibold text-white mb-4 sm:mb-6">Company</h4>
-            <ul className="space-y-2 sm:space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <a href={link.href} className="text-sm sm:text-base text-neutral-400 hover:text-white transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Support Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <h4 className="text-sm sm:text-base font-semibold text-white mb-4 sm:mb-6">Support</h4>
-            <ul className="space-y-2 sm:space-y-3">
-              {footerLinks.support.map((link) => (
-                <li key={link.name}>
-                  <a href={link.href} className="text-sm sm:text-base text-neutral-400 hover:text-white transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
-
-        {/* Bottom Section */}
+      <div className="relative z-10 w-[95vw] md:w-[85vw] mx-auto px-4 py-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="border-t border-neutral-800 mt-8 sm:mt-12 lg:mt-16 pt-8 sm:pt-12 lg:pt-16"
+          transition={{
+            duration: 0.8,
+            type: "spring",
+            damping: 25,
+            stiffness: 300,
+          }}
+          className="bg-white/[0.06] backdrop-blur-[40px] rounded-xl border border-white/[0.12] p-4 shadow-2xl relative overflow-hidden group"
         >
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-            <p className="text-sm sm:text-base text-neutral-400">
-              © {currentYear} Titans Trading. All rights reserved.
-            </p>
-            <div className="flex space-x-6 sm:space-x-8">
-              <a href="#" className="text-sm sm:text-base text-neutral-400 hover:text-white transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-sm sm:text-base text-neutral-400 hover:text-white transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" className="text-sm sm:text-base text-neutral-400 hover:text-white transition-colors">
-                Cookie Policy
-              </a>
+          {/* Futuristic inner glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.08] via-transparent to-purple-500/[0.08] opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-xl" />
+
+          {/* Sleek pattern overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_50%,rgba(255,255,255,0.02)_50%)] bg-[length:4px_4px] opacity-30" />
+
+          <div className="relative z-10 flex items-center justify-between">
+            {/* Company branding */}
+            <div className="flex items-center space-x-3">
+              <motion.h3
+                className="text-lg font-bold bg-gradient-to-r from-white via-cyan-100 to-purple-100 bg-clip-text text-transparent tracking-tight"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                TITANS TRADING
+              </motion.h3>
+              <div className="w-px h-4 bg-gradient-to-b from-transparent via-gray-400 to-transparent" />
+            </div>
+
+            {/* Copyright */}
+            <motion.p
+              className="text-xs text-gray-300 font-medium tracking-wider uppercase"
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.3 }}
+            >
+              © {currentYear} All Rights Reserved
+            </motion.p>
+
+            {/* Futuristic accent */}
+            <div className="flex items-center space-x-2 text-xs text-gray-400 tracking-wider">
+              <div className="w-1 h-1 bg-cyan-400 rounded-full animate-pulse" />
+              <span className="uppercase font-medium">
+                Powered by Advanced AI
+              </span>
+              <div className="w-1 h-1 bg-purple-400 rounded-full animate-pulse delay-500" />
             </div>
           </div>
+
+          {/* Futuristic corner accents */}
+          <div className="absolute top-2 right-2 w-2 h-2 bg-cyan-400/40 rounded-full blur-sm animate-pulse" />
+          <div className="absolute bottom-2 left-2 w-1.5 h-1.5 bg-purple-400/40 rounded-full blur-sm animate-pulse delay-1000" />
         </motion.div>
       </div>
     </footer>

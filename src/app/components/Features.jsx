@@ -45,8 +45,8 @@ function Features() {
   ];
 
   return (
-    <section className="mt-16 sm:mt-20 lg:mt-24 text-white">
-      <div className="w-[95vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw] xl:w-[75vw] mx-auto px-4">
+    <section className="mt-20 text-white">
+      <div className="w-[95vw] md:w-[85vw] mx-auto">
         <h2 className="bg-clip-text mb-8 sm:mb-10 lg:mb-12 flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl z-20 font-bold tracking-tight leading-tight">
           Bot Features
         </h2>

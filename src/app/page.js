@@ -14,39 +14,24 @@ import Pricing from "./components/Pricing";
 export default function Page() {
   return (
     <main className="bg-black text-white min-h-screen">
-      {/* Navbar */}
-      {/* <Navbar /> */}
+      <VenomBeam>
+        {/* Navbar */}
+        {/* <Navbar /> */}
 
-      {/* Hero with animated background */}
-      <VenomBeam className="flex items-center justify-center w-full flex-col px-4 sm:px-6 lg:px-8">
+        {/* Hero with animated background */}
         <Hero />
-      </VenomBeam>
-      
-      <VenomBeam className="flex items-center justify-center w-full flex-col px-4 sm:px-6 lg:px-8">
         <AboutBot />
-      </VenomBeam>
-      
-      <VenomBeam className="flex items-center justify-center w-full flex-col px-4 sm:px-6 lg:px-8">
         <BacktestResults />
-      </VenomBeam>
-      
-      <VenomBeam className="flex items-center justify-center w-full flex-col px-4 sm:px-6 lg:px-8">
         <LiveResults />
-      </VenomBeam>
-      
-      <VenomBeam className="flex items-center justify-center w-full flex-col px-4 sm:px-6 lg:px-8">
         <Features />
-      </VenomBeam>
-      
-      <VenomBeam className="flex items-center justify-center w-full flex-col px-4 sm:px-6 lg:px-8">
-        <Pricing/>
-      </VenomBeam>
-      
-      {/* Other sections */}
-      <LeadForm />
+        <Pricing />
 
-      {/* Footer */}
-      <Footer />
+        {/* Other sections */}
+        <LeadForm />
+
+        {/* Footer */}
+        <Footer />
+      </VenomBeam>
     </main>
   );
 }
