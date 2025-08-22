@@ -8,6 +8,8 @@ function LeadForm({ isModalOpen, setIsModalOpen }) {
     email: "",
     phone: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -16,12 +18,35 @@ function LeadForm({ isModalOpen, setIsModalOpen }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    setIsModalOpen(false);
-    setFormData({ name: "", email: "", phone: "" });
+    setIsSubmitting(true);
+    setSubmitMessage("");
+
+    try {
+      const response = await fetch("/api/submit-lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitMessage("Thank you! We'll be in touch soon.");
+        setIsModalOpen(false);
+        setFormData({ name: "", email: "", phone: "" });
+      } else {
+        setSubmitMessage("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitMessage("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -128,6 +153,7 @@ function LeadForm({ isModalOpen, setIsModalOpen }) {
                     className="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400/50 focus:bg-white/[0.08] transition-all duration-300"
                     placeholder="Enter your full name"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -142,6 +168,7 @@ function LeadForm({ isModalOpen, setIsModalOpen }) {
                     className="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400/50 focus:bg-white/[0.08] transition-all duration-300"
                     placeholder="Enter your email address"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -156,14 +183,30 @@ function LeadForm({ isModalOpen, setIsModalOpen }) {
                     className="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400/50 focus:bg-white/[0.08] transition-all duration-300"
                     placeholder="Enter your phone number"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
 
+                {submitMessage && (
+                  <div
+                    className={`text-sm p-3 rounded-xl ${
+                      submitMessage.includes("Thank you")
+                        ? "bg-green-500/20 border border-green-400/50 text-green-300"
+                        : "bg-red-500/20 border border-red-400/50 text-red-300"
+                    }`}
+                  >
+                    {submitMessage}
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70"
+                  disabled={isSubmitting}
+                  className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span className="relative z-10">Submit Application</span>
+                  <span className="relative z-10">
+                    {isSubmitting ? "Submitting..." : "Submit Application"}
+                  </span>
                 </button>
               </form>
 
