@@ -2,9 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { CloudLightning, Cpu, TrendingUp } from "react-feather";
 import { SpotlightCard } from "@/components/ui/spotlightcard";
-import { InteractiveInput } from "@/components/ui/interactive-input";
 
-export default function AboutBot() {
+export default function AboutBot({ onRequestAccess }) {
   const features = [
     {
       icon: <Cpu size={32} />,
@@ -27,7 +26,10 @@ export default function AboutBot() {
   ];
 
   return (
-    <section id="about" className="pt-20  z-50   flex flex-col  justify-center  items-center ">
+    <section
+      id="about"
+      className="pt-20  z-50   flex flex-col  justify-center  items-center "
+    >
       {/* Section Heading */}
       <h2 className="bg-clip-text mb-8 sm:mb-10 lg:mb-12 flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl z-20 font-bold tracking-tight leading-tight px-4">
         About the Bot
@@ -38,7 +40,9 @@ export default function AboutBot() {
         {features.map((feature, idx) => (
           <SpotlightCard key={idx} className="" spotlightColor="34, 211, 238">
             <div className="w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6">
-              <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-neutral-200">{feature.icon}</h3>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-neutral-200">
+                {feature.icon}
+              </h3>
               <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2 sm:mb-3 bg-clip-text flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white pb-1 sm:pb-2 pt-2 sm:pt-4 relative z-20 font-bold tracking-tight leading-tight">
                 {feature.title}
               </h3>
@@ -49,20 +53,14 @@ export default function AboutBot() {
           </SpotlightCard>
         ))}
       </div>
-      
+
       <div className="mt-8 sm:mt-10 lg:mt-12 px-4 z-50">
-        <InteractiveInput
-          className="cursor-pointer flex mx-auto font-bold text-base sm:text-lg lg:text-xl w-fit"
-          variant="default"
-          inputSize="lg"
-          glow={true}
-          rounded="full"
-          hideAnimations={false}
-          uppercase={true}
-          shimmerSize="0.1rem"
-          shimmerDuration="2s"
-          placeholder="Request Early Access"
-        />
+        <button
+          onClick={onRequestAccess}
+          className="cursor-pointer font-bold text-base sm:text-lg lg:text-xl px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/70 uppercase"
+        >
+          <span className="relative z-10">Request Early Access</span>
+        </button>
       </div>
     </section>
   );

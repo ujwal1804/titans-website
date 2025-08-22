@@ -1,6 +1,6 @@
 import React from "react";
 
-function Pricing() {
+function Pricing({ onGetStarted }) {
   return (
     <section className="text-gray-100 py-20 relative overflow-hidden">
       {/* Background gradient for depth */}
@@ -120,7 +120,10 @@ function Pricing() {
                     </div>
                   </div>
 
-                  <button className="w-full px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] group/btn relative overflow-hidden hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/70">
+                  <button
+                    onClick={onGetStarted}
+                    className="w-full px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] group/btn relative overflow-hidden hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/70"
+                  >
                     {/* Button glow effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-cyan-600/20 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 rounded-2xl" />
                     {/* Button shine effect */}

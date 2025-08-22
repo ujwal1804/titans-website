@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import VenomBeam from "@/components/ui/venom-beam";
 import AboutBot from "./components/AboutBot";
 import BacktestResults from "./components/BacktestResults";
@@ -12,6 +13,8 @@ import Navbar from "./components/Navbar";
 import Pricing from "./components/Pricing";
 
 export default function Page() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <main className="bg-black text-white min-h-screen">
       <VenomBeam>
@@ -20,14 +23,14 @@ export default function Page() {
 
         {/* Hero with animated background */}
         <Hero />
-        <AboutBot />
+        <AboutBot onRequestAccess={() => setIsModalOpen(true)} />
         <BacktestResults />
         <LiveResults />
-        <Pricing />
+        <Pricing onGetStarted={() => setIsModalOpen(true)} />
         <Features />
 
         {/* Other sections */}
-        <LeadForm />
+        <LeadForm isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 
         {/* Footer */}
         <Footer />

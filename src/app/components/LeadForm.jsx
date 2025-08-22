@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { InteractiveInput } from "@/components/ui/interactive-input";
 
-function LeadForm() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+function LeadForm({ isModalOpen, setIsModalOpen }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
