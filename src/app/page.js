@@ -23,8 +23,8 @@ export default function Page() {
         <AboutBot />
         <BacktestResults />
         <LiveResults />
-        <Features />
         <Pricing />
+        <Features />
 
         {/* Other sections */}
         <LeadForm />

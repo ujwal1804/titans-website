@@ -15,7 +15,7 @@ const VenomBeam = ({ children, className = "" }) => {
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
-      canvas.height = document.documentElement.scrollHeight;
+      canvas.height = window.innerHeight;
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     };
@@ -25,16 +25,16 @@ const VenomBeam = ({ children, className = "" }) => {
 
     const initParticles = () => {
       particlesRef.current = [];
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 150; i++) {
         particlesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 1.5,
-          vy: (Math.random() - 0.5) * 1.5,
+          vx: (Math.random() - 0.5) * 2,
+          vy: (Math.random() - 0.5) * 2,
           life: 0,
-          maxLife: Math.random() * 120 + 60,
-          size: Math.random() * 2 + 1,
-          opacity: Math.random() * 0.8 + 0.3,
+          maxLife: Math.random() * 150 + 80,
+          size: Math.random() * 1.5 + 0.8,
+          opacity: Math.random() * 0.9 + 0.4,
         });
       }
     };
@@ -42,13 +42,13 @@ const VenomBeam = ({ children, className = "" }) => {
     initParticles();
 
     const handleMouseMove = (e) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY + window.scrollY };
+      mouseRef.current = { x: e.clientX, y: e.clientY };
     };
 
     canvas.addEventListener("mousemove", handleMouseMove);
 
     const animate = () => {
-      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.fillStyle = "rgba(0,0,0,0.15)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       particlesRef.current.forEach((p) => {
@@ -60,10 +60,10 @@ const VenomBeam = ({ children, className = "" }) => {
         const dx = mouseRef.current.x - p.x;
         const dy = mouseRef.current.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-          const force = (150 - dist) / 150;
-          p.vx += (dx / dist) * force * 0.05;
-          p.vy += (dy / dist) * force * 0.05;
+        if (dist < 200) {
+          const force = (200 - dist) / 200;
+          p.vx += (dx / dist) * force * 0.08;
+          p.vy += (dy / dist) * force * 0.08;
         }
 
         // bounce
@@ -85,29 +85,31 @@ const VenomBeam = ({ children, className = "" }) => {
           0,
           p.x,
           p.y,
-          p.size * 3
+          p.size * 2.5
         );
 
-        // White-to-gray glowing orb effect
-        gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`); // bright white center
-        gradient.addColorStop(0.5, `rgba(200, 200, 200, ${alpha * 0.7})`); // soft gray glow
-        gradient.addColorStop(1, `rgba(0, 0, 0, 0)`); // fade out to transparent
+        // Enhanced cyan glow effect
+        gradient.addColorStop(0, `rgba(0, 255, 255, ${alpha * 0.8})`); // cyan center
+        gradient.addColorStop(0.3, `rgba(0, 200, 255, ${alpha * 0.6})`); // blue-cyan
+        gradient.addColorStop(0.7, `rgba(0, 150, 255, ${alpha * 0.3})`); // blue
+        gradient.addColorStop(1, `rgba(0, 0, 0, 0)`); // fade out
 
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.size * 1.8, 0, Math.PI * 2);
         ctx.fillStyle = gradient;
         ctx.fill();
       });
 
-      // connect nearby particles
+      // connect nearby particles with enhanced visibility
       particlesRef.current.forEach((p1, i) => {
         particlesRef.current.slice(i + 1).forEach((p2) => {
           const dx = p1.x - p2.x;
           const dy = p1.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) {
-            ctx.strokeStyle = `rgba(0,247,255,${(120 - dist) / 300})`;
-            ctx.lineWidth = 0.3;
+            const opacity = (120 - dist) / 120;
+            ctx.strokeStyle = `rgba(0, 255, 255, ${opacity * 0.6})`;
+            ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
@@ -132,7 +134,7 @@ const VenomBeam = ({ children, className = "" }) => {
     <div className="relative w-full bg-black">
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 w-full h-full pointer-events-none"
+        className="fixed inset-0 w-full h-full pointer-events-none z-0"
       />
       <div className={`relative z-10 ${className}`}>{children}</div>
     </div>
