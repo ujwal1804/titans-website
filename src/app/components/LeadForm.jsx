@@ -51,7 +51,7 @@ function LeadForm({ isModalOpen, setIsModalOpen }) {
           >
             <button
               onClick={() => setIsModalOpen(true)}
-              className="cursor-pointer font-bold text-base sm:text-lg px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/70"
+              className="cursor-pointer font-bold text-base sm:text-lg px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70"
             >
               <span className="relative z-10">Get Early Access</span>
             </button>
@@ -161,7 +161,7 @@ function LeadForm({ isModalOpen, setIsModalOpen }) {
 
                 <button
                   type="submit"
-                  className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/70"
+                  className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70"
                 >
                   <span className="relative z-10">Submit Application</span>
                 </button>

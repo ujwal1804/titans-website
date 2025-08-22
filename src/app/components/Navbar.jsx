@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 function Navbar({ onRequestAccess }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,15 +11,15 @@ function Navbar({ onRequestAccess }) {
       setIsScrolled(window.scrollY > 20);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Features', href: '#features' },
-    { name: 'Pricing', href: '#pricing' },
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Features", href: "#features" },
+    { name: "Pricing", href: "#pricing" },
   ];
 
   return (
@@ -28,9 +28,9 @@ function Navbar({ onRequestAccess }) {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-white/[0.08] backdrop-blur-[20px] border-b border-white/[0.1]' 
-          : 'bg-transparent'
+        isScrolled
+          ? "bg-white/[0.08] backdrop-blur-[20px] border-b border-white/[0.1]"
+          : "bg-transparent"
       }`}
     >
       <div className="w-[95vw] md:w-[85vw] mx-auto ">
@@ -65,7 +65,7 @@ function Navbar({ onRequestAccess }) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onRequestAccess}
-              className="px-6 py-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/70 font-medium"
+              className="px-6 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-transparent"
             >
               Get Started
             </motion.button>
@@ -75,7 +75,7 @@ function Navbar({ onRequestAccess }) {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-300 hover:text-white transition-colors duration-200"
+              className="text-gray-300 hover:text-white transition-colors duration-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-transparent"
             >
               <svg
                 className="w-6 h-6"
@@ -108,7 +108,7 @@ function Navbar({ onRequestAccess }) {
           {isMobileMenuOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
               className="md:hidden bg-white/[0.05] backdrop-blur-[20px] border-t border-white/[0.1] mt-2 rounded-2xl overflow-hidden"
@@ -120,7 +120,7 @@ function Navbar({ onRequestAccess }) {
                     href={item.href}
                     whileHover={{ x: 4 }}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block text-gray-300 hover:text-white transition-colors duration-200 font-medium"
+                    className="block text-gray-300 hover:text-white transition-colors duration-200 font-medium focus:outline-none focus:text-white"
                   >
                     {item.name}
                   </motion.a>
@@ -132,7 +132,7 @@ function Navbar({ onRequestAccess }) {
                     onRequestAccess();
                     setIsMobileMenuOpen(false);
                   }}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/70 font-medium"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-transparent"
                 >
                   Get Started
                 </motion.button>

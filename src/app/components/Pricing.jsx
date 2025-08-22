@@ -12,14 +12,14 @@ function Pricing({ onGetStarted }) {
       {/* Animated background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/8 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/8 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/8 rounded-full blur-3xl animate-pulse delay-1000" />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/4 rounded-full blur-2xl animate-pulse delay-500" />
       </div>
 
       <div className="w-full px-4 relative z-10">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight bg-gradient-to-r from-white via-cyan-100 to-purple-100 bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight bg-gradient-to-r from-white via-cyan-100 to-blue-100 bg-clip-text text-transparent mb-6">
             Bot Pricing
           </h2>
           <p className="text-lg sm:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
@@ -119,13 +119,13 @@ function Pricing({ onGetStarted }) {
                       <span className="text-white font-semibold">20%</span>
                     </div>
                     <div className="w-full bg-gray-600/30 rounded-full h-2 mt-2">
-                      <div className="bg-gradient-to-r from-cyan-400 to-purple-400 h-2 rounded-full w-4/5"></div>
+                      <div className="bg-gradient-to-r from-cyan-400 to-blue-400 h-2 rounded-full w-4/5"></div>
                     </div>
                   </div>
 
                   <button
                     onClick={onGetStarted}
-                    className="w-full px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] group/btn relative overflow-hidden hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/70"
+                    className="w-full px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] group/btn relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70"
                   >
                     {/* Button glow effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-cyan-600/20 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 rounded-2xl" />
@@ -152,7 +152,7 @@ function Pricing({ onGetStarted }) {
               </div>
 
               {/* Floating accent elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-cyan-400/20 to-purple-400/20 rounded-full blur-xl animate-pulse" />
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 rounded-full blur-xl animate-pulse" />
               <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-br from-cyan-400/20 to-cyan-400/20 rounded-full blur-xl animate-pulse delay-1000" />
             </div>
           </div>

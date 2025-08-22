@@ -57,7 +57,7 @@ export default function AboutBot({ onRequestAccess }) {
       <div className="mt-8 sm:mt-10 lg:mt-12 px-4 z-50">
         <button
           onClick={onRequestAccess}
-          className="cursor-pointer font-bold text-base sm:text-lg lg:text-xl px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-purple-500/30 hover:border-cyan-400/70 uppercase"
+          className="cursor-pointer font-bold text-base sm:text-lg lg:text-xl px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 uppercase"
         >
           <span className="relative z-10">Request Early Access</span>
         </button>

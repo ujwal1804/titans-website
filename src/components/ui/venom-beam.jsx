@@ -13,6 +13,10 @@ const VenomBeam = ({ children, className = "" }) => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Detect mobile device and adjust particle count
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 80 : 150; // Reduced particles for mobile
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -25,7 +29,7 @@ const VenomBeam = ({ children, className = "" }) => {
 
     const initParticles = () => {
       particlesRef.current = [];
-      for (let i = 0; i < 150; i++) {
+      for (let i = 0; i < particleCount; i++) {
         particlesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
