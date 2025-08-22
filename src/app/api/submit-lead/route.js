@@ -134,7 +134,7 @@ async function sendAdminNotification({ name, email, phone }) {
       <div class="container">
         <div class="header">
           <h1 class="title">🚀 New Lead Alert</h1>
-          <p class="subtitle">Titans Trading Bot - AI-Powered Trading</p>
+          <p class="subtitle">Titans Trading Bot - Algorithm-Based Trading</p>
         </div>
         
         <div class="lead-card">
@@ -363,14 +363,14 @@ async function sendWelcomeEmail({ name, email }) {
       <div class="container">
         <div class="header">
           <h1 class="title">🎉 Welcome to Titans Trading</h1>
-          <p class="subtitle">Your AI-Powered Trading Journey Begins</p>
+          <p class="subtitle">Your Algorithm-Based Trading Journey Begins</p>
         </div>
         
         <div class="welcome-card">
           <div class="greeting">Hi ${name}! 👋</div>
           
           <div class="message">
-            Welcome to the future of trading! You've just joined our exclusive waitlist for the most advanced AI trading bot in the market.
+            Welcome to the future of trading! You've just joined our exclusive waitlist for the most advanced algorithm-based trading bot in the market.
           </div>
           
           <div class="highlight">
@@ -397,7 +397,7 @@ async function sendWelcomeEmail({ name, email }) {
       from: process.env.GMAIL_USER,
       to: email,
       subject:
-        "🎉 Welcome to Titans Trading Bot - Your AI Trading Journey Begins",
+        "🎉 Welcome to Titans Trading Bot - Your Algorithm-Based Trading Journey Begins",
       html: welcomeContent,
     });
 

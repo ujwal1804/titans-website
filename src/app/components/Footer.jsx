@@ -61,7 +61,7 @@ function Footer() {
             <div className="flex items-center space-x-2 text-xs text-gray-400 tracking-wider">
               <div className="w-1 h-1 bg-cyan-400 rounded-full animate-pulse" />
               <span className="uppercase font-medium">
-                Powered by Advanced AI
+                Powered by Advanced Algorithms
               </span>
               <div className="w-1 h-1 bg-blue-400 rounded-full animate-pulse delay-500" />
             </div>
@@ -91,7 +91,7 @@ function Footer() {
             <div className="flex items-center space-x-2 text-xs text-gray-400 tracking-wider">
               <div className="w-1 h-1 bg-cyan-400 rounded-full animate-pulse" />
               <span className="uppercase font-medium text-center">
-                Powered by AI
+                Powered by Algorithms
               </span>
               <div className="w-1 h-1 bg-blue-400 rounded-full animate-pulse delay-500" />
             </div>

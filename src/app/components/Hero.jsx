@@ -13,9 +13,9 @@ export default function SplineSceneBasic() {
           Futuristic Trading
         </h1>
         <p className="mt-3 sm:mt-4 md:mt-5 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-neutral-300 max-w-full text-center 2xl:text-left mx-auto leading-relaxed  hidden md:block">
-          Experience next-level trading with our AI-powered bot. Track profits,
-          automate strategies, and engage with live 3D insights for smarter
-          decisions.
+          Experience next-level trading with our algorithm-based bot. Track
+          profits, automate strategies, and engage with live 3D insights for
+          smarter decisions.
         </p>
       </div>
 

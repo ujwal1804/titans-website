@@ -10,7 +10,10 @@ export default function BacktestResults() {
   ];
 
   return (
-    <section id="backtest" className="pt-20 w-[95vw] md:w-[85vw] mx-auto  flex  flex-col">
+    <section
+      id="backtest"
+      className="pt-20 w-[95vw] md:w-[85vw] mx-auto  flex  flex-col"
+    >
       {/* Section Heading */}
       <h2 className="bg-clip-text text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight">
         Backtest Results
@@ -31,7 +34,10 @@ export default function BacktestResults() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        Our AI-driven trading bot consistently executes trades with precision and efficiency. Backtests demonstrate rapid equity growth, minimal drawdowns, and reliable performance across varied market conditions.
+        Our algorithm-driven trading bot consistently executes trades with
+        precision and efficiency. Backtests demonstrate rapid equity growth,
+        minimal drawdowns, and reliable performance across varied market
+        conditions.
       </motion.p>
     </section>
   );

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  CheckCircle,
-  Clock,
-  Star,
-  TrendingUp,
-  Video,
-  Globe,
-} from "lucide-react";
+import { CheckCircle, Clock, Star, TrendingUp, Globe } from "lucide-react";
 import { BentoGrid } from "@/components/ui/bento-grid";
 
 function Features() {
@@ -18,7 +11,7 @@ function Features() {
         "Executes trades automatically with advanced algorithms and risk management strategies.",
       icon: <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />,
       status: "Live",
-      tags: ["Automation", "AI", "Trading"],
+      tags: ["Automation", "Algorithms", "Trading"],
       colSpan: 2,
       hasPersistentHover: true,
     },
@@ -32,12 +25,13 @@ function Features() {
       tags: ["Safety", "Strategy", "Capital"],
     },
     {
-      title: "Market Analytics",
-      meta: "Realtime Insights",
+      title: "Performance Tracking",
+      meta: "Real-time Stats",
       description:
-        "Provides AI-powered predictions and visual dashboards to monitor market trends and signals.",
-      icon: <Video className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />,
-      tags: ["Analytics", "AI", "Visualization"],
+        "Monitor your trading performance with live profit tracking and basic performance metrics.",
+      icon: <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />,
+      status: "Live",
+      tags: ["Performance", "Tracking", "Metrics"],
       colSpan: 2,
     },
     {

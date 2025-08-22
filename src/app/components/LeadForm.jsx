@@ -63,8 +63,8 @@ function LeadForm({ isModalOpen, setIsModalOpen }) {
               Get Early Access
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-              Be among the first to experience our revolutionary AI trading bot.
-              Join the waitlist and get exclusive early access.
+              Be among the first to experience our revolutionary algorithm-based
+              trading bot. Join the waitlist and get exclusive early access.
             </p>
           </motion.div>
 
@@ -212,7 +212,7 @@ function LeadForm({ isModalOpen, setIsModalOpen }) {
 
               <p className="text-xs text-gray-400 text-center mt-4">
                 By submitting this form, you agree to receive updates about our
-                AI trading bot.
+                algorithm-based trading bot.
               </p>
             </motion.div>
           </motion.div>

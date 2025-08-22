@@ -104,7 +104,7 @@ function Pricing({ onGetStarted }) {
 
                   <div className="mb-8">
                     <div className="text-4xl font-bold text-white mb-2">
-                      80%
+                      50%
                     </div>
                     <div className="text-sm text-gray-300">Profit Share</div>
                   </div>
@@ -112,11 +112,11 @@ function Pricing({ onGetStarted }) {
                   <div className="space-y-3 mb-8 text-left">
                     <div className="flex items-center justify-between">
                       <span className="text-gray-300">Your Share</span>
-                      <span className="text-white font-semibold">80%</span>
+                      <span className="text-white font-semibold">50%</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-300">Platform Fee</span>
-                      <span className="text-white font-semibold">20%</span>
+                      <span className="text-white font-semibold">50%</span>
                     </div>
                     <div className="w-full bg-gray-600/30 rounded-full h-2 mt-2">
                       <div className="bg-gradient-to-r from-cyan-400 to-blue-400 h-2 rounded-full w-4/5"></div>

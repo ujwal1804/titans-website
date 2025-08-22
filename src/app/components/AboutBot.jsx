@@ -7,21 +7,21 @@ export default function AboutBot({ onRequestAccess }) {
   const features = [
     {
       icon: <Cpu size={32} />,
-      title: "AI Precision",
+      title: "Mathematical Precision",
       description:
-        "Executes trades with surgical accuracy using advanced MQL5 algorithms that adapt to market conditions in real-time.",
+        "Executes trades with mathematical accuracy using sophisticated MQL5 algorithms that continuously adapt to evolving market dynamics.",
     },
     {
       icon: <TrendingUp size={32} />,
-      title: "Proven Performance",
+      title: "Proven Results",
       description:
-        "Backtested results double equity in 4 months, and even in worst-case scenarios growth is achieved within 7–8 months.",
+        "Comprehensive backtesting demonstrates consistent 200% equity growth within 4 months, with robust performance even in challenging market conditions.",
     },
     {
       icon: <CloudLightning size={32} />,
-      title: "Fast & Reliable",
+      title: "Lightning Fast Execution",
       description:
-        "Designed for speed and consistency, handling multiple trades efficiently across volatile markets.",
+        "Engineered for optimal speed and reliability, seamlessly managing multiple concurrent trades across diverse market environments.",
     },
   ];
 
@@ -32,7 +32,7 @@ export default function AboutBot({ onRequestAccess }) {
     >
       {/* Section Heading */}
       <h2 className="bg-clip-text mb-8 sm:mb-10 lg:mb-12 flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl z-20 font-bold tracking-tight leading-tight px-4">
-        About the Bot
+        Revolutionary Trading Technology
       </h2>
 
       {/* Features Grid */}
@@ -59,7 +59,7 @@ export default function AboutBot({ onRequestAccess }) {
           onClick={onRequestAccess}
           className="cursor-pointer font-bold text-base sm:text-lg lg:text-xl px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 uppercase"
         >
-          <span className="relative z-10">Request Early Access</span>
+          <span className="relative z-10">Join the Revolution</span>
         </button>
       </div>
     </section>
