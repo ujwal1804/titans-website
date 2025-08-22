@@ -19,7 +19,7 @@ export default function Page() {
     <main className="bg-black text-white min-h-screen">
       <VenomBeam>
         {/* Navbar */}
-        {/* <Navbar /> */}
+        <Navbar onRequestAccess={() => setIsModalOpen(true)} />
 
         {/* Hero with animated background */}
         <Hero />

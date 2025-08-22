@@ -2,7 +2,10 @@ import React from "react";
 
 function Pricing({ onGetStarted }) {
   return (
-    <section className="text-gray-100 py-20 relative overflow-hidden">
+    <section
+      id="pricing"
+      className="text-gray-100 py-20 relative overflow-hidden"
+    >
       {/* Background gradient for depth */}
       <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/80" />
 
