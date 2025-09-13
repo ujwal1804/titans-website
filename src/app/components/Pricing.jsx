@@ -122,7 +122,7 @@ function Pricing() {
                       <div className="bg-gradient-to-r from-cyan-400 to-blue-400 h-2 rounded-full w-1/2"></div>
                     </div>
                   </div>
- 
+
                   <a
                     href="https://user-ind.dooprimeglobal.com/signup/gegy-iwzkacjdu-A01"
                     target="_blank"
