@@ -1,6 +1,6 @@
 import React from "react";
 
-function Pricing({ onGetStarted }) {
+function Pricing() {
   return (
     <section
       id="pricing"
@@ -119,13 +119,15 @@ function Pricing({ onGetStarted }) {
                       <span className="text-white font-semibold">50%</span>
                     </div>
                     <div className="w-full bg-gray-600/30 rounded-full h-2 mt-2">
-                      <div className="bg-gradient-to-r from-cyan-400 to-blue-400 h-2 rounded-full w-4/5"></div>
+                      <div className="bg-gradient-to-r from-cyan-400 to-blue-400 h-2 rounded-full w-1/2"></div>
                     </div>
                   </div>
 
-                  <button
-                    onClick={onGetStarted}
-                    className="w-full px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] group/btn relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70"
+                  <a
+                    href="https://user-ind.dooprimeglobal.com/signup/gegy-iwzkacjdu-A01"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] group/btn relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 inline-block"
                   >
                     {/* Button glow effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-cyan-600/20 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 rounded-2xl" />
@@ -147,7 +149,7 @@ function Pricing({ onGetStarted }) {
                         />
                       </svg>
                     </span>
-                  </button>
+                  </a>
                 </div>
               </div>
 

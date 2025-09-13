@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 
-function Navbar({ onRequestAccess }) {
+function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -61,14 +61,16 @@ function Navbar({ onRequestAccess }) {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <motion.button
+            <motion.a
+              href="https://user-ind.dooprimeglobal.com/signup/gegy-iwzkacjdu-A01"
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={onRequestAccess}
-              className="px-6 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-transparent"
+              className="px-6 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-transparent inline-block"
             >
               Get Started
-            </motion.button>
+            </motion.a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -111,31 +113,49 @@ function Navbar({ onRequestAccess }) {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden bg-white/[0.05] backdrop-blur-[20px] border-t border-white/[0.1] mt-2 rounded-2xl overflow-hidden"
+              className="md:hidden bg-white/[0.05] backdrop-blur-[20px] border-t mt-2 rounded-2xl overflow-hidden"
             >
               <div className="px-4 py-4 space-y-4">
                 {navItems.map((item) => (
-                  <motion.a
+                  <motion.button
                     key={item.name}
-                    href={item.href}
                     whileHover={{ x: 4 }}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block text-gray-300 hover:text-white transition-colors duration-200 font-medium focus:outline-none focus:text-white"
+                    onClick={() => {
+                      const targetElement = document.querySelector(item.href);
+                      
+                      if (targetElement) {
+                        // Get the element's position
+                        const elementTop = targetElement.offsetTop;
+                        const navbarHeight = 80; // Approximate navbar height
+                        
+                        // Scroll to the element with offset for navbar
+                        window.scrollTo({
+                          top: elementTop - navbarHeight,
+                          behavior: 'smooth'
+                        });
+                      }
+                      
+                      // Close menu after a delay to allow scrolling to start
+                      setTimeout(() => {
+                        setIsMobileMenuOpen(false);
+                      }, 500);
+                    }}
+                    className="block w-full text-left text-gray-300 hover:text-white transition-colors duration-200 font-medium focus:outline-none focus:text-white cursor-pointer py-2"
                   >
                     {item.name}
-                  </motion.a>
+                  </motion.button>
                 ))}
-                <motion.button
+                <motion.a
+                  href="https://user-ind.dooprimeglobal.com/signup/gegy-iwzkacjdu-A01"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    onRequestAccess();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-transparent"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-transparent inline-block text-center"
                 >
                   Get Started
-                </motion.button>
+                </motion.a>
               </div>
             </motion.div>
           )}

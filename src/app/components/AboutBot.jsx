@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { CloudLightning, Cpu, TrendingUp } from "react-feather";
 import { SpotlightCard } from "@/components/ui/spotlightcard";
 
-export default function AboutBot({ onRequestAccess }) {
+export default function AboutBot() {
   const features = [
     {
       icon: <Cpu size={32} />,
@@ -55,12 +55,14 @@ export default function AboutBot({ onRequestAccess }) {
       </div>
 
       <div className="mt-8 sm:mt-10 lg:mt-12 px-4 z-50">
-        <button
-          onClick={onRequestAccess}
-          className="cursor-pointer font-bold text-base sm:text-lg lg:text-xl px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 uppercase"
+        <a
+          href="https://user-ind.dooprimeglobal.com/signup/gegy-iwzkacjdu-A01"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cursor-pointer font-bold text-base sm:text-lg lg:text-xl px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 uppercase inline-block"
         >
           <span className="relative z-10">Join the Revolution</span>
-        </button>
+        </a>
       </div>
     </section>
   );
