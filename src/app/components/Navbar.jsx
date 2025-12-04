@@ -1,10 +1,15 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,10 +21,11 @@ function Navbar() {
   }, []);
 
   const navItems = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Features", href: "#features" },
-    { name: "Pricing", href: "#pricing" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Features", href: "/features" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "Dashboard", href: "/dashboard" },
   ];
 
   return (
@@ -36,26 +42,32 @@ function Navbar() {
       <div className="w-[95vw] md:w-[85vw] mx-auto ">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center"
-          >
-            <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
-              Titans Trading
-            </h1>
-          </motion.div>
+          <Link href="/">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center cursor-pointer"
+            >
+              <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
+                Titans Trading
+              </h1>
+            </motion.div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <motion.a
-                key={item.name}
-                href={item.href}
-                whileHover={{ y: -2 }}
-                className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
-              >
-                {item.name}
-              </motion.a>
+              <Link key={item.name} href={item.href}>
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  className={`transition-colors duration-200 font-medium ${
+                    pathname === item.href
+                      ? "text-white"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  {item.name}
+                </motion.div>
+              </Link>
             ))}
           </div>
 
@@ -117,33 +129,21 @@ function Navbar() {
             >
               <div className="px-4 py-4 space-y-4">
                 {navItems.map((item) => (
-                  <motion.button
-                    key={item.name}
-                    whileHover={{ x: 4 }}
-                    onClick={() => {
-                      const targetElement = document.querySelector(item.href);
-                      
-                      if (targetElement) {
-                        // Get the element's position
-                        const elementTop = targetElement.offsetTop;
-                        const navbarHeight = 80; // Approximate navbar height
-                        
-                        // Scroll to the element with offset for navbar
-                        window.scrollTo({
-                          top: elementTop - navbarHeight,
-                          behavior: 'smooth'
-                        });
-                      }
-                      
-                      // Close menu after a delay to allow scrolling to start
-                      setTimeout(() => {
+                  <Link key={item.name} href={item.href}>
+                    <motion.button
+                      whileHover={{ x: 4 }}
+                      onClick={() => {
                         setIsMobileMenuOpen(false);
-                      }, 500);
-                    }}
-                    className="block w-full text-left text-gray-300 hover:text-white transition-colors duration-200 font-medium focus:outline-none focus:text-white cursor-pointer py-2"
-                  >
-                    {item.name}
-                  </motion.button>
+                      }}
+                      className={`block w-full text-left transition-colors duration-200 font-medium focus:outline-none cursor-pointer py-2 ${
+                        pathname === item.href
+                          ? "text-white"
+                          : "text-gray-300 hover:text-white"
+                      }`}
+                    >
+                      {item.name}
+                    </motion.button>
+                  </Link>
                 ))}
                 <motion.a
                   href="https://user-ind.dooprimeglobal.com/signup/gegy-iwzkacjdu-A01"
