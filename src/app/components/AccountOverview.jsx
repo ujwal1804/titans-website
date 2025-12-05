@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import { TrendingUp, DollarSign, Activity } from "lucide-react";
 
 export default function AccountOverview({ account }) {
@@ -45,24 +46,39 @@ export default function AccountOverview({ account }) {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
       {stats.map((stat, index) => {
         const Icon = stat.icon;
         return (
-          <div
+          <motion.div
             key={index}
-            className={`p-4 sm:p-6 rounded-lg border ${stat.bgColor} ${stat.borderColor} backdrop-blur-sm transition-all hover:scale-105`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className={`mobile-card crm-card p-4 sm:p-5 md:p-6 border ${stat.bgColor} ${stat.borderColor} interactive-element relative overflow-hidden group`}
           >
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs sm:text-sm text-neutral-400 uppercase tracking-wide">
-                {stat.label}
+            {/* Animated background gradient */}
+            <div className={`absolute inset-0 bg-gradient-to-br ${stat.bgColor} opacity-50 group-hover:opacity-100 transition-opacity duration-300`} />
+            
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <p className="text-xs sm:text-sm text-neutral-400 uppercase tracking-wide font-medium">
+                  {stat.label}
+                </p>
+                <div className={`${stat.bgColor} ${stat.color} p-2 rounded-lg`}>
+                  <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${stat.color}`} />
+                </div>
+              </div>
+              <p className={`text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold ${stat.color} leading-tight`}>
+                {stat.value}
               </p>
-              <Icon className={`w-5 h-5 ${stat.color}`} />
             </div>
-            <p className={`text-xl sm:text-2xl md:text-3xl font-bold ${stat.color}`}>
-              {stat.value}
-            </p>
-          </div>
+            
+            {/* Shine effect on hover */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+          </motion.div>
         );
       })}
     </div>

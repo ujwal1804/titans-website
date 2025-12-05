@@ -83,7 +83,7 @@ export function isAuthenticated() {
  * @param {string} session - Session token (optional, will auto-login if not provided)
  * @returns {Promise<{success: boolean, accounts?: Array, message?: string, error?: boolean}>}
  */
-export async function getMyFxBookAccounts(session) {
+export async function getMyFxBookAccounts(session, retryCount = 0) {
   try {
     // If session is provided, use it; otherwise let the API auto-login
     const url = session 
@@ -99,10 +99,23 @@ export async function getMyFxBookAccounts(session) {
     if (data.success && data.accounts) {
       return data;
     } else {
+      // If session is invalid and we haven't retried yet, clear stored session and retry without session (will auto-login)
+      if (data.message && (data.message.includes("Invalid session") || data.message.includes("Session parameter is required")) && retryCount === 0) {
+        console.log("Session invalid, clearing and retrying...");
+        clearSession();
+        // Retry without session to trigger auto-login
+        return getMyFxBookAccounts(null, 1);
+      }
       throw new Error(data.message || "Failed to retrieve accounts");
     }
   } catch (error) {
     console.error("MyFxBook get accounts error:", error);
+    // If error is about invalid session and we haven't retried, clear it and retry once
+    if (error.message && error.message.includes("Invalid session") && retryCount === 0) {
+      clearSession();
+      // Retry without session to trigger auto-login
+      return getMyFxBookAccounts(null, 1);
+    }
     return {
       success: false,
       error: true,
@@ -137,7 +150,7 @@ function getCurrentDate() {
  * @param {string} endDate - End date in YYYY-MM-DD format (optional, defaults to today)
  * @returns {Promise<{success: boolean, dataDaily?: Array, message?: string, error?: boolean}>}
  */
-export async function getMyFxBookDailyData(session, accountId = "11808068", startDate, endDate) {
+export async function getMyFxBookDailyData(session, accountId = "11808068", startDate, endDate, retryCount = 0) {
   try {
     // Use provided dates or calculate defaults (August 2025 to today)
     const start = startDate || getBotStartDate();
@@ -157,10 +170,23 @@ export async function getMyFxBookDailyData(session, accountId = "11808068", star
     if (data.success && data.dataDaily) {
       return data;
     } else {
+      // If session is invalid and we haven't retried yet, clear stored session and retry without session (will auto-login)
+      if (data.message && (data.message.includes("Invalid session") || data.message.includes("Session parameter is required")) && retryCount === 0) {
+        console.log("Session invalid, clearing and retrying...");
+        clearSession();
+        // Retry without session to trigger auto-login
+        return getMyFxBookDailyData(null, accountId, startDate, endDate, 1);
+      }
       throw new Error(data.message || "Failed to retrieve daily data");
     }
   } catch (error) {
     console.error("MyFxBook get daily data error:", error);
+    // If error is about invalid session and we haven't retried, clear it and retry once
+    if (error.message && error.message.includes("Invalid session") && retryCount === 0) {
+      clearSession();
+      // Retry without session to trigger auto-login
+      return getMyFxBookDailyData(null, accountId, startDate, endDate, 1);
+    }
     return {
       success: false,
       error: true,

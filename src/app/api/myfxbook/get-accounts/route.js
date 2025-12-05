@@ -100,6 +100,38 @@ export async function GET(request) {
         account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
       });
     } else {
+      // If session is invalid, try to auto-login and retry once
+      if (data.message && (data.message.includes("Invalid session") || data.message.includes("Session parameter is required"))) {
+        try {
+          console.log("Session invalid, attempting auto-login and retry...");
+          const newSession = await getSessionFromLogin();
+          const retryUrl = `${apiBaseUrl}/get-my-accounts.json?session=${encodeURIComponent(newSession)}`;
+          const retryResponse = await fetch(retryUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const retryData = await retryResponse.json();
+          
+          if (retryData.error === false) {
+            const targetAccountId = 11808068;
+            const filteredAccounts = (retryData.accounts || []).filter(
+              account => account.id === targetAccountId || account.accountId === targetAccountId
+            );
+            return NextResponse.json({
+              success: true,
+              error: false,
+              message: retryData.message || "Accounts retrieved successfully",
+              accounts: filteredAccounts,
+              account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
+            });
+          }
+        } catch (retryError) {
+          console.error("Error retrying with new session:", retryError);
+        }
+      }
+      
       return NextResponse.json(
         {
           success: false,
@@ -185,6 +217,38 @@ export async function POST(request) {
         account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
       });
     } else {
+      // If session is invalid, try to auto-login and retry once
+      if (data.message && (data.message.includes("Invalid session") || data.message.includes("Session parameter is required"))) {
+        try {
+          console.log("Session invalid, attempting auto-login and retry...");
+          const newSession = await getSessionFromLogin();
+          const retryUrl = `${apiBaseUrl}/get-my-accounts.json?session=${encodeURIComponent(newSession)}`;
+          const retryResponse = await fetch(retryUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const retryData = await retryResponse.json();
+          
+          if (retryData.error === false) {
+            const targetAccountId = 11808068;
+            const filteredAccounts = (retryData.accounts || []).filter(
+              account => account.id === targetAccountId || account.accountId === targetAccountId
+            );
+            return NextResponse.json({
+              success: true,
+              error: false,
+              message: retryData.message || "Accounts retrieved successfully",
+              accounts: filteredAccounts,
+              account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
+            });
+          }
+        } catch (retryError) {
+          console.error("Error retrying with new session:", retryError);
+        }
+      }
+      
       return NextResponse.json(
         {
           success: false,

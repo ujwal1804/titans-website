@@ -8,6 +8,7 @@ import PerformanceMetrics from "../components/PerformanceMetrics";
 import TradingStats from "../components/TradingStats";
 import ForecastCalculator from "../components/ForecastCalculator";
 import Navbar from "../components/Navbar";
+import MobileBottomNav from "../components/MobileBottomNav";
 
 export default function DashboardPage() {
   const { session, loading, error, login, getAccounts, getDailyData, isAuthenticated } = useMyFxBook();
@@ -80,7 +81,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-black text-white pb-20 md:pb-0">
       {/* Navbar */}
       <Navbar />
       
@@ -149,6 +150,7 @@ export default function DashboardPage() {
         )}
         </div>
       </div>
+      <MobileBottomNav />
     </main>
   );
 }

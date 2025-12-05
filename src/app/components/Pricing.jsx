@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 
 function Pricing() {
   return (
@@ -16,13 +19,13 @@ function Pricing() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/4 rounded-full blur-2xl animate-pulse delay-500" />
       </div>
 
-      <div className="w-full px-4 relative z-10">
+      <div className="mobile-app-container md:w-[85vw] max-w-7xl mx-auto relative z-10">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight bg-gradient-to-r from-white via-cyan-100 to-blue-100 bg-clip-text text-transparent mb-6">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight bg-gradient-to-r from-white via-cyan-100 to-blue-100 bg-clip-text text-transparent mb-4 sm:mb-6">
             Bot Pricing
           </h2>
-          <p className="text-lg sm:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto px-4">
             Profit-sharing made simple. Start with a minimum investment and
             withdraw profits anytime. Our bot handles everything with
             transparency and efficiency.
@@ -30,69 +33,107 @@ function Pricing() {
         </div>
 
         {/* Main Content */}
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-16">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 sm:gap-12 md:gap-16">
           {/* Left Section - Features */}
-          <div className="flex-1 max-w-lg space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] transition-all duration-300 hover:bg-white/[0.08] hover:border-white/[0.12] group">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-white text-lg font-bold">✓</span>
+          <div className="flex-1 w-full max-w-lg space-y-4 sm:space-y-6">
+            <div className="space-y-3 sm:space-y-4">
+              <motion.div
+                whileHover={{ scale: 1.02, x: 4 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
+              >
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <span className="text-white text-base sm:text-lg font-bold">✓</span>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-white mb-1">
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
                     Minimum Investment
                   </h4>
-                  <p className="text-sm text-gray-300">Start with just $500</p>
+                  <p className="text-xs sm:text-sm text-gray-300">Start with just $500</p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] transition-all duration-300 hover:bg-white/[0.08] hover:border-white/[0.12] group">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-white text-lg font-bold">✓</span>
+              <motion.div
+                whileHover={{ scale: 1.02, x: 4 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
+              >
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <span className="text-white text-base sm:text-lg font-bold">✓</span>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-white mb-1">
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
                     Flexible Withdrawals
                   </h4>
-                  <p className="text-sm text-gray-300">
+                  <p className="text-xs sm:text-sm text-gray-300">
                     Withdraw profits anytime
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] transition-all duration-300 hover:bg-white/[0.08] hover:border-white/[0.12] group">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-white text-lg font-bold">✓</span>
+              <motion.div
+                whileHover={{ scale: 1.02, x: 4 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
+              >
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <span className="text-white text-base sm:text-lg font-bold">✓</span>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-white mb-1">
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
+                    Monthly Subscription
+                  </h4>
+                  <p className="text-xs sm:text-sm text-gray-300">$50/month access fee</p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.02, x: 4 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
+              >
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <span className="text-white text-base sm:text-lg font-bold">✓</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
                     No Hidden Fees
                   </h4>
-                  <p className="text-sm text-gray-300">Complete transparency</p>
+                  <p className="text-xs sm:text-sm text-gray-300">Complete transparency</p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] transition-all duration-300 hover:bg-white/[0.08] hover:border-white/[0.12] group">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-white text-lg font-bold">✓</span>
+              <motion.div
+                whileHover={{ scale: 1.02, x: 4 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
+              >
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <span className="text-white text-base sm:text-lg font-bold">✓</span>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-white mb-1">
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
                     Real-time Performance
                   </h4>
-                  <p className="text-sm text-gray-300">
+                  <p className="text-xs sm:text-sm text-gray-300">
                     Live tracking & analytics
                   </p>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
 
           {/* Right Section - Premium Card */}
-          <div className="flex-1 max-w-md">
-            <div className="relative group">
+          <div className="flex-1 w-full max-w-md">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.02, y: -4 }}
+              className="relative group"
+            >
               {/* Main glass card */}
-              <div className="bg-white/[0.08] backdrop-blur-[40px] rounded-3xl p-8 shadow-2xl border border-white/[0.12] transition-all duration-500 hover:bg-white/[0.12] hover:border-white/[0.18] hover:shadow-[0_25px_50px_-12px_rgba(255,255,255,0.15)]">
+              <div className="mobile-card crm-card p-6 sm:p-8 shadow-2xl transition-all duration-500 hover:shadow-[0_25px_50px_-12px_rgba(255,255,255,0.15)]">
                 {/* Inner glow effect */}
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/[0.15] via-transparent to-white/[0.05] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -102,29 +143,33 @@ function Pricing() {
                     Profit Sharing Model
                   </h3>
 
-                  <div className="mb-8">
-                    <div className="text-4xl font-bold text-white mb-2">
+                  <div className="mb-6 sm:mb-8">
+                    <div className="text-3xl sm:text-4xl font-bold text-white mb-2">
                       50%
                     </div>
-                    <div className="text-sm text-gray-300">Profit Share</div>
+                    <div className="text-xs sm:text-sm text-gray-300">Profit Share</div>
                   </div>
 
-                  <div className="space-y-3 mb-8 text-left">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-300">Your Share</span>
-                      <span className="text-white font-semibold">50%</span>
+                  <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8 text-left">
+                    <div className="flex items-center justify-between py-2 border-b border-white/5">
+                      <span className="text-gray-300 text-sm sm:text-base">Monthly Subscription</span>
+                      <span className="text-white font-semibold text-sm sm:text-base">$50</span>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-300">Platform Fee</span>
-                      <span className="text-white font-semibold">50%</span>
+                    <div className="flex items-center justify-between py-2 border-b border-white/5">
+                      <span className="text-gray-300 text-sm sm:text-base">Your Share</span>
+                      <span className="text-white font-semibold text-sm sm:text-base">50%</span>
                     </div>
-                    <div className="w-full bg-gray-600/30 rounded-full h-2 mt-2">
+                    <div className="flex items-center justify-between py-2 border-b border-white/5">
+                      <span className="text-gray-300 text-sm sm:text-base">Platform Fee</span>
+                      <span className="text-white font-semibold text-sm sm:text-base">50%</span>
+                    </div>
+                    <div className="w-full bg-gray-600/30 rounded-full h-2 mt-3">
                       <div className="bg-gradient-to-r from-cyan-400 to-blue-400 h-2 rounded-full w-1/2"></div>
                     </div>
                   </div>
 
                   <a
-                    href="https://user-ind.dooprimeglobal.com/signup/gegy-iwzkacjdu-A01"
+                    href="https://my.dooprime.com/register/?lid=54744&pid=704210"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] group/btn relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 inline-block"
@@ -154,9 +199,9 @@ function Pricing() {
               </div>
 
               {/* Floating accent elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 rounded-full blur-xl animate-pulse" />
-              <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-br from-cyan-400/20 to-cyan-400/20 rounded-full blur-xl animate-pulse delay-1000" />
-            </div>
+              <div className="absolute -top-4 -right-4 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 rounded-full blur-xl animate-pulse" />
+              <div className="absolute -bottom-4 -left-4 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-cyan-400/20 to-cyan-400/20 rounded-full blur-xl animate-pulse delay-1000" />
+            </motion.div>
           </div>
         </div>
       </div>

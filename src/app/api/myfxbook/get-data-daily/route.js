@@ -115,6 +115,36 @@ export async function GET(request) {
         endDate: endDate,
       });
     } else {
+      // If session is invalid, try to auto-login and retry once
+      if (data.message && (data.message.includes("Invalid session") || data.message.includes("Session parameter is required"))) {
+        try {
+          console.log("Session invalid, attempting auto-login and retry...");
+          const newSession = await getSessionFromLogin();
+          const retryUrl = `${apiBaseUrl}/get-data-daily.json?session=${encodeURIComponent(newSession)}&id=${accountId}&start=${startDate}&end=${endDate}`;
+          const retryResponse = await fetch(retryUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const retryData = await retryResponse.json();
+          
+          if (retryData.error === false) {
+            return NextResponse.json({
+              success: true,
+              error: false,
+              message: retryData.message || "Daily data retrieved successfully",
+              dataDaily: retryData.dataDaily || [],
+              accountId: accountId,
+              startDate: startDate,
+              endDate: endDate,
+            });
+          }
+        } catch (retryError) {
+          console.error("Error retrying with new session:", retryError);
+        }
+      }
+      
       return NextResponse.json(
         {
           success: false,
@@ -202,6 +232,36 @@ export async function POST(request) {
         endDate: endDate,
       });
     } else {
+      // If session is invalid, try to auto-login and retry once
+      if (data.message && (data.message.includes("Invalid session") || data.message.includes("Session parameter is required"))) {
+        try {
+          console.log("Session invalid, attempting auto-login and retry...");
+          const newSession = await getSessionFromLogin();
+          const retryUrl = `${apiBaseUrl}/get-data-daily.json?session=${encodeURIComponent(newSession)}&id=${accountId}&start=${startDate}&end=${endDate}`;
+          const retryResponse = await fetch(retryUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const retryData = await retryResponse.json();
+          
+          if (retryData.error === false) {
+            return NextResponse.json({
+              success: true,
+              error: false,
+              message: retryData.message || "Daily data retrieved successfully",
+              dataDaily: retryData.dataDaily || [],
+              accountId: accountId,
+              startDate: startDate,
+              endDate: endDate,
+            });
+          }
+        } catch (retryError) {
+          console.error("Error retrying with new session:", retryError);
+        }
+      }
+      
       return NextResponse.json(
         {
           success: false,

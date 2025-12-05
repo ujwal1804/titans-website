@@ -37,7 +37,7 @@ export default function DailyDataChart({ dailyData, account }) {
 
   if (chartData.length === 0) {
     return (
-      <div className="p-6 bg-neutral-900/50 border border-neutral-800 rounded-lg text-center">
+      <div className="mobile-card crm-card p-6 text-center">
         <p className="text-neutral-400">No daily data available</p>
       </div>
     );
@@ -56,8 +56,15 @@ export default function DailyDataChart({ dailyData, account }) {
   const minEquityGain = Math.min(...equityGains);
   const equityGainRange = maxEquityGain - minEquityGain || 1;
 
-  const maxProfit = Math.max(...chartData.map(d => Math.abs(d.profit)));
-  const profitRange = maxProfit * 2 || 1;
+  // Chart dimensions
+  const chartWidth = Math.max(chartData.length * 8, 800); // Minimum width for visibility
+  const chartHeight = 200;
+  const paddingLeft = 80; // Space for Y-axis labels
+  const paddingRight = 20;
+  const paddingTop = 20;
+  const paddingBottom = 40; // Space for X-axis labels
+  const plotWidth = chartWidth - paddingLeft - paddingRight;
+  const plotHeight = chartHeight - paddingTop - paddingBottom;
 
   const handleChartHover = (e, index) => {
     if (e.type === 'mouseenter' || e.type === 'mousemove') {
@@ -75,16 +82,7 @@ export default function DailyDataChart({ dailyData, account }) {
   const hoveredData = hoveredIndex !== null ? chartData[hoveredIndex] : null;
 
   return (
-    <div className="p-4 sm:p-6 rounded-2xl relative overflow-hidden">
-      {/* Apple-style glassmorphism background */}
-      <div className="absolute inset-0 bg-white/5 backdrop-blur-2xl rounded-2xl"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/5 to-transparent rounded-2xl"></div>
-      <div className="absolute inset-0 border border-white/20 rounded-2xl"></div>
-      <div className="absolute inset-[1px] border border-white/10 rounded-2xl"></div>
-      
-      {/* Subtle inner glow */}
-      <div className="absolute inset-0 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] rounded-2xl pointer-events-none"></div>
-      
+    <div className="mobile-card crm-card p-4 sm:p-5 md:p-6 relative overflow-hidden">
       {/* Content */}
       <div className="relative z-10">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
@@ -135,7 +133,11 @@ export default function DailyDataChart({ dailyData, account }) {
           {/* Content */}
           <div className="relative z-10 h-full">
           
-          <svg className="w-full h-full" viewBox={`0 0 ${chartData.length * 10} 250`} preserveAspectRatio="none">
+          <svg 
+            className="w-full h-full" 
+            viewBox={`0 0 ${chartWidth} ${chartHeight}`} 
+            preserveAspectRatio="xMidYMid meet"
+          >
             <defs>
               {/* Premium gradient with better visibility */}
               <linearGradient id="equityGainGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -160,35 +162,64 @@ export default function DailyDataChart({ dailyData, account }) {
             </defs>
             
             {/* Grid background */}
-            <rect width="100%" height="100%" fill="url(#gridPattern)" opacity="0.3" />
+            <rect x={paddingLeft} y={paddingTop} width={plotWidth} height={plotHeight} fill="url(#gridPattern)" opacity="0.3" />
+            
+            {/* Grid lines */}
+            {[0, 25, 50, 75, 100].map((percent) => {
+              const y = paddingTop + plotHeight - (percent / 100) * plotHeight;
+              return (
+                <line
+                  key={`grid-${percent}`}
+                  x1={paddingLeft}
+                  y1={y}
+                  x2={paddingLeft + plotWidth}
+                  y2={y}
+                  stroke="#374151"
+                  strokeWidth="0.5"
+                  opacity="0.3"
+                />
+              );
+            })}
+            
             {/* Zero line */}
-            <line
-              x1="0"
-              y1={200 - ((0 - minEquityGain) / equityGainRange) * 200}
-              x2={chartData.length * 10}
-              y2={200 - ((0 - minEquityGain) / equityGainRange) * 200}
-              stroke="#6b7280"
-              strokeWidth="1"
-              strokeDasharray="4 4"
-            />
+            {minEquityGain <= 0 && maxEquityGain >= 0 && (
+              <line
+                x1={paddingLeft}
+                y1={paddingTop + plotHeight - ((0 - minEquityGain) / equityGainRange) * plotHeight}
+                x2={paddingLeft + plotWidth}
+                y2={paddingTop + plotHeight - ((0 - minEquityGain) / equityGainRange) * plotHeight}
+                stroke="#6b7280"
+                strokeWidth="1"
+                strokeDasharray="4 4"
+                opacity="0.5"
+              />
+            )}
+            
+            {/* Chart line */}
             <polyline
               fill="none"
               stroke="#64748b"
-              strokeWidth="2"
-              points={chartData.map((d, i) => 
-                `${i * 10},${200 - ((d.growthEquity - minEquityGain) / equityGainRange) * 200}`
-              ).join(' ')}
+              strokeWidth="2.5"
+              points={chartData.map((d, i) => {
+                const x = paddingLeft + (i / (chartData.length - 1 || 1)) * plotWidth;
+                const y = paddingTop + plotHeight - ((d.growthEquity - minEquityGain) / equityGainRange) * plotHeight;
+                return `${x},${y}`;
+              }).join(' ')}
             />
+            
+            {/* Area fill */}
             <polygon
               fill="url(#equityGainGradient)"
-              points={`0,${200 - ((0 - minEquityGain) / equityGainRange) * 200} ${chartData.map((d, i) => 
-                `${i * 10},${200 - ((d.growthEquity - minEquityGain) / equityGainRange) * 200}`
-              ).join(' ')} ${chartData.length * 10},${200 - ((0 - minEquityGain) / equityGainRange) * 200}`}
+              points={`${paddingLeft},${paddingTop + plotHeight} ${chartData.map((d, i) => {
+                const x = paddingLeft + (i / (chartData.length - 1 || 1)) * plotWidth;
+                const y = paddingTop + plotHeight - ((d.growthEquity - minEquityGain) / equityGainRange) * plotHeight;
+                return `${x},${y}`;
+              }).join(' ')} ${paddingLeft + plotWidth},${paddingTop + plotHeight}`}
             />
             {/* Interactive hover points with enhanced styling */}
             {chartData.map((d, i) => {
-              const x = i * 10;
-              const y = 250 - ((d.growthEquity - minEquityGain) / equityGainRange) * 230;
+              const x = paddingLeft + (i / (chartData.length - 1 || 1)) * plotWidth;
+              const y = paddingTop + plotHeight - ((d.growthEquity - minEquityGain) / equityGainRange) * plotHeight;
               const isHovered = hoveredIndex === i;
               return (
                 <g key={i} className="cursor-pointer">
@@ -196,9 +227,9 @@ export default function DailyDataChart({ dailyData, account }) {
                   {isHovered && (
                     <line
                       x1={x}
-                      y1="0"
+                      y1={paddingTop}
                       x2={x}
-                      y2="250"
+                      y2={paddingTop + plotHeight}
                       stroke="#3b82f6"
                       strokeWidth="2.5"
                       strokeDasharray="5 5"
@@ -246,15 +277,15 @@ export default function DailyDataChart({ dailyData, account }) {
             {/* Y-axis labels */}
             {[0, 25, 50, 75, 100].map((percent) => {
               const value = minEquityGain + (percent / 100) * equityGainRange;
-              const y = 200 - (percent / 100) * 200;
+              const y = paddingTop + plotHeight - (percent / 100) * plotHeight;
               return (
                 <text
                   key={`y-label-${percent}`}
-                  x="0"
+                  x={paddingLeft - 10}
                   y={y}
                   fill="#9ca3af"
-                  fontSize="10"
-                  textAnchor="start"
+                  fontSize="11"
+                  textAnchor="end"
                   className="select-none"
                   dy="4"
                 >
@@ -266,13 +297,14 @@ export default function DailyDataChart({ dailyData, account }) {
             {chartData.map((d, i) => {
               const showDate = i === 0 || i === chartData.length - 1 || i % Math.ceil(chartData.length / 8) === 0;
               if (!showDate) return null;
+              const x = paddingLeft + (i / (chartData.length - 1 || 1)) * plotWidth;
               return (
                 <text
                   key={`date-equity-${i}`}
-                  x={i * 10}
-                  y="195"
+                  x={x}
+                  y={paddingTop + plotHeight + 15}
                   fill="#9ca3af"
-                  fontSize="9"
+                  fontSize="10"
                   textAnchor="middle"
                   className="select-none font-medium"
                 >
@@ -333,9 +365,9 @@ export default function DailyDataChart({ dailyData, account }) {
       {/* Data Table */}
       <div className="mt-8 overflow-x-auto">
         <h3 className="text-sm font-semibold text-neutral-300 mb-4">Recent Daily Data</h3>
-        <div className="bg-neutral-800/30 rounded-lg overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-neutral-900/50">
+        <div className="mobile-card crm-card overflow-hidden">
+          <table className="w-full text-xs sm:text-sm">
+            <thead className="bg-white/5">
               <tr>
                 <th className="text-left p-3 text-neutral-400">Date</th>
                 <th className="text-right p-3 text-neutral-400">Equity Gain</th>
@@ -345,7 +377,7 @@ export default function DailyDataChart({ dailyData, account }) {
             </thead>
             <tbody>
               {chartData.slice(-10).reverse().map((day, index) => (
-                <tr key={index} className="border-t border-neutral-700/50 hover:bg-neutral-800/50">
+                <tr key={index} className="border-t border-white/10 hover:bg-white/5 transition-colors">
                   <td className="p-3 text-neutral-300">{day.date}</td>
                   <td className={`p-3 text-right font-mono font-semibold ${
                     day.growthEquity >= 0 ? "text-green-400" : "text-red-400"

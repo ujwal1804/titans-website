@@ -9,10 +9,11 @@ import LeadForm from "./components/LeadForm";
 import LiveResults from "./components/LiveResults";
 import Navbar from "./components/Navbar";
 import Pricing from "./components/Pricing";
+import MobileBottomNav from "./components/MobileBottomNav";
 
 export default function Page() {
   return (
-    <main className="bg-black text-white min-h-screen">
+    <main className="bg-black text-white min-h-screen pb-20 md:pb-0">
       <VenomBeam>
         {/* Navbar */}
         <Navbar />
@@ -30,6 +31,9 @@ export default function Page() {
 
         {/* Footer */}
         <Footer />
+        
+        {/* Mobile Bottom Navigation */}
+        <MobileBottomNav />
       </VenomBeam>
     </main>
   );

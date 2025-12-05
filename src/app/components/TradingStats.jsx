@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import { Target, ArrowUpDown, Clock, Server } from "lucide-react";
 
 export default function TradingStats({ account }) {
@@ -41,48 +42,74 @@ export default function TradingStats({ account }) {
   ];
 
   return (
-    <div className="p-4 sm:p-6 bg-neutral-900/50 border border-neutral-800 rounded-lg">
-      <h2 className="text-xl sm:text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
+    <div className="mobile-card crm-card p-4 sm:p-5 md:p-6">
+      <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
         Trading Statistics
       </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
-            <div
+            <motion.div
               key={index}
-              className="p-4 bg-neutral-800/50 border border-neutral-700 rounded-lg"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              whileHover={{ scale: 1.02, x: 4 }}
+              whileTap={{ scale: 0.98 }}
+              className="p-3 sm:p-4 mobile-card crm-card interactive-element"
             >
               <div className="flex items-center gap-3 mb-2">
-                <Icon className={`w-5 h-5 ${stat.color}`} />
-                <p className="text-sm text-neutral-400">{stat.label}</p>
+                <div className={`${stat.color} p-2 rounded-lg bg-white/5`}>
+                  <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${stat.color}`} />
+                </div>
+                <p className="text-xs sm:text-sm text-neutral-400">{stat.label}</p>
               </div>
-              <p className={`text-lg sm:text-xl font-bold ${stat.color}`}>
+              <p className={`text-base sm:text-lg md:text-xl font-bold ${stat.color}`}>
                 {stat.value}
               </p>
-            </div>
+            </motion.div>
           );
         })}
 
         {account.server && (
-          <div className="p-4 bg-neutral-800/50 border border-neutral-700 rounded-lg mt-4">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02, x: 4 }}
+            whileTap={{ scale: 0.98 }}
+            className="p-3 sm:p-4 mobile-card crm-card interactive-element mt-4"
+          >
             <div className="flex items-center gap-3 mb-2">
-              <Server className="w-5 h-5 text-neutral-400" />
-              <p className="text-sm text-neutral-400">Trading Server</p>
+              <div className="text-neutral-400 p-2 rounded-lg bg-white/5">
+                <Server className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-400" />
+              </div>
+              <p className="text-xs sm:text-sm text-neutral-400">Trading Server</p>
             </div>
-            <p className="text-lg font-semibold text-white">{account.server.name}</p>
-          </div>
+            <p className="text-sm sm:text-base font-semibold text-white">{account.server.name}</p>
+          </motion.div>
         )}
 
         {account.lastUpdateDate && (
-          <div className="p-4 bg-neutral-800/50 border border-neutral-700 rounded-lg">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02, x: 4 }}
+            whileTap={{ scale: 0.98 }}
+            className="p-3 sm:p-4 mobile-card crm-card interactive-element"
+          >
             <div className="flex items-center gap-3 mb-2">
-              <Clock className="w-5 h-5 text-neutral-400" />
-              <p className="text-sm text-neutral-400">Last Update</p>
+              <div className="text-neutral-400 p-2 rounded-lg bg-white/5">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-400" />
+              </div>
+              <p className="text-xs sm:text-sm text-neutral-400">Last Update</p>
             </div>
-            <p className="text-sm font-semibold text-white">{account.lastUpdateDate}</p>
-          </div>
+            <p className="text-xs sm:text-sm font-semibold text-white">{account.lastUpdateDate}</p>
+          </motion.div>
         )}
       </div>
     </div>

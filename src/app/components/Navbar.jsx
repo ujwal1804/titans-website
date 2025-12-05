@@ -9,16 +9,32 @@ import { usePathname } from "next/navigation";
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 20);
+      
+      // Mobile: Hide navbar on scroll down, show on scroll up
+      if (window.innerWidth < 768) {
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setIsVisible(false);
+        } else {
+          setIsVisible(true);
+        }
+      } else {
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -31,8 +47,8 @@ function Navbar() {
   return (
     <motion.nav
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      animate={{ y: isVisible ? 0 : -100 }}
+      transition={{ duration: 0.3 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-white/[0.08] backdrop-blur-[20px] border-b border-white/[0.1]"
@@ -74,7 +90,7 @@ function Navbar() {
           {/* CTA Button */}
           <div className="hidden md:block">
             <motion.a
-              href="https://user-ind.dooprimeglobal.com/signup/gegy-iwzkacjdu-A01"
+              href="https://my.dooprime.com/register/?lid=54744&pid=704210"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
@@ -146,7 +162,7 @@ function Navbar() {
                   </Link>
                 ))}
                 <motion.a
-                  href="https://user-ind.dooprimeglobal.com/signup/gegy-iwzkacjdu-A01"
+                  href="https://my.dooprime.com/register/?lid=54744&pid=704210"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.02 }}

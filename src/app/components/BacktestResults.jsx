@@ -6,8 +6,18 @@ import StatsCount from "@/components/ui/statscount";
 import { useMyFxBook } from "@/hooks/useMyFxBook";
 
 export default function BacktestResults() {
-  const { getAccounts, isAuthenticated } = useMyFxBook();
+  const { getAccounts, isAuthenticated, login } = useMyFxBook();
   const [account, setAccount] = useState(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      if (!isAuthenticated) {
+        // Auto-login if not authenticated
+        await login();
+      }
+    };
+    loadData();
+  }, [isAuthenticated, login]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -54,10 +64,10 @@ export default function BacktestResults() {
   return (
     <section
       id="backtest"
-      className="flex flex-col w-full py-16 sm:py-20 md:py-24 lg:py-32"
+      className="flex flex-col w-full py-8 sm:py-12 md:py-16 lg:py-20"
     >
       {/* Section Heading */}
-      <h2 className="bg-clip-text text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 md:mb-20 lg:mb-24">
+      <h2 className="bg-clip-text text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight px-4 sm:px-6 lg:px-8 mb-6 sm:mb-8 md:mb-12 lg:mb-16">
         Backtest Results
       </h2>
 
@@ -66,7 +76,7 @@ export default function BacktestResults() {
         stats={stats}
         title=""
         showDividers={true}
-        className="w-[95vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw] xl:w-[75vw] mx-auto text-center px-4 sm:px-6 lg:px-8"
+        className="mobile-app-container md:w-[85vw] mx-auto text-center"
       />
 
       {/* Optional Description */}

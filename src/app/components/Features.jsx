@@ -6,7 +6,7 @@ function Features() {
   const itemsSample = [
     {
       title: "Autonomous Trading",
-      meta: "24/7 Live",
+      meta: "24/5 Live",
       description:
         "Executes trades automatically with advanced algorithms and risk management strategies.",
       icon: <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />,
@@ -46,9 +46,9 @@ function Features() {
   ];
 
   return (
-    <section id="features" className="mt-20 text-white">
-      <div className="w-[95vw] md:w-[85vw] mx-auto">
-        <h2 className="bg-clip-text mb-8 sm:mb-10 lg:mb-12 flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl z-20 font-bold tracking-tight leading-tight">
+    <section id="features" className="py-8 sm:py-12 md:py-16 lg:py-20 text-white">
+      <div className="mobile-app-container md:w-[85vw] mx-auto">
+        <h2 className="bg-clip-text mb-6 sm:mb-8 md:mb-10 lg:mb-12 flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl z-20 font-bold tracking-tight leading-tight px-4">
           Bot Features
         </h2>
 

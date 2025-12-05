@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import { Calendar, TrendingUp, BarChart3 } from "lucide-react";
 
 export default function PerformanceMetrics({ account, dailyData }) {
@@ -77,64 +78,82 @@ export default function PerformanceMetrics({ account, dailyData }) {
   ];
 
   return (
-    <div className="p-4 sm:p-6 bg-neutral-900/50 border border-neutral-800 rounded-lg">
-      <h2 className="text-xl sm:text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
+    <div className="mobile-card crm-card p-4 sm:p-5 md:p-6">
+      <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
         Performance Metrics
       </h2>
 
-      <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-6">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6">
         {performanceData.map((item, index) => {
           const Icon = item.icon;
           return (
-            <div
+            <motion.div
               key={index}
-              className="p-4 bg-neutral-800/50 border border-neutral-700 rounded-lg"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-3 sm:p-4 mobile-card crm-card interactive-element"
             >
               <div className="flex items-center gap-2 mb-2">
                 <Icon className="w-4 h-4 text-neutral-400" />
                 <p className="text-xs sm:text-sm text-neutral-400">{item.label}</p>
               </div>
               <p
-                className={`text-lg sm:text-xl font-bold ${
+                className={`text-base sm:text-lg md:text-xl font-bold ${
                   item.trend === "up" ? "text-green-400" : "text-red-400"
                 }`}
               >
                 {item.value}
               </p>
-            </div>
+            </motion.div>
           );
         })}
       </div>
 
       {metrics.totalDays > 0 && (
-        <div className="pt-6 border-t border-neutral-700">
-          <h3 className="text-sm font-semibold text-neutral-300 mb-4">Daily Performance</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-3 bg-neutral-800/30 rounded-lg">
+        <div className="pt-4 sm:pt-6 border-t border-white/10">
+          <h3 className="text-sm sm:text-base font-semibold text-neutral-300 mb-3 sm:mb-4">Daily Performance</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="p-3 sm:p-4 mobile-card crm-card interactive-element"
+            >
               <p className="text-xs text-neutral-400 mb-1">Average Daily Profit</p>
-              <p className={`text-sm font-semibold ${
+              <p className={`text-sm sm:text-base font-semibold ${
                 metrics.avgDailyProfit >= 0 ? "text-green-400" : "text-red-400"
               }`}>
                 {account.currency} {formatCurrency(metrics.avgDailyProfit)}
               </p>
-            </div>
+            </motion.div>
             {metrics.bestDay && (
-              <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="p-3 sm:p-4 mobile-card crm-card border-green-500/30 bg-green-500/10 interactive-element"
+              >
                 <p className="text-xs text-green-400 mb-1">Best Day</p>
-                <p className="text-sm font-semibold text-green-400">
+                <p className="text-sm sm:text-base font-semibold text-green-400">
                   {account.currency} {formatCurrency(metrics.bestDay.profit)}
                 </p>
                 <p className="text-xs text-neutral-500 mt-1">{metrics.bestDay.date}</p>
-              </div>
+              </motion.div>
             )}
             {metrics.worstDay && (
-              <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="p-3 sm:p-4 mobile-card crm-card border-red-500/30 bg-red-500/10 interactive-element"
+              >
                 <p className="text-xs text-red-400 mb-1">Worst Day</p>
-                <p className="text-sm font-semibold text-red-400">
+                <p className="text-sm sm:text-base font-semibold text-red-400">
                   {account.currency} {formatCurrency(metrics.worstDay.profit)}
                 </p>
                 <p className="text-xs text-neutral-500 mt-1">{metrics.worstDay.date}</p>
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
