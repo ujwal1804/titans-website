@@ -74,12 +74,28 @@ export default function AboutBot() {
       className="py-8 sm:py-12 md:py-16 lg:py-20 z-50 flex flex-col justify-center items-center"
     >
       {/* Section Heading */}
-      <h2 className="bg-clip-text mb-6 sm:mb-8 md:mb-10 lg:mb-12 flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl z-20 font-bold tracking-tight leading-tight px-4">
-        Revolutionary Trading Technology
-      </h2>
+      <div className="text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center justify-center mb-4"
+        >
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full blur-xl opacity-50 animate-pulse" />
+            <div className="relative p-4 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-400/30">
+              <Cpu className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400" />
+            </div>
+          </div>
+        </motion.div>
+        <h2 className="bg-clip-text text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl z-20 font-bold tracking-tight leading-tight px-4">
+          Revolutionary Trading Technology
+        </h2>
+      </div>
 
       {/* Features Grid - Mobile App Style */}
-      <div className="mobile-app-container md:w-[85vw] mx-auto">
+      <div className="w-[95vw] md:w-[85vw] mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
           {features.map((feature, idx) => (
             <SpotlightCard key={idx} className="" spotlightColor="34, 211, 238">

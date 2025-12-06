@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useGetStarted } from "@/contexts/GetStartedContext";
+import { DollarSign, Wallet, CreditCard, TrendingUp, Shield, Clock, CheckCircle2, Zap } from "lucide-react";
 
 function Pricing() {
   const { openModal } = useGetStarted();
@@ -22,10 +23,24 @@ function Pricing() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/4 rounded-full blur-2xl animate-pulse delay-500" />
       </div>
 
-      <div className="mobile-app-container md:w-[85vw] max-w-7xl mx-auto relative z-10">
+      <div className="w-[95vw] md:w-[85vw] mx-auto px-4 sm:px-6 relative z-10">
         {/* Header Section */}
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight bg-gradient-to-r from-white via-cyan-100 to-blue-100 bg-clip-text text-transparent mb-4 sm:mb-6">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center justify-center mb-4"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full blur-xl opacity-50 animate-pulse" />
+              <div className="relative p-4 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-400/30">
+                <DollarSign className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-400" />
+              </div>
+            </div>
+          </motion.div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight bg-gradient-to-r from-white via-cyan-100 to-blue-100 bg-clip-text text-transparent mb-4 sm:mb-6">
             Bot Pricing
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto px-4">
@@ -45,8 +60,8 @@ function Pricing() {
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                  <span className="text-white text-base sm:text-lg font-bold">✓</span>
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
@@ -62,7 +77,7 @@ function Pricing() {
                 className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
               >
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                  <span className="text-white text-base sm:text-lg font-bold">✓</span>
+                  <Wallet className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
@@ -79,8 +94,8 @@ function Pricing() {
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                  <span className="text-white text-base sm:text-lg font-bold">✓</span>
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
@@ -95,8 +110,8 @@ function Pricing() {
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                  <span className="text-white text-base sm:text-lg font-bold">✓</span>
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                  <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
@@ -112,7 +127,7 @@ function Pricing() {
                 className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
               >
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
-                  <span className="text-white text-base sm:text-lg font-bold">✓</span>
+                  <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
@@ -155,15 +170,24 @@ function Pricing() {
 
                   <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8 text-left">
                     <div className="flex items-center justify-between py-2 border-b border-white/5">
-                      <span className="text-gray-300 text-sm sm:text-base">Monthly Subscription</span>
+                      <div className="flex items-center gap-2">
+                        <CreditCard className="w-4 h-4 text-cyan-400" />
+                        <span className="text-gray-300 text-sm sm:text-base">Monthly Subscription</span>
+                      </div>
                       <span className="text-white font-semibold text-sm sm:text-base">$50</span>
                     </div>
                     <div className="flex items-center justify-between py-2 border-b border-white/5">
-                      <span className="text-gray-300 text-sm sm:text-base">Your Share</span>
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="w-4 h-4 text-emerald-400" />
+                        <span className="text-gray-300 text-sm sm:text-base">Your Share</span>
+                      </div>
                       <span className="text-white font-semibold text-sm sm:text-base">50%</span>
                     </div>
                     <div className="flex items-center justify-between py-2 border-b border-white/5">
-                      <span className="text-gray-300 text-sm sm:text-base">Platform Fee</span>
+                      <div className="flex items-center gap-2">
+                        <Zap className="w-4 h-4 text-blue-400" />
+                        <span className="text-gray-300 text-sm sm:text-base">Platform Fee</span>
+                      </div>
                       <span className="text-white font-semibold text-sm sm:text-base">50%</span>
                     </div>
                     <div className="w-full bg-gray-600/30 rounded-full h-2 mt-3">

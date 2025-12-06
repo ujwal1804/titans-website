@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Target, Users, Shield, TrendingUp, Clock, DollarSign, CheckCircle2, Headphones } from "lucide-react";
 import { useMyFxBook } from "@/hooks/useMyFxBook";
 
 export default function Mission() {
@@ -53,81 +54,245 @@ export default function Mission() {
         {
           value: getMonthsTrading(),
           label: "Months Trading",
-          color: "text-cyan-400",
+          icon: Clock,
+          color: "from-cyan-400 to-cyan-600",
+          bgColor: "from-cyan-500/20 to-cyan-600/10",
+          borderColor: "border-cyan-400/30",
         },
         {
-          value: `${account.currency} ${formatCurrency(account.profit)}`,
+          value: formatCurrency(account.profit),
+          suffix: ` ${account.currency}`,
           label: "Total Profit",
-          color: "text-blue-400",
+          icon: DollarSign,
+          color: "from-emerald-400 to-emerald-600",
+          bgColor: "from-emerald-500/20 to-emerald-600/10",
+          borderColor: "border-emerald-400/30",
         },
         {
-          value: `${parseFloat(account.gain || 0).toFixed(1)}%`,
+          value: parseFloat(account.gain || 0).toFixed(1),
+          suffix: "%",
           label: "Total Gain",
-          color: "text-purple-400",
+          icon: TrendingUp,
+          color: "from-blue-400 to-blue-600",
+          bgColor: "from-blue-500/20 to-blue-600/10",
+          borderColor: "border-blue-400/30",
         },
         {
           value: "24/7",
           label: "Support",
-          color: "text-emerald-400",
+          icon: Headphones,
+          color: "from-purple-400 to-purple-600",
+          bgColor: "from-purple-500/20 to-purple-600/10",
+          borderColor: "border-purple-400/30",
         },
       ]
     : [
-        { value: "4+", label: "Years R&D", color: "text-cyan-400" },
-        { value: "$50M+", label: "Volume Traded", color: "text-blue-400" },
-        { value: "99.9%", label: "Uptime", color: "text-purple-400" },
-        { value: "24/7", label: "Support", color: "text-emerald-400" },
+        {
+          value: "4+",
+          label: "Years R&D",
+          icon: Clock,
+          color: "from-cyan-400 to-cyan-600",
+          bgColor: "from-cyan-500/20 to-cyan-600/10",
+          borderColor: "border-cyan-400/30",
+        },
+        {
+          value: "$50M+",
+          label: "Volume Traded",
+          icon: DollarSign,
+          color: "from-emerald-400 to-emerald-600",
+          bgColor: "from-emerald-500/20 to-emerald-600/10",
+          borderColor: "border-emerald-400/30",
+        },
+        {
+          value: "99.9%",
+          label: "Uptime",
+          icon: CheckCircle2,
+          color: "from-blue-400 to-blue-600",
+          bgColor: "from-blue-500/20 to-blue-600/10",
+          borderColor: "border-blue-400/30",
+        },
+        {
+          value: "24/7",
+          label: "Support",
+          icon: Headphones,
+          color: "from-purple-400 to-purple-600",
+          bgColor: "from-purple-500/20 to-purple-600/10",
+          borderColor: "border-purple-400/30",
+        },
       ];
 
+  const missionPoints = [
+    {
+      icon: Target,
+      title: "Democratize Trading",
+      description: "Make institutional-grade trading technology accessible to everyone, not just hedge funds and Wall Street elites.",
+      color: "from-cyan-400 to-cyan-600",
+    },
+    {
+      icon: Users,
+      title: "Expert Team",
+      description: "Our mathematicians, data scientists, and financial analysts have spent years perfecting our algorithms.",
+      color: "from-blue-400 to-blue-600",
+    },
+    {
+      icon: Shield,
+      title: "Transparency & Security",
+      description: "We value transparency, security, and performance above all else. Your success is our success.",
+      color: "from-emerald-400 to-emerald-600",
+    },
+  ];
+
   return (
-    <section className="py-12 sm:py-16 md:py-20 relative">
-      <div className="mobile-app-container md:w-[85vw] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
-          {/* Text Content */}
+    <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl animate-pulse delay-1000" />
+      </div>
+
+      <div className="w-[95vw] md:w-[85vw] mx-auto px-4 sm:px-6 relative z-10">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12 sm:mb-16 md:mb-20"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-cyan-300 bg-clip-text text-transparent mb-4 tracking-tight">
+            Our Mission
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg text-neutral-400 max-w-2xl mx-auto">
+            Empowering traders with cutting-edge technology and unwavering commitment to your success
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-start">
+          {/* Mission Points */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            className="space-y-6 sm:space-y-8"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-400 mb-6">
-              Our Mission
-            </h2>
-            <div className="space-y-6 text-neutral-300 text-lg leading-relaxed">
-              <p>
-                At Titans Trading, we are driven by a singular vision: to democratize access to institutional-grade trading technology. We believe that sophisticated algorithmic trading shouldn't be reserved for hedge funds and Wall Street elites.
-              </p>
-              <p>
-                Our team of expert mathematicians, data scientists, and financial analysts have spent years perfecting our algorithms. We combine cutting-edge machine learning with time-tested trading strategies to deliver consistent, reliable results.
-              </p>
-              <p>
-                We value transparency, security, and performance above all else. Our profit-sharing model ensures that our interests are perfectly aligned with yours – we only succeed when you succeed.
-              </p>
-            </div>
+            {missionPoints.map((point, index) => {
+              const Icon = point.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 hover:border-cyan-400/30 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-1"
+                >
+                  {/* Glow effect */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${point.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300 blur-xl`} />
+                  
+                  <div className="relative z-10 flex items-start gap-4 sm:gap-5">
+                    {/* Icon */}
+                    <div className={`flex-shrink-0 p-3 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-400/20 group-hover:scale-110 transition-transform duration-300`}>
+                      <Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${
+                        index === 0 ? 'text-cyan-400' : 
+                        index === 1 ? 'text-blue-400' : 
+                        'text-emerald-400'
+                      }`} />
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="flex-1">
+                      <h3 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">
+                        {point.title}
+                      </h3>
+                      <p className="text-sm sm:text-base text-neutral-300 leading-relaxed">
+                        {point.description}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
-          {/* Visual/Stats */}
+          {/* Stats Grid */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 blur-3xl rounded-full" />
-            <div className="relative mobile-card crm-card p-6 sm:p-7 md:p-8 grid grid-cols-2 gap-6 sm:gap-7 md:gap-8">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className={`${stat.color} text-4xl font-bold mb-2`}>
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-neutral-400 uppercase tracking-wider">
-                    {stat.label}
-                  </div>
+            {/* Background glow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 blur-3xl rounded-3xl" />
+            
+            {/* Stats Card */}
+            <div className="relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 overflow-hidden">
+              {/* Pattern overlay */}
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_50%,rgba(6,182,212,0.03)_50%)] bg-[length:4px_4px] opacity-30" />
+              
+              <div className="relative z-10">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8 text-center">
+                  Our Track Record
+                </h3>
+                <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                  {stats.map((stat, index) => {
+                    const Icon = stat.icon;
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        className={`group text-center p-4 sm:p-5 rounded-xl bg-gradient-to-br ${stat.bgColor} border ${stat.borderColor} hover:border-opacity-50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10`}
+                      >
+                        {/* Icon */}
+                        <div className={`inline-flex p-2 rounded-lg bg-gradient-to-br ${stat.bgColor} border ${stat.borderColor} mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                          <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${
+                            index === 0 ? 'text-cyan-400' : 
+                            index === 1 ? 'text-emerald-400' : 
+                            index === 2 ? 'text-blue-400' : 
+                            'text-purple-400'
+                          }`} />
+                        </div>
+                        
+                        {/* Value */}
+                        <div className={`text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-br ${stat.color} bg-clip-text text-transparent mb-1`}>
+                          {stat.value}
+                          {stat.suffix && <span className="text-xl sm:text-2xl md:text-3xl">{stat.suffix}</span>}
+                        </div>
+                        
+                        {/* Label */}
+                        <div className="text-xs sm:text-sm text-neutral-400 font-medium uppercase tracking-wider">
+                          {stat.label}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
-              ))}
+              </div>
             </div>
           </motion.div>
         </div>
+
+        {/* Bottom CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-12 sm:mt-16 md:mt-20 text-center"
+        >
+          <div className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl border border-cyan-400/20 rounded-2xl p-6 sm:p-8 md:p-10 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_50%,rgba(6,182,212,0.03)_50%)] bg-[length:4px_4px] opacity-30" />
+            <div className="relative z-10">
+              <p className="text-base sm:text-lg md:text-xl text-neutral-200 leading-relaxed max-w-3xl mx-auto">
+                We combine cutting-edge machine learning with time-tested trading strategies to deliver consistent, reliable results. Our profit-sharing model ensures that our interests are perfectly aligned with yours – <span className="text-cyan-300 font-semibold">we only succeed when you succeed.</span>
+              </p>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

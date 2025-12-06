@@ -41,10 +41,10 @@ export default function SplineSceneBasic() {
 
   return (
     <section id="home" className="pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-12 relative">
-      <Card className="mobile-app-container md:w-[85vw] h-[70vh] sm:h-[75vh] md:h-[80vh] mx-auto overflow-hidden flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 rounded-2xl sm:rounded-3xl shadow-2xl mobile-card">
+      <Card className="w-[95vw] md:w-[85vw] h-[70vh] sm:h-[75vh] md:h-[80vh] mx-auto px-4 sm:px-6 overflow-hidden flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 rounded-2xl sm:rounded-3xl shadow-2xl mobile-card">
       {/* Left content */}
       <div className="hidden lg:flex flex-1 flex-col justify-center z-10 py-4 sm:py-6 md:py-8 lg:py-10 order-2 lg:order-1 px-4 sm:px-6">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 leading-tight tracking-tight text-center lg:text-left">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 leading-tight tracking-tight text-center lg:text-left">
           Futuristic Trading
         </h1>
         <p className="mt-3 sm:mt-4 md:mt-5 text-sm sm:text-base md:text-lg lg:text-xl text-neutral-300 max-w-full text-center lg:text-left mx-auto lg:mx-0 leading-relaxed">

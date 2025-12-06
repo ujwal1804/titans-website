@@ -96,7 +96,7 @@ function LiveResults() {
       </p>
 
       {/* Results Grid - Mobile App Style */}
-      <div className="mobile-app-container md:w-[85vw] mx-auto">
+      <div className="w-[95vw] md:w-[85vw] mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {results.map((item, index) => (
             <motion.div

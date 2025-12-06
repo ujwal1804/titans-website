@@ -97,7 +97,7 @@ export default function StatsSection() {
 
   return (
     <section className="py-8 sm:py-12 md:py-20 relative overflow-hidden">
-      <div className="mobile-app-container md:w-[85vw] mx-auto">
+      <div className="w-[95vw] md:w-[85vw] mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {stats.map((stat, index) => (
             <motion.div

@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Home, BarChart3, Settings, User, TrendingUp } from "lucide-react";
+import { Home, BarChart3, Sparkles, Info, DollarSign } from "lucide-react";
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
@@ -12,9 +12,9 @@ export default function MobileBottomNav() {
   const navItems = [
     { name: "Home", href: "/", icon: Home },
     { name: "Dashboard", href: "/dashboard", icon: BarChart3 },
-    { name: "Features", href: "/features", icon: TrendingUp },
-    { name: "About", href: "/about", icon: User },
-    { name: "Pricing", href: "/pricing", icon: Settings },
+    { name: "Features", href: "/features", icon: Sparkles },
+    { name: "About", href: "/about", icon: Info },
+    { name: "Pricing", href: "/pricing", icon: DollarSign },
   ];
 
   return (
