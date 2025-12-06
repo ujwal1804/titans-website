@@ -2,8 +2,11 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useGetStarted } from "@/contexts/GetStartedContext";
 
 function Pricing() {
+  const { openModal } = useGetStarted();
+  
   return (
     <section
       id="pricing"
@@ -168,10 +171,8 @@ function Pricing() {
                     </div>
                   </div>
 
-                  <a
-                    href="https://my.dooprime.com/register/?lid=54744&pid=704210"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={openModal}
                     className="w-full px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-2xl font-semibold tracking-wide shadow-lg hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] group/btn relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 inline-block"
                   >
                     {/* Button glow effect */}
@@ -194,7 +195,7 @@ function Pricing() {
                         />
                       </svg>
                     </span>
-                  </a>
+                  </button>
                 </div>
               </div>
 

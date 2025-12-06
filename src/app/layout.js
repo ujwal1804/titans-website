@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from 'next/font/local';
+import { GetStartedProvider } from "@/contexts/GetStartedContext";
 
 const trenchThin = localFont({
   src: "./fonts/TrenchThin.otf",
@@ -34,7 +35,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${aquire.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <GetStartedProvider>
+          {children}
+        </GetStartedProvider>
       </body>
     </html>
   );

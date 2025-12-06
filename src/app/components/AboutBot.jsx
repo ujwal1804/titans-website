@@ -5,9 +5,11 @@ import { motion } from "framer-motion";
 import { CloudLightning, Cpu, TrendingUp } from "react-feather";
 import { SpotlightCard } from "@/components/ui/spotlightcard";
 import { useMyFxBook } from "@/hooks/useMyFxBook";
+import { useGetStarted } from "@/contexts/GetStartedContext";
 
 export default function AboutBot() {
   const { getAccounts, isAuthenticated, login } = useMyFxBook();
+  const { openModal } = useGetStarted();
   const [account, setAccount] = useState(null);
 
   useEffect(() => {
@@ -98,14 +100,12 @@ export default function AboutBot() {
       </div>
 
       <div className="mt-8 sm:mt-10 lg:mt-12 px-4 z-50">
-        <a
-          href="https://my.dooprime.com/register/?lid=54744&pid=704210"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={openModal}
           className="cursor-pointer font-bold text-base sm:text-lg lg:text-xl px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-xl hover:shadow-cyan-500/25 transition-all duration-300 active:scale-[0.98] relative overflow-hidden hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 uppercase inline-block"
         >
           <span className="relative z-10">Join the Revolution</span>
-        </a>
+        </button>
       </div>
     </section>
   );

@@ -88,6 +88,34 @@ If your environment variables aren't loading:
 3. Check that there are no spaces around the `=` sign
 4. Make sure there are no quotes around the values (unless the value itself contains spaces)
 
+## Cloudinary Configuration
+
+For payment screenshot uploads, you need to configure Cloudinary:
+
+1. Sign up at [Cloudinary](https://cloudinary.com/)
+2. Get your credentials from the Dashboard
+3. Add to `.env.local`:
+
+```env
+# Cloudinary Configuration
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+```
+
+See `CLOUDINARY_SETUP.md` for detailed setup instructions.
+
+## Google Sheets Configuration
+
+For storing form submissions:
+
+```env
+# Google Sheets (via Apps Script)
+GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
+```
+
+See `GOOGLE_SHEETS_SETUP.md` for detailed setup instructions.
+
 ## Example `.env.local` File
 
 ```env
@@ -95,6 +123,18 @@ If your environment variables aren't loading:
 MYFXBOOK_API_URL=https://www.myfxbook.com/api
 MYFXBOOK_EMAIL=ujwal.raina.ur@gmail.com
 MYFXBOOK_PASSWORD=!000crORE\$tu
+
+# Cloudinary Configuration
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+
+# Google Sheets (via Apps Script)
+GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
+
+# Gmail Configuration (for email notifications)
+GMAIL_USER=your-email@gmail.com
+GMAIL_APP_PASSWORD=your-app-password
 ```
 
 ### Handling Special Characters in Passwords

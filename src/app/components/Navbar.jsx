@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useGetStarted } from "@/contexts/GetStartedContext";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,6 +13,7 @@ function Navbar() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const pathname = usePathname();
+  const { openModal } = useGetStarted();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -89,16 +91,14 @@ function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <motion.a
-              href="https://my.dooprime.com/register/?lid=54744&pid=704210"
-              target="_blank"
-              rel="noopener noreferrer"
+            <motion.button
+              onClick={openModal}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-6 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-transparent inline-block"
             >
               Get Started
-            </motion.a>
+            </motion.button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -161,17 +161,17 @@ function Navbar() {
                     </motion.button>
                   </Link>
                 ))}
-                <motion.a
-                  href="https://my.dooprime.com/register/?lid=54744&pid=704210"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <motion.button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    openModal();
+                  }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => setIsMobileMenuOpen(false)}
                   className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm border border-cyan-400/50 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/70 font-medium focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-2 focus:ring-offset-transparent inline-block text-center"
                 >
                   Get Started
-                </motion.a>
+                </motion.button>
               </div>
             </motion.div>
           )}
