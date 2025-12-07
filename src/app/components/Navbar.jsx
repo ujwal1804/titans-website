@@ -66,7 +66,7 @@ function Navbar() {
               className="flex items-center cursor-pointer"
             >
               <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
-                Titans Trading
+                 Trading Titans
               </h1>
             </motion.div>
           </Link>
