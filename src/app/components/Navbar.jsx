@@ -60,7 +60,7 @@ function Navbar() {
       <div className="w-[95vw] md:w-[85vw] mx-auto ">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <Link href="/">
+          <Link href="/" prefetch={true}>
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex items-center cursor-pointer"
@@ -74,7 +74,7 @@ function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <Link key={item.name} href={item.href}>
+              <Link key={item.name} href={item.href} prefetch={true}>
                 <motion.div
                   whileHover={{ y: -2 }}
                   className={`transition-colors duration-200 font-medium ${
@@ -145,7 +145,7 @@ function Navbar() {
             >
               <div className="px-4 py-4 space-y-4">
                 {navItems.map((item) => (
-                  <Link key={item.name} href={item.href}>
+                  <Link key={item.name} href={item.href} prefetch={true}>
                     <motion.button
                       whileHover={{ x: 4 }}
                       onClick={() => {

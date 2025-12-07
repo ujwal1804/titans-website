@@ -67,7 +67,7 @@ function Pricing() {
                   <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
                     Minimum Investment
                   </h4>
-                  <p className="text-xs sm:text-sm text-gray-300">Start with just $500</p>
+                  <p className="text-xs sm:text-sm text-gray-300">Start with just $600</p>
                 </div>
               </motion.div>
 
@@ -92,16 +92,17 @@ function Pricing() {
               <motion.div
                 whileHover={{ scale: 1.02, x: 4 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group"
+                onClick={openModal}
+                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mobile-card crm-card interactive-element group cursor-pointer"
               >
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                   <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold text-white mb-1 text-sm sm:text-base">
-                    Monthly Subscription
+                    Lifetime Access
                   </h4>
-                  <p className="text-xs sm:text-sm text-gray-300">$50/month access fee</p>
+                  <p className="text-xs sm:text-sm text-gray-300">$50 one-time fee</p>
                 </div>
               </motion.div>
 
@@ -172,7 +173,7 @@ function Pricing() {
                     <div className="flex items-center justify-between py-2 border-b border-white/5">
                       <div className="flex items-center gap-2">
                         <CreditCard className="w-4 h-4 text-cyan-400" />
-                        <span className="text-gray-300 text-sm sm:text-base">Monthly Subscription</span>
+                        <span className="text-gray-300 text-sm sm:text-base">Lifetime Access</span>
                       </div>
                       <span className="text-white font-semibold text-sm sm:text-base">$50</span>
                     </div>

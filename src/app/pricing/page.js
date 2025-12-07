@@ -11,18 +11,41 @@ import MobileBottomNav from "../components/MobileBottomNav";
 
 export default function PricingPage() {
   return (
-    <main className="bg-black text-white min-h-screen pb-20 md:pb-0">
-      <Navbar />
-      <PageHero 
-        title="Transparent Pricing" 
-        subtitle="No hidden fees. No subscriptions. We only make money when you make money."
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Offer",
+            "name": "Titans Trading Bot - Lifetime Access",
+            "description": "Lifetime access to automated trading bot with profit-sharing model",
+            "price": "50",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com"}/pricing`,
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "50",
+              "priceCurrency": "USD",
+              "valueAddedTaxIncluded": false
+            }
+          })
+        }}
       />
+      <main className="bg-black text-white min-h-screen pb-20 md:pb-0">
+        <Navbar />
+        <PageHero 
+          title="Transparent Pricing" 
+          subtitle="No hidden fees. No subscriptions. We only make money when you make money."
+        />
       <StatsSection />
       <Pricing />
       <WhyChooseUs />
       <FAQ />
       <Footer />
       <MobileBottomNav />
-    </main>
+      </main>
+    </>
   );
 }

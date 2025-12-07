@@ -12,12 +12,25 @@ import MobileBottomNav from "../components/MobileBottomNav";
 
 export default function AboutPage() {
   return (
-    <main className="bg-black text-white min-h-screen pb-20 md:pb-0">
-      <Navbar />
-      <PageHero 
-        title="About Titans" 
-        subtitle="Pioneering the future of algorithmic trading with precision, transparency, and performance."
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "About Titans Trading",
+            "description": "Pioneering the future of algorithmic trading with precision, transparency, and performance.",
+            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com"}/about`,
+          })
+        }}
       />
+      <main className="bg-black text-white min-h-screen pb-20 md:pb-0">
+        <Navbar />
+        <PageHero 
+          title="About Titans" 
+          subtitle="Pioneering the future of algorithmic trading with precision, transparency, and performance."
+        />
       <StatsSection />
       <AboutBot />
       <Mission />
@@ -25,6 +38,7 @@ export default function AboutPage() {
       <TechnologyStack />
       <Footer />
       <MobileBottomNav />
-    </main>
+      </main>
+    </>
   );
 }

@@ -59,6 +59,7 @@ export default function AboutBot() {
       description: account
         ? `Live trading results show ${parseFloat(account.gain || 0).toFixed(2)}% total gain with ${account.currency} ${formatCurrency(account.profit)} in total profit, demonstrating consistent performance in real market conditions.`
         : "Comprehensive backtesting demonstrates consistent 200% equity growth within 4 months, with robust performance even in challenging market conditions.",
+      url: "https://www.myfxbook.com/members/ujwal1804/titansfx20/11808068",
     },
     {
       icon: <CloudLightning size={32} />,
@@ -98,15 +99,20 @@ export default function AboutBot() {
       <div className="w-[95vw] md:w-[85vw] mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
           {features.map((feature, idx) => (
-            <SpotlightCard key={idx} className="" spotlightColor="34, 211, 238">
-              <div className="w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-neutral-200">
+            <SpotlightCard 
+              key={idx} 
+              className={`backdrop-blur-xl bg-black/20 border border-white/10 hover:bg-black/30 hover:border-white/20 transition-all duration-300 ${feature.url ? 'cursor-pointer hover:scale-105' : ''}`}
+              spotlightColor="34, 211, 238"
+              onClick={feature.url ? () => window.open(feature.url, '_blank', 'noopener,noreferrer') : undefined}
+            >
+              <div className="w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6 relative z-10">
+                <div className="mb-2 sm:mb-3 text-cyan-400">
                   {feature.icon}
-                </h3>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2 sm:mb-3 bg-clip-text flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white pb-1 sm:pb-2 pt-2 sm:pt-4 relative z-20 font-bold tracking-tight leading-tight">
+                </div>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-2 sm:mb-3 text-white pb-1 sm:pb-2 pt-2 sm:pt-4 relative z-20 font-bold tracking-tight leading-tight">
                   {feature.title}
                 </h3>
-                <p className="text-xs sm:text-sm lg:text-base bg-clip-text flex flex-col text-transparent text-center bg-gradient-to-b from-neutral-700 to-neutral-500 dark:from-neutral-200 dark:to-white pb-1 sm:pb-2 pt-2 sm:pt-4 relative z-20 font-bold tracking-tight leading-tight leading-relaxed">
+                <p className="text-xs sm:text-sm lg:text-base text-neutral-200 pb-1 sm:pb-2 pt-2 sm:pt-4 relative z-20 leading-relaxed">
                   {feature.description}
                 </p>
               </div>

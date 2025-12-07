@@ -32,6 +32,7 @@ export default function MobileBottomNav() {
             <Link 
               key={item.name} 
               href={item.href}
+              prefetch={true}
               className="focus:outline-none focus:ring-0 active:bg-transparent focus-visible:outline-none"
               style={{ WebkitTapHighlightColor: 'transparent' }}
             >

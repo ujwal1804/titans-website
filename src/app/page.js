@@ -13,28 +13,52 @@ import MobileBottomNav from "./components/MobileBottomNav";
 
 export default function Page() {
   return (
-    <main className="bg-black text-white min-h-screen pb-20 md:pb-0">
-      <VenomBeam>
-        {/* Navbar */}
-        <Navbar />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FinancialService",
+            "name": "Titans Trading",
+            "description": "AI-Powered Algorithmic Trading Bot for Automated Forex Trading",
+            "url": process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com",
+            "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com"}/logo.png`,
+            "sameAs": [
+              "https://twitter.com/titanstrading"
+            ],
+            "offers": {
+              "@type": "Offer",
+              "price": "50",
+              "priceCurrency": "USD",
+              "description": "Lifetime access to automated trading bot"
+            }
+          })
+        }}
+      />
+      <main className="bg-black text-white min-h-screen pb-20 md:pb-0">
+        <VenomBeam>
+          {/* Navbar */}
+          <Navbar />
 
-        {/* Hero with animated background */}
-        <Hero />
-        <AboutBot />
-        <BacktestResults />
-        <LiveResults />
-        <Pricing />
-        <Features />
+          {/* Hero with animated background */}
+          <Hero />
+          <AboutBot />
+          <BacktestResults />
+          <LiveResults />
+          <Pricing />
+          <Features />
 
-        {/* Other sections */}
-        <LeadForm />
+          {/* Other sections */}
+          <LeadForm />
 
-        {/* Footer */}
-        <Footer />
-        
-        {/* Mobile Bottom Navigation */}
-        <MobileBottomNav />
-      </VenomBeam>
-    </main>
+          {/* Footer */}
+          <Footer />
+          
+          {/* Mobile Bottom Navigation */}
+          <MobileBottomNav />
+        </VenomBeam>
+      </main>
+    </>
   );
 }
