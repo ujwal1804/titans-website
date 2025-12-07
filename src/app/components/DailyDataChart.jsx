@@ -166,7 +166,7 @@ export default function DailyDataChart({ dailyData, account }) {
                     margin={{
                       top: 5,
                       right: 5,
-                      left: -20,
+                      left: 5,
                       bottom: 25,
                     }}
                   >
@@ -193,13 +193,17 @@ export default function DailyDataChart({ dailyData, account }) {
                       height={40}
                       interval={Math.floor(chartData.length / 5)}
                       tickMargin={5}
+                      tickLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+                      axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
                     />
                     <YAxis
                       stroke="#9ca3af"
-                      fontSize={9}
-                      tick={{ fill: '#9ca3af', fontSize: 9 }}
+                      fontSize={10}
+                      tick={{ fill: '#9ca3af', fontSize: 10 }}
                       tickFormatter={(value) => `${value.toFixed(0)}%`}
-                      width={35}
+                      width={50}
+                      domain={['auto', 'auto']}
+                      allowDecimals={false}
                     />
                     <Tooltip 
                       content={<CustomTooltip />}
@@ -278,6 +282,8 @@ export default function DailyDataChart({ dailyData, account }) {
                     height={60}
                     interval={getXAxisInterval()}
                     tickMargin={8}
+                    tickLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
+                    axisLine={{ stroke: '#9ca3af', strokeWidth: 1 }}
                   />
                   <YAxis
                     stroke="#9ca3af"

@@ -221,6 +221,16 @@ nav button:active {
 
 /* Custom Scrollbar Styling */
 @layer utilities {
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+  
   /* Webkit browsers (Chrome, Safari, Edge) */
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
