@@ -115,7 +115,7 @@ export default function BacktestResults() {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
 
-      <div className="w-[95vw] md:w-[85vw] mx-auto px-4 sm:px-6 relative z-10">
+      <div className="w-[95vw] md:w-[90vw] lg:w-[85vw] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -200,7 +200,7 @@ export default function BacktestResults() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="max-w-4xl mx-auto"
+          className="w-full"
         >
           <div className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-8 md:p-10 relative overflow-hidden">
             {/* Background pattern */}
