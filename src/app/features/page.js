@@ -21,7 +21,7 @@ export default function FeaturesPage() {
             "name": "Titans Trading Bot",
             "applicationCategory": "FinanceApplication",
             "description": "AI-Powered Algorithmic Trading Bot with autonomous trading, risk management, and performance tracking features",
-            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com"}/features`,
+            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://ttitans.com"}/features`,
             "featureList": [
               "Autonomous Trading",
               "Risk Management",

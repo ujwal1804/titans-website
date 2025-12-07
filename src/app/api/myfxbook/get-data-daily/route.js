@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getCache, setCache } from "@/lib/cache";
 
 /**
  * Helper function to login and get session
@@ -64,6 +65,21 @@ export async function GET(request) {
     const accountId = searchParams.get("id") || "11808068"; // Default account ID
     const startDate = searchParams.get("start") || getBotStartDate();
     const endDate = searchParams.get("end") || getCurrentDate();
+    
+    // Check cache first (only for default account and date range)
+    const isDefaultRequest = accountId === "11808068" && 
+                             startDate === getBotStartDate() && 
+                             endDate === getCurrentDate();
+    
+    if (isDefaultRequest) {
+      const cacheKey = `myfxbook_daily_data_${accountId}`;
+      const cachedData = getCache(cacheKey);
+      
+      if (cachedData) {
+        console.log('Returning cached daily data');
+        return NextResponse.json(cachedData);
+      }
+    }
 
     // If no session provided, automatically login to get one
     if (!session) {
@@ -105,7 +121,7 @@ export async function GET(request) {
 
     // Check if request was successful
     if (data.error === false) {
-      return NextResponse.json({
+      const responseData = {
         success: true,
         error: false,
         message: data.message || "Daily data retrieved successfully",
@@ -113,7 +129,16 @@ export async function GET(request) {
         accountId: accountId,
         startDate: startDate,
         endDate: endDate,
-      });
+      };
+      
+      // Cache the response if it's a default request
+      if (isDefaultRequest) {
+        const cacheKey = `myfxbook_daily_data_${accountId}`;
+        setCache(cacheKey, responseData);
+        console.log('Cached daily data');
+      }
+      
+      return NextResponse.json(responseData);
     } else {
       // If session is invalid, try to auto-login and retry once
       if (data.message && (data.message.includes("Invalid session") || data.message.includes("Session parameter is required"))) {
@@ -130,7 +155,7 @@ export async function GET(request) {
           const retryData = await retryResponse.json();
           
           if (retryData.error === false) {
-            return NextResponse.json({
+            const responseData = {
               success: true,
               error: false,
               message: retryData.message || "Daily data retrieved successfully",
@@ -138,7 +163,16 @@ export async function GET(request) {
               accountId: accountId,
               startDate: startDate,
               endDate: endDate,
-            });
+            };
+            
+            // Cache the response if it's a default request
+            if (isDefaultRequest) {
+              const cacheKey = `myfxbook_daily_data_${accountId}`;
+              setCache(cacheKey, responseData);
+              console.log('Cached daily data (retry)');
+            }
+            
+            return NextResponse.json(responseData);
           }
         } catch (retryError) {
           console.error("Error retrying with new session:", retryError);
@@ -175,6 +209,28 @@ export async function POST(request) {
     const body = await request.json();
     let { session, id, start, end } = body;
 
+    // Use provided account ID or default
+    const accountId = id || "11808068";
+    
+    // Use provided dates or calculate defaults
+    const startDate = start || getBotStartDate();
+    const endDate = end || getCurrentDate();
+    
+    // Check cache first (only for default account and date range)
+    const isDefaultRequest = accountId === "11808068" && 
+                             startDate === getBotStartDate() && 
+                             endDate === getCurrentDate();
+    
+    if (isDefaultRequest) {
+      const cacheKey = `myfxbook_daily_data_${accountId}`;
+      const cachedData = getCache(cacheKey);
+      
+      if (cachedData) {
+        console.log('Returning cached daily data (POST)');
+        return NextResponse.json(cachedData);
+      }
+    }
+
     // If no session provided, automatically login to get one
     if (!session) {
       try {
@@ -192,13 +248,6 @@ export async function POST(request) {
         );
       }
     }
-
-    // Use provided account ID or default
-    const accountId = id || "11808068";
-    
-    // Use provided dates or calculate defaults
-    const startDate = start || getBotStartDate();
-    const endDate = end || getCurrentDate();
 
     // Decode URL-encoded session if needed
     const decodedSession = decodeURIComponent(session);
@@ -222,7 +271,7 @@ export async function POST(request) {
 
     // Check if request was successful
     if (data.error === false) {
-      return NextResponse.json({
+      const responseData = {
         success: true,
         error: false,
         message: data.message || "Daily data retrieved successfully",
@@ -230,7 +279,16 @@ export async function POST(request) {
         accountId: accountId,
         startDate: startDate,
         endDate: endDate,
-      });
+      };
+      
+      // Cache the response if it's a default request
+      if (isDefaultRequest) {
+        const cacheKey = `myfxbook_daily_data_${accountId}`;
+        setCache(cacheKey, responseData);
+        console.log('Cached daily data (POST)');
+      }
+      
+      return NextResponse.json(responseData);
     } else {
       // If session is invalid, try to auto-login and retry once
       if (data.message && (data.message.includes("Invalid session") || data.message.includes("Session parameter is required"))) {
@@ -247,7 +305,7 @@ export async function POST(request) {
           const retryData = await retryResponse.json();
           
           if (retryData.error === false) {
-            return NextResponse.json({
+            const responseData = {
               success: true,
               error: false,
               message: retryData.message || "Daily data retrieved successfully",
@@ -255,7 +313,16 @@ export async function POST(request) {
               accountId: accountId,
               startDate: startDate,
               endDate: endDate,
-            });
+            };
+            
+            // Cache the response if it's a default request
+            if (isDefaultRequest) {
+              const cacheKey = `myfxbook_daily_data_${accountId}`;
+              setCache(cacheKey, responseData);
+              console.log('Cached daily data (POST retry)');
+            }
+            
+            return NextResponse.json(responseData);
           }
         } catch (retryError) {
           console.error("Error retrying with new session:", retryError);

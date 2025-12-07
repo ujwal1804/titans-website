@@ -117,7 +117,7 @@ export default function DownloadMT5Page() {
             "applicationCategory": "FinanceApplication",
             "operatingSystem": ["Windows", "macOS", "Linux", "iOS", "Android"],
             "description": "Download MetaTrader 5 (MT5) for Windows, Mac, iOS, and Android. Start trading with Titans Trading bot on the world's most popular trading platform.",
-            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com"}/download-mt5`,
+            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://ttitans.com"}/download-mt5`,
             "offers": {
               "@type": "Offer",
               "price": "0",

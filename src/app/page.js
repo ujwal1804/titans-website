@@ -22,8 +22,8 @@ export default function Page() {
             "@type": "FinancialService",
             "name": "Titans Trading",
             "description": "AI-Powered Algorithmic Trading Bot for Automated Forex Trading",
-            "url": process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com",
-            "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com"}/logo.png`,
+            "url": process.env.NEXT_PUBLIC_SITE_URL || "https://ttitans.com",
+            "logo": `${process.env.NEXT_PUBLIC_SITE_URL || "https://ttitans.com"}/logo.png`,
             "sameAs": [
               "https://twitter.com/titanstrading"
             ],

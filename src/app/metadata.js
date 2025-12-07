@@ -2,7 +2,7 @@
 export const siteConfig = {
   name: "Titans Trading",
   description: "AI-Powered Algorithmic Trading Bot for Automated Forex Trading",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://ttitans.com",
   ogImage: "/images.jpeg",
   links: {
     twitter: "https://twitter.com/titanstrading",

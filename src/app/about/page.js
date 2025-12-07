@@ -21,7 +21,7 @@ export default function AboutPage() {
             "@type": "AboutPage",
             "name": "About Titans Trading",
             "description": "Pioneering the future of algorithmic trading with precision, transparency, and performance.",
-            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com"}/about`,
+            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://ttitans.com"}/about`,
           })
         }}
       />

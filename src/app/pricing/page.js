@@ -23,7 +23,7 @@ export default function PricingPage() {
             "price": "50",
             "priceCurrency": "USD",
             "availability": "https://schema.org/InStock",
-            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://titans-trading.com"}/pricing`,
+            "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://ttitans.com"}/pricing`,
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
               "price": "50",

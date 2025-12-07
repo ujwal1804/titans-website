@@ -25,7 +25,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://titans-trading.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://ttitans.com'),
   title: {
     default: "Titans Trading - AI-Powered Algorithmic Trading Bot | Automated Forex Trading",
     template: "%s | Titans Trading"
@@ -59,16 +59,17 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://titans-trading.com',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://ttitans.com',
     siteName: "Titans Trading",
     title: "Titans Trading - AI-Powered Algorithmic Trading Bot",
     description: "Experience next-level algorithmic trading with Titans Trading bot. Automated forex trading with proven results and real-time performance tracking.",
     images: [
       {
-        url: "/images.jpeg",
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://ttitans.com'}/images.jpeg`,
         width: 1200,
         height: 630,
         alt: "Titans Trading - Automated Trading Bot",
+        type: "image/jpeg",
       },
     ],
   },
@@ -76,7 +77,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Titans Trading - AI-Powered Algorithmic Trading Bot",
     description: "Experience next-level algorithmic trading with automated forex trading bot. Proven results and real-time performance tracking.",
-    images: ["/images.jpeg"],
+    images: [`${process.env.NEXT_PUBLIC_SITE_URL || 'https://ttitans.com'}/images.jpeg`],
     creator: "@titanstrading",
   },
   robots: {
@@ -96,7 +97,7 @@ export const metadata = {
     yahoo: process.env.YAHOO_VERIFICATION,
   },
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL || 'https://titans-trading.com',
+    canonical: process.env.NEXT_PUBLIC_SITE_URL || 'https://ttitans.com',
   },
 };
 

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getCache, setCache } from "@/lib/cache";
 
 /**
  * Helper function to login and get session
@@ -41,6 +42,15 @@ async function getSessionFromLogin() {
 
 export async function GET(request) {
   try {
+    // Check cache first
+    const cacheKey = 'myfxbook_accounts_11808068';
+    const cachedData = getCache(cacheKey);
+    
+    if (cachedData) {
+      console.log('Returning cached accounts data');
+      return NextResponse.json(cachedData);
+    }
+
     // Get session from query parameters
     const { searchParams } = new URL(request.url);
     let session = searchParams.get("session");
@@ -91,14 +101,20 @@ export async function GET(request) {
         account => account.id === targetAccountId || account.accountId === targetAccountId
       );
       
-      return NextResponse.json({
+      const responseData = {
         success: true,
         error: false,
         message: data.message || "Accounts retrieved successfully",
         accounts: filteredAccounts,
         // Also return the account directly for convenience
         account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
-      });
+      };
+      
+      // Cache the response
+      setCache(cacheKey, responseData);
+      console.log('Cached accounts data');
+      
+      return NextResponse.json(responseData);
     } else {
       // If session is invalid, try to auto-login and retry once
       if (data.message && (data.message.includes("Invalid session") || data.message.includes("Session parameter is required"))) {
@@ -119,13 +135,19 @@ export async function GET(request) {
             const filteredAccounts = (retryData.accounts || []).filter(
               account => account.id === targetAccountId || account.accountId === targetAccountId
             );
-            return NextResponse.json({
+            const responseData = {
               success: true,
               error: false,
               message: retryData.message || "Accounts retrieved successfully",
               accounts: filteredAccounts,
               account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
-            });
+            };
+            
+            // Cache the response
+            setCache(cacheKey, responseData);
+            console.log('Cached accounts data (retry)');
+            
+            return NextResponse.json(responseData);
           }
         } catch (retryError) {
           console.error("Error retrying with new session:", retryError);
@@ -159,6 +181,15 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
+    // Check cache first
+    const cacheKey = 'myfxbook_accounts_11808068';
+    const cachedData = getCache(cacheKey);
+    
+    if (cachedData) {
+      console.log('Returning cached accounts data (POST)');
+      return NextResponse.json(cachedData);
+    }
+
     const body = await request.json();
     let { session } = body;
 
@@ -208,14 +239,20 @@ export async function POST(request) {
         account => account.id === targetAccountId || account.accountId === targetAccountId
       );
       
-      return NextResponse.json({
+      const responseData = {
         success: true,
         error: false,
         message: data.message || "Accounts retrieved successfully",
         accounts: filteredAccounts,
         // Also return the account directly for convenience
         account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
-      });
+      };
+      
+      // Cache the response
+      setCache(cacheKey, responseData);
+      console.log('Cached accounts data');
+      
+      return NextResponse.json(responseData);
     } else {
       // If session is invalid, try to auto-login and retry once
       if (data.message && (data.message.includes("Invalid session") || data.message.includes("Session parameter is required"))) {
@@ -236,13 +273,19 @@ export async function POST(request) {
             const filteredAccounts = (retryData.accounts || []).filter(
               account => account.id === targetAccountId || account.accountId === targetAccountId
             );
-            return NextResponse.json({
+            const responseData = {
               success: true,
               error: false,
               message: retryData.message || "Accounts retrieved successfully",
               accounts: filteredAccounts,
               account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
-            });
+            };
+            
+            // Cache the response
+            setCache(cacheKey, responseData);
+            console.log('Cached accounts data (retry)');
+            
+            return NextResponse.json(responseData);
           }
         } catch (retryError) {
           console.error("Error retrying with new session:", retryError);

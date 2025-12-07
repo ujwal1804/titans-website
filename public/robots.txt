@@ -4,5 +4,5 @@ Disallow: /api/
 Disallow: /dashboard/
 Disallow: /_next/
 
-Sitemap: https://titans-trading.com/sitemap.xml
+Sitemap: https://ttitans.com/sitemap.xml
 
