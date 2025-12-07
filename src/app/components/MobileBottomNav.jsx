@@ -29,20 +29,17 @@ export default function MobileBottomNav() {
           const isActive = pathname === item.href;
           
           return (
-            <Link key={item.name} href={item.href}>
+            <Link 
+              key={item.name} 
+              href={item.href}
+              className="focus:outline-none focus:ring-0 active:bg-transparent focus-visible:outline-none"
+              style={{ WebkitTapHighlightColor: 'transparent' }}
+            >
               <motion.div
                 whileTap={{ scale: 0.9 }}
-                className="flex flex-col items-center justify-center px-4 py-2 rounded-xl transition-all duration-200 relative"
+                className="flex flex-col items-center justify-center px-4 py-2 rounded-xl transition-all duration-200 relative focus:outline-none focus:ring-0 active:bg-transparent focus-visible:outline-none"
+                style={{ WebkitTapHighlightColor: 'transparent' }}
               >
-                {/* Active indicator */}
-                {isActive && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-gradient-to-t from-cyan-500/20 to-blue-500/20 rounded-xl border border-cyan-400/30"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-                
                 {/* Icon */}
                 <div className="relative z-10">
                   <Icon

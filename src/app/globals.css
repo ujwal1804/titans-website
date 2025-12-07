@@ -95,10 +95,40 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Better focus states for accessibility */
+/* Remove focus outlines globally */
 *:focus {
-  outline: 2px solid #0ea5e9;
-  outline-offset: 2px;
+  outline: none !important;
+}
+
+*:focus-visible {
+  outline: none !important;
+}
+
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove tap highlight and active states on mobile */
+a:active,
+button:active {
+  background-color: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Remove blue background on mobile bottom nav */
+nav a:focus,
+nav a:active,
+nav button:focus,
+nav button:active {
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 /* Improved mobile touch targets */
@@ -215,5 +245,30 @@ html {
   .custom-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: #06b6d4 rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Thin scrollbar for tables */
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
   }
 }

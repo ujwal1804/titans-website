@@ -4,7 +4,8 @@ const Spline = lazy(() => import('@splinetool/react-spline'))
 
 export function SplineScene({
   scene,
-  className
+  className,
+  style
 }) {
   return (
     <Suspense
@@ -13,7 +14,7 @@ export function SplineScene({
           <span className="loader"></span>
         </div>
       }>
-      <Spline scene={scene} className={className} />
+      <Spline scene={scene} className={className} style={style} />
     </Suspense>
   );
 }

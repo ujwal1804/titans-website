@@ -3,6 +3,17 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Calculator, TrendingUp, Calendar, DollarSign, RefreshCw } from "lucide-react";
 import { useMyFxBook } from "@/hooks/useMyFxBook";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ReferenceLine,
+  Cell,
+} from "recharts";
 
 export default function ForecastCalculator({ account, dailyData = [] }) {
   const [dailyGainData, setDailyGainData] = useState([]);
@@ -574,281 +585,200 @@ export default function ForecastCalculator({ account, dailyData = [] }) {
 
       {/* Historical Monthly Gain Chart */}
       {monthlyGains.length > 0 && (
-        <div className="mt-8">
-          <h3 className="text-lg sm:text-xl font-bold text-neutral-200 mb-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
+        <div className="mt-6 sm:mt-8">
+          <h3 className="text-base sm:text-lg md:text-xl font-bold text-neutral-200 mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
             Monthly Gain (Change)
           </h3>
-          <div className="relative rounded-3xl p-6 sm:p-8 mb-8 overflow-hidden">
+          
+          {/* Mobile/Tablet: Compact Bar Chart */}
+          <div className="block md:hidden">
+            <div className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-4 overflow-hidden">
+              <div className="h-64 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={monthlyGains}
+                    margin={{
+                      top: 10,
+                      right: 10,
+                      left: -15,
+                      bottom: 30,
+                    }}
+                  >
+                    <defs>
+                      {monthlyGains.map((_, index) => {
+                        const colors = [
+                          { start: '#3b82f6', end: '#2563eb' },
+                          { start: '#8b5cf6', end: '#7c3aed' },
+                          { start: '#06b6d4', end: '#0891b2' },
+                          { start: '#10b981', end: '#059669' },
+                          { start: '#6366f1', end: '#4f46e5' },
+                        ];
+                        const color = colors[index % colors.length] || { start: '#3b82f6', end: '#2563eb' };
+                        return (
+                          <linearGradient key={`barGradMobile-${index}`} id={`barGradMobile-${index}`} x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor={color.start} stopOpacity={0.9} />
+                            <stop offset="100%" stopColor={color.end} stopOpacity={0.7} />
+                          </linearGradient>
+                        );
+                      })}
+                    </defs>
+                    <CartesianGrid strokeDasharray="2 2" stroke="#374151" opacity={0.15} vertical={false} />
+                    <XAxis
+                      dataKey="month"
+                      stroke="#9ca3af"
+                      fontSize={9}
+                      tick={{ fill: '#9ca3af', fontSize: 9 }}
+                      angle={-30}
+                      textAnchor="end"
+                      height={40}
+                      interval={0}
+                    />
+                    <YAxis
+                      stroke="#9ca3af"
+                      fontSize={9}
+                      tick={{ fill: '#9ca3af', fontSize: 9 }}
+                      tickFormatter={(value) => `${value}%`}
+                      width={35}
+                    />
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          const data = payload[0].payload;
+                          return (
+                            <div className="bg-gradient-to-br from-neutral-900 to-neutral-950 border-2 border-neutral-600/50 rounded-lg px-3 py-2 text-[10px] shadow-2xl backdrop-blur-sm">
+                              <div className="text-neutral-300 font-bold mb-1 text-[11px] border-b border-neutral-700 pb-1">
+                                {data.month}
+                              </div>
+                              <div className="space-y-1">
+                                <div className="flex justify-between gap-4 items-center">
+                                  <span className="text-neutral-400 text-[9px]">Gain:</span>
+                                  <span className={`font-bold text-[10px] ${
+                                    data.gain >= 0 ? "text-green-400" : "text-red-400"
+                                  }`}>
+                                    {data.gain >= 0 ? "+" : ""}{data.gain.toFixed(2)}%
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                      cursor={{ fill: 'rgba(59, 130, 246, 0.1)' }}
+                    />
+                    <ReferenceLine y={0} stroke="#6b7280" strokeDasharray="3 3" opacity={0.4} />
+                    <Bar dataKey="gain" radius={[4, 4, 0, 0]}>
+                      {monthlyGains.map((entry, index) => {
+                        const colors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981', '#6366f1'];
+                        const barColor = entry.gain >= 0 ? colors[index % colors.length] : '#ef4444';
+                        return (
+                          <Cell key={`cell-${index}`} fill={entry.gain >= 0 ? `url(#barGradMobile-${index})` : '#ef4444'} />
+                        );
+                      })}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop: Full Featured Chart */}
+          <div className="hidden md:block relative rounded-2xl lg:rounded-3xl p-6 lg:p-8 mb-8 overflow-hidden">
             {/* Premium Apple glassmorphism for chart */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.04] to-white/[0.06] backdrop-blur-3xl rounded-3xl"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-white/10 via-transparent to-white/5 rounded-3xl"></div>
-            <div className="absolute inset-0 border border-white/25 rounded-3xl"></div>
-            <div className="absolute inset-[0.5px] border border-white/15 rounded-3xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-white/[0.04] to-white/[0.06] backdrop-blur-3xl rounded-2xl lg:rounded-3xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-white/10 via-transparent to-white/5 rounded-2xl lg:rounded-3xl"></div>
+            <div className="absolute inset-0 border border-white/25 rounded-2xl lg:rounded-3xl"></div>
+            <div className="absolute inset-[0.5px] border border-white/15 rounded-2xl lg:rounded-3xl"></div>
             
             {/* Premium inner highlights */}
-            <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-white/15 to-transparent rounded-t-3xl pointer-events-none"></div>
-            <div className="absolute inset-0 shadow-[inset_0_1px_2px_rgba(255,255,255,0.15),inset_0_-1px_1px_rgba(0,0,0,0.1)] rounded-3xl pointer-events-none"></div>
+            <div className="absolute top-0 left-0 right-0 h-1/3 bg-gradient-to-b from-white/15 to-transparent rounded-t-2xl lg:rounded-t-3xl pointer-events-none"></div>
+            <div className="absolute inset-0 shadow-[inset_0_1px_2px_rgba(255,255,255,0.15),inset_0_-1px_1px_rgba(0,0,0,0.1)] rounded-2xl lg:rounded-3xl pointer-events-none"></div>
             
             {/* Content container */}
             <div className="relative z-10">
-              <div className="h-96 sm:h-[28rem] relative overflow-x-auto overflow-y-visible">
-              <svg 
-                className="w-full h-full min-w-full" 
-                viewBox={`0 0 ${Math.max(monthlyGains.length * 90, 500) + 80} 360`} 
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <defs>
-                  {/* Premium professional gradients with better visibility */}
-                  {monthlyGains.map((_, index) => {
-                    // Professional color palette - better contrast and visibility
-                    const colors = [
-                      { start: '#3b82f6', end: '#2563eb' }, // blue
-                      { start: '#8b5cf6', end: '#7c3aed' }, // purple
-                      { start: '#06b6d4', end: '#0891b2' }, // cyan
-                      { start: '#10b981', end: '#059669' }, // emerald
-                      { start: '#6366f1', end: '#4f46e5' }, // indigo
-                    ];
-                    const color = colors[index % colors.length] || { start: '#3b82f6', end: '#2563eb' };
-                    return (
-                      <linearGradient key={`barGradient-${index}`} id={`barGradient-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor={color.start} stopOpacity="0.85" />
-                        <stop offset="50%" stopColor={color.start} stopOpacity="0.75" />
-                        <stop offset="100%" stopColor={color.end} stopOpacity="0.65" />
-                      </linearGradient>
-                    );
-                  })}
-                  
-                  {/* Glow effect filter */}
-                  <filter id="glow">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                    <feMerge>
-                      <feMergeNode in="coloredBlur"/>
-                      <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                  </filter>
-                  
-                  {/* Shadow filter */}
-                  <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodOpacity="0.3"/>
-                  </filter>
-                </defs>
-                
-                {/* Enhanced grid lines with spacing from Y-axis labels */}
-                {[0, 25, 50, 75].map((percent) => {
-                  const chartHeight = 300;
-                  const padding = 20;
-                  const leftPadding = 80; // Space for Y-axis labels
-                  const y = chartHeight + padding - (percent / 75) * chartHeight;
-                  return (
-                    <g key={`grid-${percent}`}>
-                      <line
-                        x1={leftPadding}
-                        y1={y}
-                        x2={Math.max(monthlyGains.length * 90, 500) + leftPadding}
-                        y2={y}
-                        stroke={percent === 0 ? "#4b5563" : "#374151"}
-                        strokeWidth={percent === 0 ? "1.5" : "0.5"}
-                        strokeDasharray={percent === 0 ? "0" : "2 2"}
-                        opacity={percent === 0 ? "0.5" : "0.2"}
-                      />
-                    </g>
-                  );
-                })}
-                
-                {/* Zero line with gradient */}
-                <line
-                  x1={80}
-                  y1={320}
-                  x2={Math.max(monthlyGains.length * 90, 500) + 80}
-                  y2={320}
-                  stroke="url(#zeroLineGradient)"
-                  strokeWidth="2"
-                  strokeDasharray="4 4"
-                  opacity="0.6"
-                />
-                <defs>
-                  <linearGradient id="zeroLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#6b7280" stopOpacity="0" />
-                    <stop offset="50%" stopColor="#6b7280" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#6b7280" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                
-                {/* Monthly gain bars with enhanced styling */}
-                  {monthlyGains.map((month, index) => {
-                    const leftPadding = 80; // Space for Y-axis labels
-                    const x = index * 90 + 90 + leftPadding;
-                    const gainPercent = month.gain;
-                    const chartHeight = 300;
-                    const zeroLineY = 320;
-                    const maxHeight = chartHeight;
-                    const barHeight = Math.min(Math.abs(gainPercent) * (maxHeight / 75), maxHeight);
-                    const isPositive = gainPercent >= 0;
-                    const y = isPositive ? zeroLineY - barHeight : zeroLineY;
-                  
-                  // Premium professional colors with better visibility
-                  const colors = [
-                    '#3b82f6', // blue
-                    '#8b5cf6', // purple
-                    '#06b6d4', // cyan
-                    '#10b981', // emerald
-                    '#6366f1', // indigo
-                  ];
-                  const barColor = isPositive ? colors[index % colors.length] : "#ef4444";
-                  
-                  return (
-                    <g key={month.monthKey} className="group cursor-pointer">
-                      {/* Invisible hover area for better interaction */}
-                      <rect
-                        x={x - 40}
-                        y="0"
-                        width="80"
-                        height="360"
-                        fill="transparent"
-                        className="pointer-events-auto"
-                        onMouseEnter={() => {}}
-                        onMouseLeave={() => {}}
-                      />
-                      {/* Bar shadow - only for positive bars */}
-                      {isPositive && (
-                        <rect
-                          x={x - 32}
-                          y={y + 3}
-                          width="64"
-                          height={barHeight}
-                          fill="black"
-                          opacity="0.15"
-                          rx="4"
-                          className="transition-opacity duration-200 group-hover:opacity-0"
-                        />
-                      )}
-                      {/* Main bar with gradient */}
-                      <rect
-                        x={x - 32}
-                        y={y}
-                        width="64"
-                        height={barHeight}
-                        fill={`url(#barGradient-${index})`}
-                        rx="4"
-                        className="transition-all duration-200 group-hover:opacity-90 group-hover:brightness-110"
-                        filter="url(#shadow)"
-                      />
-                      {/* Hover highlight effect */}
-                      <rect
-                        x={x - 32}
-                        y={y}
-                        width="64"
-                        height={barHeight}
-                        fill="white"
-                        opacity="0"
-                        rx="4"
-                        className="transition-opacity duration-200 group-hover:opacity-10"
-                      />
-                      {/* Top highlight for positive bars */}
-                      {isPositive && (
-                        <rect
-                          x={x - 32}
-                          y={y}
-                          width="64"
-                          height="6"
-                          fill="white"
-                          opacity="0.15"
-                          rx="4 4 0 0"
-                        />
-                      )}
-                      {/* Apple-style value label */}
-                      <rect
-                        x={x - 38}
-                        y={isPositive ? y - 32 : y + barHeight + 4}
-                        width="76"
-                        height="24"
-                        fill="rgba(255, 255, 255, 0.12)"
-                        rx="6"
-                        className="backdrop-blur-xl transition-opacity duration-200 group-hover:opacity-100 opacity-0 group-hover:opacity-100"
-                      />
-                      <rect
-                        x={x - 38}
-                        y={isPositive ? y - 32 : y + barHeight + 4}
-                        width="76"
-                        height="24"
-                        fill="none"
-                        stroke="rgba(255, 255, 255, 0.25)"
-                        strokeWidth="1"
-                        rx="6"
-                        className="transition-opacity duration-200 opacity-0 group-hover:opacity-100"
-                      />
-                      <text
-                        x={x}
-                        y={isPositive ? y - 15 : y + barHeight + 20}
-                        fill="#ffffff"
-                        fontSize="12"
-                        fontWeight="600"
-                        textAnchor="middle"
-                        className="drop-shadow-md transition-opacity duration-200 opacity-0 group-hover:opacity-100"
-                      >
-                        {gainPercent >= 0 ? "+" : ""}{gainPercent.toFixed(2)}%
-                      </text>
-                      {/* Always visible value label above bar */}
-                      <text
-                        x={x}
-                        y={isPositive ? y - 8 : y + barHeight + 18}
-                        fill={barColor}
-                        fontSize="11"
-                        fontWeight="600"
-                        textAnchor="middle"
-                        className="drop-shadow-sm transition-opacity duration-200 group-hover:opacity-0"
-                      >
-                        {gainPercent >= 0 ? "+" : ""}{gainPercent.toFixed(2)}%
-                      </text>
-                      {/* Month label */}
-                      <rect
-                        x={x - 42}
-                        y="335"
-                        width="84"
-                        height="14"
-                        fill="rgba(255, 255, 255, 0.08)"
-                        rx="3"
-                        className="backdrop-blur-sm"
-                      />
-                      <text
-                        x={x}
-                        y="345"
-                        fill="#e5e7eb"
-                        fontSize="10"
-                        fontWeight="500"
-                        textAnchor="middle"
-                        className="select-none"
-                      >
-                        {month.month}
-                      </text>
-                    </g>
-                  );
-                })}
-                
-                  {/* Y-axis labels with proper spacing from chart */}
-                  {[0, 25, 50, 75].map((percent) => {
-                    const chartHeight = 300;
-                    const padding = 20;
-                    const y = chartHeight + padding - (percent / 75) * chartHeight;
-                    return (
-                      <g key={`y-label-${percent}`}>
-                        <circle cx="70" cy={y} r="2" fill={percent === 0 ? "#9ca3af" : "#6b7280"} opacity={percent === 0 ? "0.8" : "0.5"} />
-                        <text
-                          x="65"
-                          y={y}
-                          fill={percent === 0 ? "#e5e7eb" : "#9ca3af"}
-                          fontSize={percent === 0 ? "12" : "11"}
-                          fontWeight={percent === 0 ? "600" : "500"}
-                          textAnchor="end"
-                          className="select-none"
-                          dy="4"
-                        >
-                          {percent}%
-                        </text>
-                      </g>
-                    );
-                  })}
-                </svg>
+              <div className="h-80 lg:h-[28rem] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={monthlyGains}
+                    margin={{
+                      top: 20,
+                      right: 20,
+                      left: 0,
+                      bottom: 40,
+                    }}
+                  >
+                    <defs>
+                      {monthlyGains.map((_, index) => {
+                        const colors = [
+                          { start: '#3b82f6', end: '#2563eb' },
+                          { start: '#8b5cf6', end: '#7c3aed' },
+                          { start: '#06b6d4', end: '#0891b2' },
+                          { start: '#10b981', end: '#059669' },
+                          { start: '#6366f1', end: '#4f46e5' },
+                        ];
+                        const color = colors[index % colors.length] || { start: '#3b82f6', end: '#2563eb' };
+                        return (
+                          <linearGradient key={`barGrad-${index}`} id={`barGrad-${index}`} x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor={color.start} stopOpacity={0.9} />
+                            <stop offset="100%" stopColor={color.end} stopOpacity={0.7} />
+                          </linearGradient>
+                        );
+                      })}
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.2} vertical={false} />
+                    <XAxis
+                      dataKey="month"
+                      stroke="#9ca3af"
+                      fontSize={11}
+                      tick={{ fill: '#9ca3af', fontSize: 11 }}
+                      angle={-30}
+                      textAnchor="end"
+                      height={50}
+                    />
+                    <YAxis
+                      stroke="#9ca3af"
+                      fontSize={11}
+                      tick={{ fill: '#9ca3af', fontSize: 11 }}
+                      tickFormatter={(value) => `${value}%`}
+                      width={50}
+                    />
+                    <Tooltip
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          const data = payload[0].payload;
+                          return (
+                            <div className="bg-gradient-to-br from-neutral-900 to-neutral-950 border-2 border-neutral-600/50 rounded-xl px-4 py-3 text-xs shadow-2xl backdrop-blur-sm">
+                              <div className="text-neutral-300 font-bold mb-2 text-sm border-b border-neutral-700 pb-2">
+                                {data.month}
+                              </div>
+                              <div className="space-y-2">
+                                <div className="flex justify-between gap-6 items-center">
+                                  <span className="text-neutral-400 text-xs">Gain:</span>
+                                  <span className={`font-bold text-sm ${
+                                    data.gain >= 0 ? "text-green-400" : "text-red-400"
+                                  }`}>
+                                    {data.gain >= 0 ? "+" : ""}{data.gain.toFixed(2)}%
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                      cursor={{ fill: 'rgba(59, 130, 246, 0.1)' }}
+                    />
+                    <ReferenceLine y={0} stroke="#6b7280" strokeDasharray="4 4" opacity={0.5} />
+                    <Bar dataKey="gain" radius={[6, 6, 0, 0]}>
+                      {monthlyGains.map((entry, index) => {
+                        const colors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981', '#6366f1'];
+                        return (
+                          <Cell key={`cell-${index}`} fill={entry.gain >= 0 ? `url(#barGrad-${index})` : '#ef4444'} />
+                        );
+                      })}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </div>

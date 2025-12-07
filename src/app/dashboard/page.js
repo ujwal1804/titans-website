@@ -86,13 +86,13 @@ export default function DashboardPage() {
       <Navbar />
       
       <div className="pt-20 sm:pt-24 pb-8 sm:pb-12 lg:pb-16">
-        <div className="w-[95vw] md:w-[85vw] mx-auto">
+        <div className="w-[95vw] sm:w-[90vw] md:w-[85vw] mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="mb-8 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 mb-4">
+        <div className="mb-6 sm:mb-8 md:mb-12">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 mb-2 sm:mb-4">
             Trading Dashboard
           </h1>
-          <p className="text-neutral-400 text-sm sm:text-base md:text-lg">
+          <p className="text-neutral-400 text-xs sm:text-sm md:text-base lg:text-lg">
             Real-time performance metrics and trading analytics
           </p>
         </div>
@@ -110,7 +110,7 @@ export default function DashboardPage() {
           <>
             <AccountOverview account={account} />
             
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mt-6 sm:mt-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mt-4 sm:mt-6 md:mt-8">
               {/* Performance Metrics */}
               <div className="lg:col-span-2">
                 <PerformanceMetrics account={account} dailyData={dailyData} />
@@ -124,13 +124,13 @@ export default function DashboardPage() {
 
             {/* Daily Data Chart */}
             {dailyData.length > 0 && (
-              <div className="mt-6 sm:mt-8">
+              <div className="mt-4 sm:mt-6 md:mt-8">
                 <DailyDataChart dailyData={dailyData} account={account} />
               </div>
             )}
 
             {/* Forecast Calculator */}
-            <div className="mt-6 sm:mt-8">
+            <div className="mt-4 sm:mt-6 md:mt-8">
               <ForecastCalculator account={account} dailyData={dailyData} />
             </div>
           </>
