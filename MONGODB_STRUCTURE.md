@@ -166,21 +166,16 @@ GET /api/db/dashboard?id=11808068
 
 ## Data Flow
 
-1. **Cron Job** (`/api/cron/sync-data`)
-   - Runs daily at midnight UTC
-   - Fetches data from all MyFxBook APIs
-   - Saves to MongoDB collections
-   - Updates existing records
-
-2. **API Routes** (MyFxBook endpoints)
-   - Still fetch from external APIs
+1. **API Routes** (MyFxBook endpoints)
+   - Fetch from external APIs when called
    - Automatically save to MongoDB when data is retrieved
    - Return API response to client
 
-3. **Dashboard/Components**
+2. **Dashboard/Components**
    - Use MongoDB fetch endpoints (`/api/db/*`)
    - Read from MongoDB (faster, no API rate limits)
    - No authentication needed
+   - Data loads automatically from database
 
 ## Benefits
 
@@ -195,6 +190,6 @@ GET /api/db/dashboard?id=11808068
 
 - Old `dashboard_data` collection is still supported for backward compatibility
 - New collections use more specific names (`myfxbook_accounts`, etc.)
-- All data is automatically synced daily via cron job
-- Manual sync available via `/api/mongodb/sync-now`
+- Data is saved to MongoDB whenever MyFxBook API endpoints are called
+- Manual sync available via `/api/mongodb/sync-now` (for testing)
 

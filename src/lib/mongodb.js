@@ -52,12 +52,33 @@ export default clientPromise;
 
 /**
  * Get MongoDB database instance
- * @param {string} dbName - Database name (optional, defaults to 'titans_dashboard')
+ * @param {string} dbName - Database name (optional)
  * @returns {Promise<Db>} MongoDB database instance
  */
-export async function getDatabase(dbName = 'titans_dashboard') {
+export async function getDatabase(dbName) {
   const client = await clientPromise;
-  return client.db(dbName);
+  
+  // If dbName is provided, use it
+  if (dbName) {
+    return client.db(dbName);
+  }
+  
+  // Otherwise, try to get database name from URI
+  try {
+    const uri = process.env.MONGODB_URI;
+    if (uri) {
+      const url = new URL(uri);
+      const dbFromUri = url.pathname.substring(1); // Remove leading /
+      if (dbFromUri && dbFromUri !== '') {
+        return client.db(dbFromUri);
+      }
+    }
+  } catch (error) {
+    console.warn('Could not parse database name from URI, using default');
+  }
+  
+  // Default fallback
+  return client.db('titans_dashboard');
 }
 
 /**
@@ -78,15 +99,32 @@ export async function getCollection(collectionName, dbName) {
 export async function testConnection() {
   try {
     const client = await clientPromise;
-    // Test with a specific database
-    await client.db('titans_dashboard').admin().ping();
+    
+    // Try to get database name from URI first
+    let dbName = 'titans_dashboard';
+    try {
+      const uri = process.env.MONGODB_URI;
+      if (uri) {
+        const url = new URL(uri);
+        const dbFromUri = url.pathname.substring(1);
+        if (dbFromUri && dbFromUri !== '') {
+          dbName = dbFromUri;
+        }
+      }
+    } catch (error) {
+      console.warn('Could not parse database name from URI');
+    }
+    
+    // Test connection with ping
+    await client.db(dbName).admin().ping();
     return true;
   } catch (error) {
     console.error('MongoDB connection error:', error);
     console.error('Error details:', {
       message: error.message,
       name: error.name,
-      code: error.code
+      code: error.code,
+      uri: process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 30) + "..." : "NOT SET"
     });
     return false;
   }

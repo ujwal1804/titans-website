@@ -61,7 +61,7 @@ function getCurrentDate() {
 
 /**
  * Manual sync endpoint - directly syncs data from MyFxBook API to MongoDB
- * This can be used to manually trigger a data sync without waiting for cron
+ * This can be used to manually trigger a data sync
  */
 export async function GET(request) {
   try {
@@ -229,8 +229,14 @@ export async function GET(request) {
       const accountsCollection = await getCollection('myfxbook_accounts');
       const dailyCollection = await getCollection('myfxbook_daily_data');
       const accountIdStr = String(accountId);
-      const accountCount = await accountsCollection.countDocuments({ accountId: { $in: [accountIdStr, parseInt(accountIdStr, 10)] } });
-      const dailyCount = await dailyCollection.countDocuments({ accountId: { $in: [accountIdStr, parseInt(accountIdStr, 10)] } });
+      const accountIdNum = parseInt(accountIdStr, 10);
+      
+      const accountCount = await accountsCollection.countDocuments({ 
+        accountId: { $in: [accountIdStr, accountIdNum] } 
+      });
+      const dailyCount = await dailyCollection.countDocuments({ 
+        accountId: { $in: [accountIdStr, accountIdNum] } 
+      });
       
       results.mongodbStats = {
         accountDocuments: accountCount,
@@ -239,21 +245,29 @@ export async function GET(request) {
       
       results.messages.push(`✓ MongoDB: ${accountCount} account(s), ${dailyCount} daily entries`);
     } catch (error) {
+      console.error('Error verifying MongoDB:', error);
       results.errors.push(`Error verifying MongoDB: ${error.message}`);
     }
 
-    results.success = results.accountSaved && results.dailyDataSaved;
+    // Consider it successful if at least one operation succeeded
+    // This allows partial success scenarios
+    results.success = results.accountSaved || results.dailyDataSaved;
 
+    // Return 200 even if there were errors, as long as we have some data or attempted sync
+    // The frontend can check the success flag and errors array
     return NextResponse.json(results, {
-      status: results.success ? 200 : 500
+      status: 200
     });
   } catch (error) {
     console.error("Error in sync-now:", error);
+    console.error("Error stack:", error.stack);
     return NextResponse.json({
       success: false,
       error: error.message,
+      errors: [error.message],
+      messages: [],
       timestamp: new Date().toISOString(),
-    }, { status: 500 });
+    }, { status: 200 }); // Return 200 so frontend can handle the error
   }
 }
 

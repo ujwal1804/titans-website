@@ -106,17 +106,20 @@ export function useMongoDB() {
       
       // Return data even if success is false, as long as we have some data
       // This handles cases where data exists but response format isn't perfect
-      if (data.success || data.account || (data.dailyData && data.dailyData.length > 0)) {
+      // Also handle 200 responses with empty data gracefully
+      if (data.account || (data.dailyData && data.dailyData.length > 0)) {
         return {
           success: true,
           account: data.account || null,
           dailyData: data.dailyData || [],
         };
       } else {
+        // No data found - this is not necessarily an error
+        // Data may not be available yet
         setError(data.message || "No data found in MongoDB");
         return {
           success: false,
-          error: true,
+          error: false, // Not an error, just no data
           message: data.message || "No data found in MongoDB",
           account: null,
           dailyData: [],

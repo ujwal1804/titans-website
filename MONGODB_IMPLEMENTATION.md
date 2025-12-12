@@ -47,21 +47,16 @@ All data should be fetched from these endpoints:
 
 ## Data Flow
 
-1. **Cron Job** (`/api/cron/sync-data`)
-   - Runs daily at midnight UTC
-   - Fetches from all MyFxBook APIs
-   - Saves to MongoDB collections
-   - Updates existing records
-
-2. **API Routes** (MyFxBook endpoints)
-   - Still fetch from external APIs when called
+1. **API Routes** (MyFxBook endpoints)
+   - Fetch from external APIs when called
    - Automatically save to MongoDB
    - Return API response
 
-3. **Dashboard/Components**
+2. **Dashboard/Components**
    - Use MongoDB endpoints (`/api/db/*`)
    - Read from MongoDB (fast, reliable)
    - No external API calls needed
+   - Data loads automatically from database
 
 ## Benefits
 
@@ -97,7 +92,7 @@ function MyComponent() {
 }
 ```
 
-## Manual Sync
+## Manual Sync (For Testing)
 
 To manually sync data (useful for testing or immediate updates):
 
@@ -110,13 +105,5 @@ This will:
 - Save to MongoDB
 - Return detailed status report
 
-## Cron Job
-
-The cron job runs automatically daily at midnight UTC and syncs:
-- Account data
-- Daily trading data
-- Gain data
-- Daily gain data
-
-See `CRON_SETUP.md` for configuration details.
+**Note:** The dashboard automatically reads from MongoDB. Data is saved to MongoDB whenever the MyFxBook API endpoints are called.
 

@@ -6,7 +6,14 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const accountId = searchParams.get("id") || "11808068";
 
-    console.log('Getting dashboard data from MongoDB for accountId:', accountId);
+    // Log environment info for debugging
+    const isProduction = process.env.NODE_ENV === 'production';
+    console.log('Getting dashboard data from MongoDB:', {
+      accountId,
+      environment: process.env.NODE_ENV,
+      hasMongoUri: !!process.env.MONGODB_URI,
+      timestamp: new Date().toISOString()
+    });
 
     const dashboardData = await getDashboardData(accountId);
 
@@ -14,7 +21,8 @@ export async function GET(request) {
       success: dashboardData.success,
       hasAccount: !!dashboardData.account,
       dailyDataCount: dashboardData.dailyData ? dashboardData.dailyData.length : 0,
-      error: dashboardData.error
+      error: dashboardData.error,
+      environment: process.env.NODE_ENV
     });
 
     // Return data even if partial (account or dailyData exists)
@@ -31,15 +39,18 @@ export async function GET(request) {
       });
     }
 
-    // No data found
+    // No data found - return 200 with empty data instead of 404
+    // This allows the frontend to handle the empty state gracefully
     return NextResponse.json({
       success: false,
-      error: true,
+      error: false,
       message: dashboardData.error || "No data found in MongoDB",
       account: null,
       dailyData: [],
       accountId: accountId,
-    }, { status: 404 });
+      accountCount: 0,
+      dailyDataCount: 0,
+    });
   } catch (error) {
     console.error("Error getting dashboard data from MongoDB:", error);
     console.error("Error stack:", error.stack);

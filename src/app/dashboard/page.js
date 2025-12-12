@@ -18,7 +18,14 @@ export default function DashboardPage() {
 
   useEffect(() => {
     loadData();
-  }, []);
+    
+    // Auto-refresh data every 30 seconds if no data is loaded
+    const interval = setInterval(() => {
+      loadData();
+    }, 30000); // 30 seconds
+    
+    return () => clearInterval(interval);
+  }, []); // Only run once on mount
 
   const loadData = async () => {
     setDataLoading(true);
@@ -45,38 +52,6 @@ export default function DashboardPage() {
     }
   };
 
-  const handleSyncNow = async () => {
-    setDataLoading(true);
-    
-    try {
-      // Trigger manual sync
-      const syncResponse = await fetch('/api/mongodb/sync-now');
-      const syncResult = await syncResponse.json();
-      
-      console.log('Sync result:', syncResult);
-      
-      if (syncResult.success || syncResult.accountSaved || syncResult.dailyDataSaved) {
-        // Wait a moment for data to be saved, then reload
-        setTimeout(() => {
-          loadData();
-        }, 3000);
-      } else {
-        console.error("Sync failed:", syncResult);
-        const errorMsg = syncResult.errors && syncResult.errors.length > 0 
-          ? syncResult.errors.join(', ') 
-          : syncResult.message || 'Unknown error';
-        alert(`Sync completed with issues: ${errorMsg}\n\nCheck console for details.`);
-        // Still try to reload data in case something was saved
-        setTimeout(() => {
-          loadData();
-        }, 2000);
-      }
-    } catch (err) {
-      console.error("Error syncing data:", err);
-      alert(`Error syncing data: ${err.message}`);
-      setDataLoading(false);
-    }
-  };
 
 
   return (
@@ -138,25 +113,12 @@ export default function DashboardPage() {
         {/* No Data State */}
         {!account && !dataLoading && (
           <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 mx-auto mb-4"></div>
             <p className="text-neutral-400 mb-4">
-              {error ? `Error: ${error}` : "No account data available. The cron job may not have run yet."}
+              {error ? `Error: ${error}` : "Loading dashboard data..."}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button
-                onClick={loadData}
-                className="px-6 py-3 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-semibold transition-colors"
-              >
-                Reload Data
-              </button>
-              <button
-                onClick={handleSyncNow}
-                className="px-6 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 rounded-lg text-green-400 font-semibold transition-colors"
-              >
-                Sync Data Now
-              </button>
-            </div>
             <p className="text-xs text-neutral-500 mt-4">
-              Click "Sync Data Now" to fetch fresh data from MyFxBook API
+              Data will load automatically from the database
             </p>
           </div>
         )}
