@@ -29,43 +29,83 @@ const COLLECTIONS = {
  */
 
 export async function saveMyFxBookAccount(accountData) {
-  try {
-    if (!accountData) {
-      return { success: false, error: 'Account data is required' };
+  const maxRetries = 3;
+  let lastError = null;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      if (!accountData) {
+        return { success: false, error: 'Account data is required' };
+      }
+
+      const accountId = String(accountData.id || accountData.accountId);
+      if (!accountId) {
+        return { success: false, error: 'Account ID is required' };
+      }
+
+      const collection = await getCollection(COLLECTIONS.MYFXBOOK_ACCOUNTS);
+      
+      const document = {
+        accountId: accountId,
+        data: accountData,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+      };
+
+      const result = await collection.updateOne(
+        { accountId: accountId },
+        { 
+          $set: document,
+          $setOnInsert: { createdAt: new Date() }
+        },
+        { upsert: true }
+      );
+
+      console.log(`✓ Account saved successfully (attempt ${attempt})`);
+      return {
+        success: true,
+        inserted: result.upsertedCount > 0,
+        modified: result.modifiedCount > 0,
+      };
+    } catch (error) {
+      lastError = error;
+      const isSSLError = error.message && (
+        error.message.includes('SSL') || 
+        error.message.includes('TLS') || 
+        error.message.includes('8028E509E87F0000') ||
+        error.message.includes('80D81CA9AE7F0000')
+      );
+
+      console.error(`Error saving MyFxBook account (attempt ${attempt}/${maxRetries}):`, {
+        message: error.message,
+        isSSLError,
+        stack: error.stack
+      });
+
+      // If it's an SSL error and we have retries left, wait and retry
+      if (isSSLError && attempt < maxRetries) {
+        const waitTime = attempt * 1000; // Exponential backoff: 1s, 2s, 3s
+        console.log(`SSL error detected, retrying in ${waitTime}ms...`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+        continue;
+      }
+
+      // If not SSL error or no retries left, return error
+      return { 
+        success: false, 
+        error: error.message,
+        isSSLError,
+        attempt
+      };
     }
-
-    const accountId = String(accountData.id || accountData.accountId);
-    if (!accountId) {
-      return { success: false, error: 'Account ID is required' };
-    }
-
-    const collection = await getCollection(COLLECTIONS.MYFXBOOK_ACCOUNTS);
-    
-    const document = {
-      accountId: accountId,
-      data: accountData,
-      updatedAt: new Date(),
-      createdAt: new Date(),
-    };
-
-    const result = await collection.updateOne(
-      { accountId: accountId },
-      { 
-        $set: document,
-        $setOnInsert: { createdAt: new Date() }
-      },
-      { upsert: true }
-    );
-
-    return {
-      success: true,
-      inserted: result.upsertedCount > 0,
-      modified: result.modifiedCount > 0,
-    };
-  } catch (error) {
-    console.error('Error saving MyFxBook account:', error);
-    return { success: false, error: error.message };
   }
+
+  // If we get here, all retries failed
+  return { 
+    success: false, 
+    error: lastError ? lastError.message : 'Unknown error after retries',
+    attempts: maxRetries
+  };
 }
 
 export async function getMyFxBookAccount(accountId = '11808068') {

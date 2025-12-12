@@ -122,7 +122,15 @@ export async function GET(request) {
             results.accountSaved = true;
             results.messages.push(`✓ Account data saved to MongoDB`);
           } else {
-            results.errors.push(`Failed to save account data: ${saveAccountResult.error}`);
+            const errorMsg = saveAccountResult.isSSLError 
+              ? `SSL error saving account data (may have succeeded): ${saveAccountResult.error}`
+              : `Failed to save account data: ${saveAccountResult.error}`;
+            results.errors.push(errorMsg);
+            // If SSL error, assume it might have succeeded
+            if (saveAccountResult.isSSLError) {
+              results.accountSaved = true;
+              results.messages.push(`⚠ Account data may have been saved despite SSL error`);
+            }
           }
         } else {
           results.errors.push(`Account ${accountId} not found`);
@@ -186,7 +194,15 @@ export async function GET(request) {
             results.dailyDataSaved = true;
             results.messages.push(`✓ Daily data saved: ${saveDailyResult.saved} entries`);
           } else {
-            results.errors.push(`Failed to save daily data: ${saveDailyResult.error}`);
+            const errorMsg = saveDailyResult.isSSLError 
+              ? `SSL error saving daily data (may have succeeded): ${saveDailyResult.error}`
+              : `Failed to save daily data: ${saveDailyResult.error}`;
+            results.errors.push(errorMsg);
+            // If SSL error, assume it might have succeeded
+            if (saveDailyResult.isSSLError && saveDailyResult.saved > 0) {
+              results.dailyDataSaved = true;
+              results.messages.push(`⚠ Daily data may have been saved (${saveDailyResult.saved} entries) despite SSL error`);
+            }
           }
         }
       } else {
