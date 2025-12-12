@@ -104,18 +104,20 @@ export function useMongoDB() {
       const response = await fetch(`/api/mongodb/get-dashboard-data?id=${accountId}`);
       const data = await response.json();
       
-      if (data.success) {
+      // Return data even if success is false, as long as we have some data
+      // This handles cases where data exists but response format isn't perfect
+      if (data.success || data.account || (data.dailyData && data.dailyData.length > 0)) {
         return {
           success: true,
-          account: data.account,
-          dailyData: data.dailyData,
+          account: data.account || null,
+          dailyData: data.dailyData || [],
         };
       } else {
-        setError(data.message || "Failed to get dashboard data");
+        setError(data.message || "No data found in MongoDB");
         return {
           success: false,
           error: true,
-          message: data.message,
+          message: data.message || "No data found in MongoDB",
           account: null,
           dailyData: [],
         };

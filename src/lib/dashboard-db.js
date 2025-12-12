@@ -199,8 +199,10 @@ export async function getLatestAccountData(accountId = '11808068') {
     const accountIdNum = typeof accountId === 'string' ? parseInt(accountId, 10) : accountId;
     const accountIdStr = String(accountId);
     
-    // Try to find account with either number or string accountId
-    const account = await collection.findOne(
+    console.log('Searching for account in MongoDB:', { accountId, accountIdNum, accountIdStr });
+    
+    // First, try to find account with specific accountId (number or string)
+    let account = await collection.findOne(
       { 
         type: 'account',
         $or: [
@@ -214,25 +216,30 @@ export async function getLatestAccountData(accountId = '11808068') {
       }
     );
 
-    if (account) {
-      console.log('Found account in MongoDB:', { accountId: account.accountId, type: typeof account.accountId });
-      return account.data;
-    }
-    
-    // If not found, try to find any account document
-    const anyAccount = await collection.findOne(
-      { type: 'account' },
-      { sort: { timestamp: -1 } }
-    );
-    
-    if (anyAccount) {
-      console.log('Found account with different accountId:', anyAccount.accountId);
-      return anyAccount.data;
+    // If not found with specific ID, try to find any account document
+    if (!account) {
+      console.log('Account not found with specific ID, searching for any account...');
+      account = await collection.findOne(
+        { type: 'account' },
+        { sort: { timestamp: -1 } }
+      );
     }
 
+    if (account) {
+      console.log('Found account in MongoDB:', { 
+        storedAccountId: account.accountId, 
+        storedAccountIdType: typeof account.accountId,
+        hasData: !!account.data,
+        timestamp: account.timestamp 
+      });
+      return account.data;
+    }
+
+    console.log('No account found in MongoDB');
     return null;
   } catch (error) {
     console.error('Error getting account data from MongoDB:', error);
+    console.error('Error details:', error.message, error.stack);
     return null;
   }
 }
@@ -252,7 +259,10 @@ export async function getDailyDataFromDB(accountId = '11808068', startDate = nul
     const accountIdNum = typeof accountId === 'string' ? parseInt(accountId, 10) : accountId;
     const accountIdStr = String(accountId);
     
-    const query = {
+    console.log('Searching for daily data in MongoDB:', { accountId, accountIdNum, accountIdStr, startDate, endDate });
+    
+    // First try with specific accountId
+    let query = {
       type: 'daily',
       $or: [
         { accountId: accountIdNum },
@@ -272,17 +282,37 @@ export async function getDailyDataFromDB(accountId = '11808068', startDate = nul
       }
     }
 
-    const dailyEntries = await collection
+    let dailyEntries = await collection
       .find(query)
       .sort({ date: -1 })
       .toArray();
 
-    console.log(`Found ${dailyEntries.length} daily entries in MongoDB for accountId: ${accountId}`);
+    // If no entries found with specific accountId, try to find any daily entries
+    if (dailyEntries.length === 0) {
+      console.log('No daily entries found with specific accountId, searching for any daily entries...');
+      query = { type: 'daily' };
+      if (startDate || endDate) {
+        query.date = {};
+        if (startDate) {
+          query.date.$gte = String(startDate);
+        }
+        if (endDate) {
+          query.date.$lte = String(endDate);
+        }
+      }
+      dailyEntries = await collection
+        .find(query)
+        .sort({ date: -1 })
+        .toArray();
+    }
+
+    console.log(`Found ${dailyEntries.length} daily entries in MongoDB`);
 
     // Extract the data field from each entry
     return dailyEntries.map(entry => entry.data);
   } catch (error) {
     console.error('Error getting daily data from MongoDB:', error);
+    console.error('Error details:', error.message, error.stack);
     return [];
   }
 }

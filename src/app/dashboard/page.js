@@ -45,6 +45,31 @@ export default function DashboardPage() {
     }
   };
 
+  const handleSyncNow = async () => {
+    setDataLoading(true);
+    
+    try {
+      // Trigger manual sync
+      const syncResponse = await fetch('/api/mongodb/sync-now');
+      const syncResult = await syncResponse.json();
+      
+      if (syncResult.success) {
+        // Wait a moment for data to be saved, then reload
+        setTimeout(() => {
+          loadData();
+        }, 2000);
+      } else {
+        console.error("Sync failed:", syncResult.error);
+        alert(`Sync failed: ${syncResult.error || syncResult.message}`);
+        setDataLoading(false);
+      }
+    } catch (err) {
+      console.error("Error syncing data:", err);
+      alert(`Error syncing data: ${err.message}`);
+      setDataLoading(false);
+    }
+  };
+
 
   return (
     <main className="min-h-screen bg-black text-white pb-20 md:pb-0">
@@ -108,12 +133,23 @@ export default function DashboardPage() {
             <p className="text-neutral-400 mb-4">
               {error ? `Error: ${error}` : "No account data available. The cron job may not have run yet."}
             </p>
-            <button
-              onClick={loadData}
-              className="px-6 py-3 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-semibold transition-colors"
-            >
-              Reload Data
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <button
+                onClick={loadData}
+                className="px-6 py-3 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-semibold transition-colors"
+              >
+                Reload Data
+              </button>
+              <button
+                onClick={handleSyncNow}
+                className="px-6 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 rounded-lg text-green-400 font-semibold transition-colors"
+              >
+                Sync Data Now
+              </button>
+            </div>
+            <p className="text-xs text-neutral-500 mt-4">
+              Click "Sync Data Now" to fetch fresh data from MyFxBook API
+            </p>
           </div>
         )}
         </div>
