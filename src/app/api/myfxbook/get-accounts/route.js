@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCache, setCache } from "@/lib/cache";
-import { saveAccountData } from "@/lib/dashboard-db";
+import { saveMyFxBookAccount } from "@/lib/mongodb-service";
 
 /**
  * Helper function to login and get session
@@ -123,7 +123,7 @@ export async function GET(request) {
       // Save to MongoDB if account exists
       if (responseData.account) {
         try {
-          const saveResult = await saveAccountData(responseData.account);
+          const saveResult = await saveMyFxBookAccount(responseData.account);
           if (saveResult.success) {
             console.log('Saved account data to MongoDB');
           } else {

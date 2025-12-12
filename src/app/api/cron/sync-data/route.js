@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { saveAccountData, saveDailyData } from "@/lib/dashboard-db";
+import { 
+  saveMyFxBookAccount, 
+  saveMyFxBookDailyData, 
+  saveMyFxBookGain, 
+  saveMyFxBookDailyGain 
+} from "@/lib/mongodb-service";
 import { getCollection } from "@/lib/mongodb";
 
 /**
@@ -85,6 +90,8 @@ export async function GET(request) {
       success: false,
       accountSaved: false,
       dailyDataSaved: false,
+      gainSaved: false,
+      dailyGainSaved: false,
       accountData: null,
       dailyDataCount: 0,
       timestamp: new Date().toISOString(),
@@ -135,7 +142,7 @@ export async function GET(request) {
           };
 
           // Save account data to MongoDB
-          const saveAccountResult = await saveAccountData(targetAccount);
+          const saveAccountResult = await saveMyFxBookAccount(targetAccount);
           if (saveAccountResult.success) {
             results.accountSaved = true;
             results.messages.push(`✓ Account data saved to MongoDB (${saveAccountResult.inserted ? 'inserted' : 'updated'})`);
@@ -203,7 +210,7 @@ export async function GET(request) {
 
         if (flattenedData.length > 0) {
           // Save daily data to MongoDB
-          const saveDailyResult = await saveDailyData(flattenedData, accountId, startDate, endDate);
+          const saveDailyResult = await saveMyFxBookDailyData(flattenedData, accountId, startDate, endDate);
           if (saveDailyResult.success) {
             results.dailyDataSaved = true;
             results.messages.push(`✓ Daily data saved to MongoDB: ${saveDailyResult.saved} entries (${saveDailyResult.inserted} inserted, ${saveDailyResult.modified} updated)`);
@@ -231,7 +238,7 @@ export async function GET(request) {
             if (retryData.error === false && retryData.dataDaily) {
               const flattenedData = Array.isArray(retryData.dataDaily) ? retryData.dataDaily.flat() : [];
               if (flattenedData.length > 0) {
-                const saveDailyResult = await saveDailyData(flattenedData, accountId, startDate, endDate);
+                const saveDailyResult = await saveMyFxBookDailyData(flattenedData, accountId, startDate, endDate);
                 if (saveDailyResult.success) {
                   results.dailyDataSaved = true;
                   results.messages.push(`✓ Daily data saved to MongoDB (retry): ${saveDailyResult.saved} entries`);
@@ -249,22 +256,73 @@ export async function GET(request) {
       results.errors.push(`Error fetching daily data: ${error.message}`);
     }
 
-    // Step 4: Verify data in MongoDB
+    // Step 4: Get and save gain data
     try {
-      const collection = await getCollection('dashboard_data');
+      const gainUrl = `${apiBaseUrl}/get-gain.json?session=${encodeURIComponent(session)}&id=${accountId}&start=${startDate}&end=${endDate}`;
+      const gainResponse = await fetch(gainUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const gainData = await gainResponse.json();
+
+      if (gainData.error === false && gainData.value !== undefined) {
+        const saveGainResult = await saveMyFxBookGain({ value: gainData.value }, accountId, startDate, endDate);
+        if (saveGainResult.success) {
+          results.gainSaved = true;
+          results.messages.push(`✓ Gain data saved to MongoDB`);
+        }
+      }
+    } catch (error) {
+      results.errors.push(`Error fetching/saving gain data: ${error.message}`);
+    }
+
+    // Step 5: Get and save daily gain data
+    try {
+      const dailyGainUrl = `${apiBaseUrl}/get-daily-gain.json?session=${encodeURIComponent(session)}&id=${accountId}&start=${startDate}&end=${endDate}`;
+      const dailyGainResponse = await fetch(dailyGainUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const dailyGainData = await dailyGainResponse.json();
+
+      if (dailyGainData.error === false && dailyGainData.dailyGain && Array.isArray(dailyGainData.dailyGain)) {
+        const saveDailyGainResult = await saveMyFxBookDailyGain(dailyGainData.dailyGain, accountId, startDate, endDate);
+        if (saveDailyGainResult.success) {
+          results.dailyGainSaved = true;
+          results.messages.push(`✓ Daily gain data saved: ${saveDailyGainResult.saved} entries`);
+        }
+      }
+    } catch (error) {
+      results.errors.push(`Error fetching/saving daily gain data: ${error.message}`);
+    }
+
+    // Step 6: Verify data in MongoDB
+    try {
+      const accountsCollection = await getCollection('myfxbook_accounts');
+      const dailyCollection = await getCollection('myfxbook_daily_data');
+      const gainCollection = await getCollection('myfxbook_gain');
+      const dailyGainCollection = await getCollection('myfxbook_daily_gain');
       
-      // Count account documents
-      const accountCount = await collection.countDocuments({ type: 'account', accountId: accountId });
-      
-      // Count daily documents
-      const dailyCount = await collection.countDocuments({ type: 'daily', accountId: accountId });
+      const accountIdStr = String(accountId);
+      const accountCount = await accountsCollection.countDocuments({ accountId: { $in: [accountIdStr, parseInt(accountIdStr, 10)] } });
+      const dailyCount = await dailyCollection.countDocuments({ accountId: { $in: [accountIdStr, parseInt(accountIdStr, 10)] } });
+      const gainCount = await gainCollection.countDocuments({ accountId: { $in: [accountIdStr, parseInt(accountIdStr, 10)] } });
+      const dailyGainCount = await dailyGainCollection.countDocuments({ accountId: { $in: [accountIdStr, parseInt(accountIdStr, 10)] } });
       
       results.mongodbStats = {
         accountDocuments: accountCount,
-        dailyDocuments: dailyCount
+        dailyDocuments: dailyCount,
+        gainDocuments: gainCount,
+        dailyGainDocuments: dailyGainCount
       };
       
-      results.messages.push(`✓ MongoDB verification: ${accountCount} account document(s), ${dailyCount} daily document(s)`);
+      results.messages.push(`✓ MongoDB verification: ${accountCount} account(s), ${dailyCount} daily entries, ${gainCount} gain(s), ${dailyGainCount} daily gain entries`);
     } catch (error) {
       results.errors.push(`Error verifying MongoDB data: ${error.message}`);
     }

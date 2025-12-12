@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { saveAccountData, saveDailyData } from "@/lib/dashboard-db";
+import { 
+  saveMyFxBookAccount, 
+  saveMyFxBookDailyData, 
+  saveMyFxBookGain, 
+  saveMyFxBookDailyGain 
+} from "@/lib/mongodb-service";
 import { getCollection } from "@/lib/mongodb";
 
 /**
@@ -112,7 +117,7 @@ export async function GET(request) {
             gain: targetAccount.gain
           };
 
-          const saveAccountResult = await saveAccountData(targetAccount);
+          const saveAccountResult = await saveMyFxBookAccount(targetAccount);
           if (saveAccountResult.success) {
             results.accountSaved = true;
             results.messages.push(`✓ Account data saved to MongoDB`);
@@ -141,7 +146,7 @@ export async function GET(request) {
                 account => account.id === accountId || account.accountId === accountId
               );
               if (targetAccount) {
-                const saveAccountResult = await saveAccountData(targetAccount);
+                const saveAccountResult = await saveMyFxBookAccount(targetAccount);
                 if (saveAccountResult.success) {
                   results.accountSaved = true;
                   results.messages.push(`✓ Account data saved to MongoDB (retry)`);
@@ -176,7 +181,7 @@ export async function GET(request) {
         results.dailyDataCount = flattenedData.length;
 
         if (flattenedData.length > 0) {
-          const saveDailyResult = await saveDailyData(flattenedData, accountId, startDate, endDate);
+          const saveDailyResult = await saveMyFxBookDailyData(flattenedData, accountId, startDate, endDate);
           if (saveDailyResult.success) {
             results.dailyDataSaved = true;
             results.messages.push(`✓ Daily data saved: ${saveDailyResult.saved} entries`);
@@ -201,7 +206,7 @@ export async function GET(request) {
             if (retryData.error === false && retryData.dataDaily) {
               const flattenedData = Array.isArray(retryData.dataDaily) ? retryData.dataDaily.flat() : [];
               if (flattenedData.length > 0) {
-                const saveDailyResult = await saveDailyData(flattenedData, accountId, startDate, endDate);
+                const saveDailyResult = await saveMyFxBookDailyData(flattenedData, accountId, startDate, endDate);
                 if (saveDailyResult.success) {
                   results.dailyDataSaved = true;
                   results.messages.push(`✓ Daily data saved (retry): ${saveDailyResult.saved} entries`);
@@ -221,9 +226,11 @@ export async function GET(request) {
 
     // Step 4: Verify data in MongoDB
     try {
-      const collection = await getCollection('dashboard_data');
-      const accountCount = await collection.countDocuments({ type: 'account', accountId: { $in: [accountId, String(accountId)] } });
-      const dailyCount = await collection.countDocuments({ type: 'daily', accountId: { $in: [accountId, String(accountId)] } });
+      const accountsCollection = await getCollection('myfxbook_accounts');
+      const dailyCollection = await getCollection('myfxbook_daily_data');
+      const accountIdStr = String(accountId);
+      const accountCount = await accountsCollection.countDocuments({ accountId: { $in: [accountIdStr, parseInt(accountIdStr, 10)] } });
+      const dailyCount = await dailyCollection.countDocuments({ accountId: { $in: [accountIdStr, parseInt(accountIdStr, 10)] } });
       
       results.mongodbStats = {
         accountDocuments: accountCount,

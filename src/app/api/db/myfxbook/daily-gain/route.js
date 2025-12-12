@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getMyFxBookDailyData } from "@/lib/mongodb-service";
+import { getMyFxBookDailyGain } from "@/lib/mongodb-service";
 
 export async function GET(request) {
   try {
@@ -8,26 +8,26 @@ export async function GET(request) {
     const startDate = searchParams.get("start") || null;
     const endDate = searchParams.get("end") || null;
 
-    const dailyData = await getMyFxBookDailyData(accountId, startDate, endDate);
+    const dailyGain = await getMyFxBookDailyGain(accountId, startDate, endDate);
 
     return NextResponse.json({
       success: true,
       error: false,
-      message: "Daily data retrieved from MongoDB",
-      dataDaily: dailyData,
+      message: "Daily gain data retrieved from MongoDB",
+      dailyGain: dailyGain,
       accountId: accountId,
       startDate: startDate,
       endDate: endDate,
-      count: dailyData.length,
+      count: dailyGain.length,
     });
   } catch (error) {
-    console.error("Error getting daily data from MongoDB:", error);
+    console.error("Error getting daily gain data from MongoDB:", error);
     return NextResponse.json({
       success: false,
       error: true,
-      message: "Failed to retrieve daily data from MongoDB",
+      message: "Failed to retrieve daily gain data from MongoDB",
       details: error.message,
-      dataDaily: [],
+      dailyGain: [],
     }, { status: 500 });
   }
 }

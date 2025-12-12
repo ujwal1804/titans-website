@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { saveMyFxBookDailyGain } from "@/lib/mongodb-service";
 
 /**
  * Helper function to login and get session
@@ -105,6 +106,16 @@ export async function GET(request) {
 
     // Check if request was successful
     if (data.error === false) {
+      // Save to MongoDB
+      if (data.dailyGain && Array.isArray(data.dailyGain) && data.dailyGain.length > 0) {
+        try {
+          await saveMyFxBookDailyGain(data.dailyGain, accountId, startDate, endDate);
+          console.log('Saved daily gain data to MongoDB');
+        } catch (dbError) {
+          console.error('Error saving daily gain to MongoDB:', dbError);
+        }
+      }
+
       return NextResponse.json({
         success: true,
         error: false,
@@ -185,6 +196,16 @@ export async function POST(request) {
 
     // Check if request was successful
     if (data.error === false) {
+      // Save to MongoDB
+      if (data.dailyGain && Array.isArray(data.dailyGain) && data.dailyGain.length > 0) {
+        try {
+          await saveMyFxBookDailyGain(data.dailyGain, accountId, startDate, endDate);
+          console.log('Saved daily gain data to MongoDB');
+        } catch (dbError) {
+          console.error('Error saving daily gain to MongoDB:', dbError);
+        }
+      }
+
       return NextResponse.json({
         success: true,
         error: false,

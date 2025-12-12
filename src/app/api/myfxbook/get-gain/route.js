@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { saveMyFxBookGain } from "@/lib/mongodb-service";
 
 /**
  * Helper function to login and get session
@@ -105,6 +106,14 @@ export async function GET(request) {
 
     // Check if request was successful
     if (data.error === false && data.value !== undefined) {
+      // Save to MongoDB
+      try {
+        await saveMyFxBookGain({ value: data.value }, accountId, startDate, endDate);
+        console.log('Saved gain data to MongoDB');
+      } catch (dbError) {
+        console.error('Error saving gain to MongoDB:', dbError);
+      }
+
       return NextResponse.json({
         success: true,
         error: false,
@@ -185,6 +194,14 @@ export async function POST(request) {
 
     // Check if request was successful
     if (data.error === false && data.value !== undefined) {
+      // Save to MongoDB
+      try {
+        await saveMyFxBookGain({ value: data.value }, accountId, startDate, endDate);
+        console.log('Saved gain data to MongoDB (POST)');
+      } catch (dbError) {
+        console.error('Error saving gain to MongoDB:', dbError);
+      }
+
       return NextResponse.json({
         success: true,
         error: false,

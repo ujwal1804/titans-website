@@ -101,7 +101,7 @@ export function useMongoDB() {
     setError(null);
 
     try {
-      const response = await fetch(`/api/mongodb/get-dashboard-data?id=${accountId}`);
+      const response = await fetch(`/api/db/dashboard?id=${accountId}`);
       const data = await response.json();
       
       // Return data even if success is false, as long as we have some data

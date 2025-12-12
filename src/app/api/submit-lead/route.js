@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
+import { savePayment } from "@/lib/mongodb-service";
 
 // Configure Cloudinary
 cloudinary.config({
@@ -120,6 +121,20 @@ export async function POST(request) {
       const result = await response.json();
       console.log("✅ Step 2 Complete: Google Sheets response:", result);
       
+      // Save to MongoDB (regardless of Google Sheets success)
+      try {
+        await savePayment({
+          name,
+          email,
+          phone,
+          screenshotUrl: imageUrl,
+          timestamp: new Date().toISOString(),
+        });
+        console.log('✅ Saved payment data to MongoDB');
+      } catch (dbError) {
+        console.error('Error saving payment to MongoDB:', dbError);
+      }
+      
       if (!result.success) {
         console.error("⚠️ Google Sheets returned error:", result.message);
         // Still return success since Cloudinary upload worked
@@ -133,6 +148,21 @@ export async function POST(request) {
       
     } catch (error) {
       console.error("❌ Step 2 Failed: Google Sheets save error:", error);
+      
+      // Still save to MongoDB even if Google Sheets fails
+      try {
+        await savePayment({
+          name,
+          email,
+          phone,
+          screenshotUrl: imageUrl,
+          timestamp: new Date().toISOString(),
+        });
+        console.log('✅ Saved payment data to MongoDB (after Google Sheets error)');
+      } catch (dbError) {
+        console.error('Error saving payment to MongoDB:', dbError);
+      }
+      
       // Still return success since Cloudinary upload worked
       return NextResponse.json({
         success: true,

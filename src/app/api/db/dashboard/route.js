@@ -17,7 +17,7 @@ export async function GET(request) {
       error: dashboardData.error
     });
 
-    // Even if not successful, return what we have (might have partial data)
+    // Return data even if partial (account or dailyData exists)
     if (dashboardData.account || (dashboardData.dailyData && dashboardData.dailyData.length > 0)) {
       return NextResponse.json({
         success: true,

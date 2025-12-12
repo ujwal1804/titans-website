@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCache, setCache } from "@/lib/cache";
-import { saveDailyData } from "@/lib/dashboard-db";
+import { saveMyFxBookDailyData } from "@/lib/mongodb-service";
 
 /**
  * Helper function to login and get session
@@ -147,7 +147,7 @@ export async function GET(request) {
       // Save to MongoDB
       if (responseData.dataDaily && responseData.dataDaily.length > 0) {
         try {
-          const saveResult = await saveDailyData(responseData.dataDaily, accountId, startDate, endDate);
+          const saveResult = await saveMyFxBookDailyData(responseData.dataDaily, accountId, startDate, endDate);
           if (saveResult.success) {
             console.log(`Saved ${saveResult.saved} daily data entries to MongoDB`);
           } else {
@@ -196,7 +196,7 @@ export async function GET(request) {
             // Save to MongoDB
             if (responseData.dataDaily && responseData.dataDaily.length > 0) {
               try {
-                const saveResult = await saveDailyData(responseData.dataDaily, accountId, startDate, endDate);
+                const saveResult = await saveMyFxBookDailyData(responseData.dataDaily, accountId, startDate, endDate);
                 if (saveResult.success) {
                   console.log(`Saved ${saveResult.saved} daily data entries to MongoDB (retry)`);
                 } else {
@@ -327,7 +327,7 @@ export async function POST(request) {
       // Save to MongoDB
       if (responseData.dataDaily && responseData.dataDaily.length > 0) {
         try {
-          const saveResult = await saveDailyData(responseData.dataDaily, accountId, startDate, endDate);
+          const saveResult = await saveMyFxBookDailyData(responseData.dataDaily, accountId, startDate, endDate);
           if (saveResult.success) {
             console.log(`Saved ${saveResult.saved} daily data entries to MongoDB (POST)`);
           } else {
@@ -376,7 +376,7 @@ export async function POST(request) {
             // Save to MongoDB
             if (responseData.dataDaily && responseData.dataDaily.length > 0) {
               try {
-                const saveResult = await saveDailyData(responseData.dataDaily, accountId, startDate, endDate);
+                const saveResult = await saveMyFxBookDailyData(responseData.dataDaily, accountId, startDate, endDate);
                 if (saveResult.success) {
                   console.log(`Saved ${saveResult.saved} daily data entries to MongoDB (POST retry)`);
                 } else {

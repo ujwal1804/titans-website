@@ -53,15 +53,23 @@ export default function DashboardPage() {
       const syncResponse = await fetch('/api/mongodb/sync-now');
       const syncResult = await syncResponse.json();
       
-      if (syncResult.success) {
+      console.log('Sync result:', syncResult);
+      
+      if (syncResult.success || syncResult.accountSaved || syncResult.dailyDataSaved) {
         // Wait a moment for data to be saved, then reload
         setTimeout(() => {
           loadData();
-        }, 2000);
+        }, 3000);
       } else {
-        console.error("Sync failed:", syncResult.error);
-        alert(`Sync failed: ${syncResult.error || syncResult.message}`);
-        setDataLoading(false);
+        console.error("Sync failed:", syncResult);
+        const errorMsg = syncResult.errors && syncResult.errors.length > 0 
+          ? syncResult.errors.join(', ') 
+          : syncResult.message || 'Unknown error';
+        alert(`Sync completed with issues: ${errorMsg}\n\nCheck console for details.`);
+        // Still try to reload data in case something was saved
+        setTimeout(() => {
+          loadData();
+        }, 2000);
       }
     } catch (err) {
       console.error("Error syncing data:", err);

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getMyFxBookDailyData } from "@/lib/mongodb-service";
+import { getMyFxBookGain } from "@/lib/mongodb-service";
 
 export async function GET(request) {
   try {
@@ -8,26 +8,34 @@ export async function GET(request) {
     const startDate = searchParams.get("start") || null;
     const endDate = searchParams.get("end") || null;
 
-    const dailyData = await getMyFxBookDailyData(accountId, startDate, endDate);
+    const gain = await getMyFxBookGain(accountId, startDate, endDate);
+
+    if (!gain) {
+      return NextResponse.json({
+        success: false,
+        error: true,
+        message: `No gain data found for account ID ${accountId}`,
+        value: null,
+      }, { status: 404 });
+    }
 
     return NextResponse.json({
       success: true,
       error: false,
-      message: "Daily data retrieved from MongoDB",
-      dataDaily: dailyData,
+      message: "Gain data retrieved from MongoDB",
+      value: gain.value || gain,
       accountId: accountId,
       startDate: startDate,
       endDate: endDate,
-      count: dailyData.length,
     });
   } catch (error) {
-    console.error("Error getting daily data from MongoDB:", error);
+    console.error("Error getting gain data from MongoDB:", error);
     return NextResponse.json({
       success: false,
       error: true,
-      message: "Failed to retrieve daily data from MongoDB",
+      message: "Failed to retrieve gain data from MongoDB",
       details: error.message,
-      dataDaily: [],
+      value: null,
     }, { status: 500 });
   }
 }
