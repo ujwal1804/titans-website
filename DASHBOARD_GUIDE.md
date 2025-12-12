@@ -203,3 +203,5 @@ Potential additions:
 - Performance comparison tools
 - Trade history details
 
+
+

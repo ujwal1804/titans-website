@@ -179,3 +179,5 @@ export default function MyFxBookDailyData({ accountId = "11808068" }) {
   );
 }
 
+
+

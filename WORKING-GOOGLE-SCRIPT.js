@@ -107,3 +107,5 @@ function TEST_FULL_API() {
   SpreadsheetApp.getUi().alert('✅ API test complete! Check logs and sheet.');
 }
 
+
+

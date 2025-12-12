@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useMyFxBook } from "@/hooks/useMyFxBook";
+import { useMongoDB } from "@/hooks/useMongoDB";
 import AccountOverview from "../components/AccountOverview";
 import DailyDataChart from "../components/DailyDataChart";
 import PerformanceMetrics from "../components/PerformanceMetrics";
@@ -11,40 +11,32 @@ import Navbar from "../components/Navbar";
 import MobileBottomNav from "../components/MobileBottomNav";
 
 export default function DashboardPage() {
-  const { session, loading, error, login, getAccounts, getDailyData, isAuthenticated } = useMyFxBook();
+  const { loading, error, getDashboardData } = useMongoDB();
   const [account, setAccount] = useState(null);
   const [dailyData, setDailyData] = useState([]);
   const [dataLoading, setDataLoading] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      loadData();
-    } else {
-      // Auto-login on mount
-      handleLogin();
-    }
-  }, [isAuthenticated]);
-
-  const handleLogin = async () => {
-    await login();
-  };
+    loadData();
+  }, []);
 
   const loadData = async () => {
     setDataLoading(true);
     
     try {
-      // Load account data
-      const accountsResult = await getAccounts();
-      if (accountsResult.success && accountsResult.account) {
-        setAccount(accountsResult.account);
-        
-        // Load daily data for this account
-        const dailyResult = await getDailyData(accountsResult.account.id || "11808068");
-        if (dailyResult.success && dailyResult.dataDaily) {
-          // Flatten the nested array structure
-          const flattened = dailyResult.dataDaily.flat();
+      // Load dashboard data from MongoDB
+      const result = await getDashboardData("11808068");
+      if (result.success) {
+        if (result.account) {
+          setAccount(result.account);
+        }
+        if (result.dailyData) {
+          // Ensure dailyData is an array
+          const flattened = Array.isArray(result.dailyData) ? result.dailyData : [];
           setDailyData(flattened);
         }
+      } else {
+        console.error("Error loading data from MongoDB:", result.message);
       }
     } catch (err) {
       console.error("Error loading data:", err);
@@ -53,32 +45,6 @@ export default function DashboardPage() {
     }
   };
 
-  if (loading && !isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 mx-auto mb-4"></div>
-          <p className="text-neutral-400">Logging in to MyFxBook...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error && !isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <p className="text-red-400 mb-4">{error}</p>
-          <button
-            onClick={handleLogin}
-            className="px-6 py-3 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-semibold transition-colors"
-          >
-            Retry Login
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <main className="min-h-screen bg-black text-white pb-20 md:pb-0">
@@ -137,14 +103,16 @@ export default function DashboardPage() {
         )}
 
         {/* No Data State */}
-        {!account && !dataLoading && isAuthenticated && (
+        {!account && !dataLoading && (
           <div className="text-center py-12">
-            <p className="text-neutral-400 mb-4">No account data available</p>
+            <p className="text-neutral-400 mb-4">
+              {error ? `Error: ${error}` : "No account data available. The cron job may not have run yet."}
+            </p>
             <button
               onClick={loadData}
               className="px-6 py-3 bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/30 rounded-lg text-cyan-400 font-semibold transition-colors"
             >
-              Load Data
+              Reload Data
             </button>
           </div>
         )}

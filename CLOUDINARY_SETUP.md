@@ -69,3 +69,5 @@ The payment screenshots will be automatically uploaded to Cloudinary in the fold
 - Compress images before uploading if needed
 - Supported formats: JPG, JPEG, PNG, GIF, WebP
 
+
+

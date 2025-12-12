@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCache, setCache } from "@/lib/cache";
+import { saveAccountData } from "@/lib/dashboard-db";
 
 /**
  * Helper function to login and get session
@@ -46,7 +47,16 @@ export async function GET(request) {
     const cacheKey = 'myfxbook_accounts_11808068';
     const cachedData = getCache(cacheKey);
     
-    if (cachedData) {
+    // Even if cached, ensure data is saved to MongoDB (in case it wasn't saved before)
+    if (cachedData && cachedData.account) {
+      try {
+        const saveResult = await saveAccountData(cachedData.account);
+        if (saveResult.success) {
+          console.log('Saved cached account data to MongoDB');
+        }
+      } catch (dbError) {
+        console.error('Error saving cached data to MongoDB:', dbError);
+      }
       console.log('Returning cached accounts data');
       return NextResponse.json(cachedData);
     }
@@ -110,6 +120,21 @@ export async function GET(request) {
         account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
       };
       
+      // Save to MongoDB if account exists
+      if (responseData.account) {
+        try {
+          const saveResult = await saveAccountData(responseData.account);
+          if (saveResult.success) {
+            console.log('Saved account data to MongoDB');
+          } else {
+            console.error('Failed to save account data to MongoDB:', saveResult.error);
+          }
+        } catch (dbError) {
+          console.error('Error saving to MongoDB:', dbError);
+          // Don't fail the request if MongoDB save fails
+        }
+      }
+      
       // Cache the response
       setCache(cacheKey, responseData);
       console.log('Cached accounts data');
@@ -142,6 +167,21 @@ export async function GET(request) {
               accounts: filteredAccounts,
               account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
             };
+            
+            // Save to MongoDB if account exists
+            if (responseData.account) {
+              try {
+                const saveResult = await saveAccountData(responseData.account);
+                if (saveResult.success) {
+                  console.log('Saved account data to MongoDB (retry)');
+                } else {
+                  console.error('Failed to save account data to MongoDB:', saveResult.error);
+                }
+              } catch (dbError) {
+                console.error('Error saving to MongoDB:', dbError);
+                // Don't fail the request if MongoDB save fails
+              }
+            }
             
             // Cache the response
             setCache(cacheKey, responseData);
@@ -248,6 +288,21 @@ export async function POST(request) {
         account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
       };
       
+      // Save to MongoDB if account exists
+      if (responseData.account) {
+        try {
+          const saveResult = await saveAccountData(responseData.account);
+          if (saveResult.success) {
+            console.log('Saved account data to MongoDB (POST)');
+          } else {
+            console.error('Failed to save account data to MongoDB:', saveResult.error);
+          }
+        } catch (dbError) {
+          console.error('Error saving to MongoDB:', dbError);
+          // Don't fail the request if MongoDB save fails
+        }
+      }
+      
       // Cache the response
       setCache(cacheKey, responseData);
       console.log('Cached accounts data');
@@ -280,6 +335,21 @@ export async function POST(request) {
               accounts: filteredAccounts,
               account: filteredAccounts.length > 0 ? filteredAccounts[0] : null,
             };
+            
+            // Save to MongoDB if account exists
+            if (responseData.account) {
+              try {
+                const saveResult = await saveAccountData(responseData.account);
+                if (saveResult.success) {
+                  console.log('Saved account data to MongoDB (POST retry)');
+                } else {
+                  console.error('Failed to save account data to MongoDB:', saveResult.error);
+                }
+              } catch (dbError) {
+                console.error('Error saving to MongoDB:', dbError);
+                // Don't fail the request if MongoDB save fails
+              }
+            }
             
             // Cache the response
             setCache(cacheKey, responseData);

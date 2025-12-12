@@ -94,3 +94,5 @@ If data isn't appearing, check Apps Script logs:
 
 **No data**: Check browser console and server logs for the actual error message
 
+
+

@@ -128,3 +128,5 @@ The script saves data in this format:
 
 You can click on the Screenshot URL in Google Sheets to view the uploaded payment screenshot!
 
+
+

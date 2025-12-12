@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCache, setCache } from "@/lib/cache";
+import { saveDailyData } from "@/lib/dashboard-db";
 
 /**
  * Helper function to login and get session
@@ -75,7 +76,19 @@ export async function GET(request) {
       const cacheKey = `myfxbook_daily_data_${accountId}`;
       const cachedData = getCache(cacheKey);
       
-      if (cachedData) {
+      // Even if cached, ensure data is saved to MongoDB (in case it wasn't saved before)
+      if (cachedData && cachedData.dataDaily && cachedData.dataDaily.length > 0) {
+        try {
+          const flattenedData = Array.isArray(cachedData.dataDaily) ? cachedData.dataDaily.flat() : [];
+          if (flattenedData.length > 0) {
+            const saveResult = await saveDailyData(flattenedData, accountId, startDate, endDate);
+            if (saveResult.success) {
+              console.log(`Saved cached daily data to MongoDB: ${saveResult.saved} entries`);
+            }
+          }
+        } catch (dbError) {
+          console.error('Error saving cached daily data to MongoDB:', dbError);
+        }
         console.log('Returning cached daily data');
         return NextResponse.json(cachedData);
       }
@@ -131,6 +144,21 @@ export async function GET(request) {
         endDate: endDate,
       };
       
+      // Save to MongoDB
+      if (responseData.dataDaily && responseData.dataDaily.length > 0) {
+        try {
+          const saveResult = await saveDailyData(responseData.dataDaily, accountId, startDate, endDate);
+          if (saveResult.success) {
+            console.log(`Saved ${saveResult.saved} daily data entries to MongoDB`);
+          } else {
+            console.error('Failed to save daily data to MongoDB:', saveResult.error);
+          }
+        } catch (dbError) {
+          console.error('Error saving daily data to MongoDB:', dbError);
+          // Don't fail the request if MongoDB save fails
+        }
+      }
+      
       // Cache the response if it's a default request
       if (isDefaultRequest) {
         const cacheKey = `myfxbook_daily_data_${accountId}`;
@@ -164,6 +192,21 @@ export async function GET(request) {
               startDate: startDate,
               endDate: endDate,
             };
+            
+            // Save to MongoDB
+            if (responseData.dataDaily && responseData.dataDaily.length > 0) {
+              try {
+                const saveResult = await saveDailyData(responseData.dataDaily, accountId, startDate, endDate);
+                if (saveResult.success) {
+                  console.log(`Saved ${saveResult.saved} daily data entries to MongoDB (retry)`);
+                } else {
+                  console.error('Failed to save daily data to MongoDB:', saveResult.error);
+                }
+              } catch (dbError) {
+                console.error('Error saving daily data to MongoDB:', dbError);
+                // Don't fail the request if MongoDB save fails
+              }
+            }
             
             // Cache the response if it's a default request
             if (isDefaultRequest) {
@@ -281,6 +324,21 @@ export async function POST(request) {
         endDate: endDate,
       };
       
+      // Save to MongoDB
+      if (responseData.dataDaily && responseData.dataDaily.length > 0) {
+        try {
+          const saveResult = await saveDailyData(responseData.dataDaily, accountId, startDate, endDate);
+          if (saveResult.success) {
+            console.log(`Saved ${saveResult.saved} daily data entries to MongoDB (POST)`);
+          } else {
+            console.error('Failed to save daily data to MongoDB:', saveResult.error);
+          }
+        } catch (dbError) {
+          console.error('Error saving daily data to MongoDB:', dbError);
+          // Don't fail the request if MongoDB save fails
+        }
+      }
+      
       // Cache the response if it's a default request
       if (isDefaultRequest) {
         const cacheKey = `myfxbook_daily_data_${accountId}`;
@@ -314,6 +372,21 @@ export async function POST(request) {
               startDate: startDate,
               endDate: endDate,
             };
+            
+            // Save to MongoDB
+            if (responseData.dataDaily && responseData.dataDaily.length > 0) {
+              try {
+                const saveResult = await saveDailyData(responseData.dataDaily, accountId, startDate, endDate);
+                if (saveResult.success) {
+                  console.log(`Saved ${saveResult.saved} daily data entries to MongoDB (POST retry)`);
+                } else {
+                  console.error('Failed to save daily data to MongoDB:', saveResult.error);
+                }
+              } catch (dbError) {
+                console.error('Error saving daily data to MongoDB:', dbError);
+                // Don't fail the request if MongoDB save fails
+              }
+            }
             
             // Cache the response if it's a default request
             if (isDefaultRequest) {
