@@ -115,11 +115,16 @@ export default function DashboardPage() {
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 mx-auto mb-4"></div>
             <p className="text-neutral-400 mb-4">
-              {error ? `Error: ${error}` : "Loading dashboard data..."}
+              {error ? `Error: ${error}` : "No data found in MongoDB"}
             </p>
             <p className="text-xs text-neutral-500 mt-4">
-              Data will load automatically from the database
+              {error ? "Please check the console or contact support" : "Data will load automatically once available in the database"}
             </p>
+            {process.env.NODE_ENV === 'development' && (
+              <p className="text-xs text-yellow-500 mt-2">
+                Debug: Visit /api/debug/production to check MongoDB status
+              </p>
+            )}
           </div>
         )}
         </div>

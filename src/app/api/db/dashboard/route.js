@@ -41,15 +41,27 @@ export async function GET(request) {
 
     // No data found - return 200 with empty data instead of 404
     // This allows the frontend to handle the empty state gracefully
+    // Include diagnostic info for production debugging
+    const diagnosticInfo = {
+      environment: process.env.NODE_ENV,
+      hasMongoUri: !!process.env.MONGODB_URI,
+      mongoUriPreview: process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 30) + "..." : "NOT SET",
+      accountId: accountId,
+      error: dashboardData.error || null
+    };
+
+    console.warn('No dashboard data found in MongoDB:', diagnosticInfo);
+
     return NextResponse.json({
       success: false,
       error: false,
-      message: dashboardData.error || "No data found in MongoDB",
+      message: dashboardData.error || "No data found in MongoDB. Please sync data first.",
       account: null,
       dailyData: [],
       accountId: accountId,
       accountCount: 0,
       dailyDataCount: 0,
+      diagnostic: process.env.NODE_ENV === 'production' ? diagnosticInfo : undefined, // Only in production for debugging
     });
   } catch (error) {
     console.error("Error getting dashboard data from MongoDB:", error);

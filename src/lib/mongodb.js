@@ -7,9 +7,23 @@ if (!process.env.MONGODB_URI) {
 
 const uri = process.env.MONGODB_URI;
 const options = {
-  // Add connection options for better error handling
-  serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+  // Connection timeout options
+  serverSelectionTimeoutMS: 10000, // Timeout after 10s
   socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+  connectTimeoutMS: 10000, // Connection timeout
+  
+  // SSL/TLS options for MongoDB Atlas
+  tls: true,
+  tlsAllowInvalidCertificates: false,
+  tlsAllowInvalidHostnames: false,
+  
+  // Retry options
+  retryWrites: true,
+  retryReads: true,
+  
+  // Connection pool options
+  maxPoolSize: 10,
+  minPoolSize: 1,
 };
 
 let client;

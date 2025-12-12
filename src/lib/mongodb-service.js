@@ -74,7 +74,15 @@ export async function getMyFxBookAccount(accountId = '11808068') {
     const accountIdStr = String(accountId);
     const accountIdNum = parseInt(accountIdStr, 10);
     
-    console.log('Searching for account in MongoDB:', { accountId, accountIdStr, accountIdNum });
+    // Check collection count first
+    const totalCount = await collection.countDocuments();
+    console.log(`MongoDB Collection "${COLLECTIONS.MYFXBOOK_ACCOUNTS}": ${totalCount} total document(s)`);
+    
+    if (totalCount === 0) {
+      console.warn(`Collection "${COLLECTIONS.MYFXBOOK_ACCOUNTS}" is empty. Data may need to be synced.`);
+    }
+    
+    console.log('Searching for account in MongoDB:', { accountId, accountIdStr, accountIdNum, totalCount });
     
     // Try multiple query formats
     let account = await collection.findOne(
@@ -99,12 +107,15 @@ export async function getMyFxBookAccount(accountId = '11808068') {
     }
     
     // If still not found, try to find any account
-    if (!account) {
+    if (!account && totalCount > 0) {
       console.log('Account not found with specific ID, searching for any account...');
       account = await collection.findOne(
         {},
         { sort: { updatedAt: -1 } }
       );
+      if (account) {
+        console.log(`Found account with different ID: ${account.accountId}`);
+      }
     }
 
     // If still not found, check old dashboard_data collection (migration support)
@@ -143,7 +154,7 @@ export async function getMyFxBookAccount(accountId = '11808068') {
       return account.data;
     }
 
-    console.log('No account found in MongoDB');
+    console.warn(`No account found in MongoDB. Collection has ${totalCount} document(s) but none match accountId ${accountId}`);
     return null;
   } catch (error) {
     console.error('Error getting MyFxBook account:', error);
@@ -221,7 +232,15 @@ export async function getMyFxBookDailyData(accountId = '11808068', startDate = n
     const accountIdStr = String(accountId);
     const accountIdNum = parseInt(accountIdStr, 10);
     
-    console.log('Searching for daily data in MongoDB:', { accountId, accountIdStr, accountIdNum, startDate, endDate });
+    // Check collection count first
+    const totalCount = await collection.countDocuments();
+    console.log(`MongoDB Collection "${COLLECTIONS.MYFXBOOK_DAILY_DATA}": ${totalCount} total document(s)`);
+    
+    if (totalCount === 0) {
+      console.warn(`Collection "${COLLECTIONS.MYFXBOOK_DAILY_DATA}" is empty. Data may need to be synced.`);
+    }
+    
+    console.log('Searching for daily data in MongoDB:', { accountId, accountIdStr, accountIdNum, startDate, endDate, totalCount });
     
     // Try multiple query formats
     let query = {
@@ -297,7 +316,11 @@ export async function getMyFxBookDailyData(accountId = '11808068', startDate = n
         .toArray();
     }
 
-    console.log(`Found ${entries.length} daily entries in MongoDB`);
+    console.log(`Found ${entries.length} daily entries in MongoDB (out of ${totalCount} total)`);
+
+    if (entries.length === 0 && totalCount > 0) {
+      console.warn(`No daily entries found for accountId ${accountId}, but collection has ${totalCount} total document(s)`);
+    }
 
     return entries.map(entry => entry.data);
   } catch (error) {
